@@ -1,41 +1,33 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-void main() => runApp(MyApp());
+import 'package:flutter/material.dart';
+import 'package:flutter_auth0/data/AuthUser.dart';
+import 'package:flutter_auth0/flutter_auth0.dart';
+import 'package:flutter_auth0/flutter_WebAuth.dart';
+
+final Auth0 auth = new Auth0(
+    clientId: 'PJVgy3Vh9jo7Wxl6sSUZsicE6S4TXZjB',
+    domain: 'actingweb.eu.auth0.com');
+final WebAuth web = new WebAuth(
+    clientId: 'PJVgy3Vh9jo7Wxl6sSUZsicE6S4TXZjB',
+    domain: 'actingweb.eu.auth0.com');
+
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      title: 'Flutter Auth0 Demo',
+      home: MyHomePage(title: 'Demo'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -44,68 +36,169 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  Future<String> _message = Future<String>.value('');
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
-  void _incrementCounter() {
+  Future<String> _signUp() async {
+    dynamic user = await auth.createUser(
+        email: usernameController.text,
+        password: passwordController.text,
+        connection: 'Username-Password-Authentication',
+        waitResponse: true);
+    return '''[Sign-Up Success] 
+    User Id: ${user['_id']}''';
+  }
+
+  Future<String> _signIn() async {
+    Auth0User user = await auth.passwordRealm(
+        username: usernameController.text,
+        password: passwordController.text,
+        realm: 'Username-Password-Authentication');
+    return '''[Sign-In Success] 
+    Access Token: ${user.accessToken}''';
+  }
+
+  Future<String> _delegationToken() async {
+    Auth0User user = await auth.passwordRealm(
+        username: usernameController.text,
+        password: passwordController.text,
+        realm: 'Username-Password-Authentication');
+    String token = await auth.delegate(token: user.idToken, api: 'firebase');
+    return '''[Delegation Token Success] 
+    Access Token: $token''';
+  }
+
+  Future<String> _userInfo() async {
+    Auth0User user = await auth.passwordRealm(
+        username: usernameController.text,
+        password: passwordController.text,
+        realm: 'Username-Password-Authentication');
+    dynamic response = await auth.userInfo(token: user.accessToken);
+    StringBuffer buffer = new StringBuffer();
+    response.forEach((k, v) => buffer.writeln('$k: $v'));
+    return '''[User Info] 
+    ${buffer.toString()}''';
+  }
+
+  Future<String> _resetPassword() async {
+    dynamic success = await auth.resetPassword(
+        email: usernameController.text,
+        connection: 'Username-Password-Authentication');
+    return success ? 'Password Reset Success' : 'Password Reset Fail';
+  }
+
+  void assignFuture(Function func) {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      _message = func();
     });
+  }
+
+  void webLogin() {
+    web
+        .authorize(
+      audience: 'https://actingweb.eu.auth0.com/userinfo',
+      scope: 'openid email',
+    )
+        .then((value) => print(value))
+        .catchError((err) => print(err));
+  }
+
+  void closeSessions() {
+    web.clearSession().catchError((err) => print(err));
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
+        leading: Image.network(
+            'https://cdn.auth0.com/styleguide/components/1.0.8/media/logos/img/logo-grey.png',
+            height: 40),
+        backgroundColor: Color.fromRGBO(0, 0, 0, 1.0),
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        child: SingleChildScrollView(
+          controller: ScrollController(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              TextField(
+                controller: usernameController,
+                decoration: const InputDecoration(
+                  hintText: 'Email/Username',
+                ),
+              ),
+              TextField(
+                controller: passwordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  hintText: 'Password',
+                ),
+              ),
+              MaterialButton(
+                  child: const Text('Test Sign Up'),
+                  color: Colors.blueAccent,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    if (usernameController.text != null &&
+                        passwordController.text != null)
+                      assignFuture(this._signUp);
+                  }),
+              MaterialButton(
+                  child: const Text('Test Sign In'),
+                  color: Colors.redAccent,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    if (usernameController.text != null &&
+                        passwordController.text != null)
+                      assignFuture(this._signIn);
+                  }),
+              MaterialButton(
+                  color: Colors.black,
+                  textColor: Colors.white,
+                  child: const Text('Test Delegation Token'),
+                  onPressed: () {
+                    if (usernameController.text != null &&
+                        passwordController.text != null)
+                      assignFuture(this._delegationToken);
+                  }),
+              MaterialButton(
+                  color: Colors.indigo,
+                  textColor: Colors.white,
+                  child: const Text('Test User Info'),
+                  onPressed: () {
+                    if (usernameController.text != null &&
+                        passwordController.text != null)
+                      assignFuture(this._userInfo);
+                  }),
+              MaterialButton(
+                  color: Colors.greenAccent,
+                  child: const Text('Test Reset Password'),
+                  onPressed: () {
+                    if (usernameController.text != null)
+                      assignFuture(this._resetPassword);
+                  }),
+              MaterialButton(
+                  color: Colors.lightBlueAccent,
+                  child: const Text('Test Web Login'),
+                  onPressed: webLogin),
+              MaterialButton(
+                  color: Colors.redAccent,
+                  child: const Text('Test Clear Sessions'),
+                  onPressed: closeSessions),
+              FutureBuilder<String>(
+                  future: _message,
+                  builder: (_, AsyncSnapshot<String> snapshot) {
+                    return Text(snapshot.data ?? '',
+                        style: const TextStyle(color: Colors.black));
+                  }),
+            ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
