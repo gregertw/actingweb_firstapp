@@ -1,16 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_auth0/data/AuthUser.dart';
 import 'package:flutter_auth0/flutter_auth0.dart';
-import 'package:flutter_auth0/flutter_WebAuth.dart';
 
-final Auth0 auth = new Auth0(
-    clientId: 'PJVgy3Vh9jo7Wxl6sSUZsicE6S4TXZjB',
-    domain: 'actingweb.eu.auth0.com');
-final WebAuth web = new WebAuth(
-    clientId: 'PJVgy3Vh9jo7Wxl6sSUZsicE6S4TXZjB',
-    domain: 'actingweb.eu.auth0.com');
+final String clientId = 'PJVgy3Vh9jo7Wxl6sSUZsicE6S4TXZjB';
+final String domain = 'actingweb.eu.auth0.com';
+
+final Auth0 auth = new Auth0(clientId: clientId, domain: domain);
+final WebAuth web = new WebAuth(clientId: clientId, domain: domain);
 
 void main() {
   runApp(MyApp());
@@ -36,9 +33,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final GlobalKey<ScaffoldState> skey = GlobalKey<ScaffoldState>();
   Future<String> _message = Future<String>.value('');
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  String refreshToken;
+  String wRefreshToken;
+  String userToken;
 
   Future<String> _signUp() async {
     dynamic user = await auth.createUser(
@@ -70,11 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<String> _userInfo() async {
-    Auth0User user = await auth.passwordRealm(
-        username: usernameController.text,
-        password: passwordController.text,
-        realm: 'Username-Password-Authentication');
-    dynamic response = await auth.userInfo(token: user.accessToken);
+    dynamic response = await web.userInfo(token: userToken);
     StringBuffer buffer = new StringBuffer();
     response.forEach((k, v) => buffer.writeln('$k: $v'));
     return '''[User Info] 
@@ -98,10 +95,26 @@ class _MyHomePageState extends State<MyHomePage> {
     web
         .authorize(
       audience: 'https://actingweb.eu.auth0.com/userinfo',
-      scope: 'openid email',
+      scope: 'openid email offline_access',
     )
-        .then((value) => print(value))
-        .catchError((err) => print(err));
+        .then((value) {
+      print('response: $value');
+      wRefreshToken = value['refresh_token'];
+      userToken = value['access_token'];
+    }).catchError((err) => print('Error: $err'));
+  }
+
+  void webRefreshToken() {
+    if (wRefreshToken == null) {
+      skey.currentState.showSnackBar(SnackBar(
+        content: Text('Invalid Refresh Token'),
+      ));
+      return;
+    }
+    web
+        .refreshToken(refreshToken: wRefreshToken)
+        .then((value) => print('response: $value'))
+        .catchError((err) => print('Error: $err'));
   }
 
   void closeSessions() {
@@ -111,6 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: skey,
       appBar: AppBar(
         leading: Image.network(
             'https://cdn.auth0.com/styleguide/components/1.0.8/media/logos/img/logo-grey.png',
@@ -185,6 +199,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Colors.lightBlueAccent,
                   child: const Text('Test Web Login'),
                   onPressed: webLogin),
+              MaterialButton(
+                  color: Colors.blueAccent,
+                  textColor: Colors.white,
+                  child: const Text('Test Web Refresh Token'),
+                  onPressed: webRefreshToken),
               MaterialButton(
                   color: Colors.redAccent,
                   child: const Text('Test Clear Sessions'),
