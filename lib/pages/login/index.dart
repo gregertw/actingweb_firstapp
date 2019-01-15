@@ -17,7 +17,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
-  final GlobalKey<ScaffoldState> skey = GlobalKey<ScaffoldState>();
   var _result;
 
   Future<String> _delegationToken() async {
@@ -41,12 +40,6 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   void _refreshToken() {
-    if (_result && _result['refresh_token'] == null) {
-      skey.currentState.showSnackBar(SnackBar(
-        content: Text('Invalid Refresh Token'),
-      ));
-      return;
-    }
     web
         .refreshToken(refreshToken: _result['refresh_token'])
         .then((value) => print('response: $value'))
