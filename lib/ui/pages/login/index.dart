@@ -1,8 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_auth0/flutter_auth0.dart';
-import 'package:first_app/pages/wait/index.dart';
+import 'package:first_app/ui/pages/wait/index.dart';
+import 'package:first_app/globals.dart';
 
 final String clientId = 'PJVgy3Vh9jo7Wxl6sSUZsicE6S4TXZjB';
 final String domain = 'actingweb.eu.auth0.com';
@@ -57,15 +57,17 @@ class LoginScreenState extends State<LoginScreen> {
       audience: 'https://actingweb.eu.auth0.com/userinfo',
       scope: 'openid email offline_access',
     ).then((value) {
-      setState(() {
-        _result = value;
-      });
+      globalPrefs.setString('userToken', value['access_token']);
+      globalPrefs.setString('refreshToken', value['refresh_token']);
+      globalPrefs.setString('idToken', value['id_token']);
+      var expires = new DateTime.now().add(new Duration(seconds: value['expires_in']));
+      globalPrefs.setString('expires', expires.toIso8601String());
       Navigator.pushNamed(context, "/HomePage");
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return WaitPage();
+    return Container();
   }
 }

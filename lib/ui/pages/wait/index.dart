@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:first_app/ui/pages/login/index.dart';
 
 class WaitPage extends StatelessWidget {
-  static String tag = 'wait-page';
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class WaitPage extends StatelessWidget {
         ]),
       ),
       child: Column(
-        children: <Widget>[logo, welcome],
+        children: <Widget>[logo, welcome, LoginScreen()],
         mainAxisAlignment: MainAxisAlignment.center,
       ),
     );
