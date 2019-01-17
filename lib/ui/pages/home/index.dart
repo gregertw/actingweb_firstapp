@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:first_app/models/appstate.dart';
+import 'package:first_app/ui/pages/login/index.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -21,19 +23,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    var appState = AppStateModel.of(context, true);
+    // If user was logged in through the WaitPage(), LoginPage() has set
+    // the globalPrefs variables. Reload the prefs
+    appState.refresh();
+    if (!appState.authenticated){
+      return Scaffold(
+        body: LoginPage(),
+      );
+    }
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text('Home'),
+        title: Text(widget.title),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -77,10 +77,10 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        onPressed: AppStateModel.of(context, false).logOut,
+        tooltip: 'Log out',
+        child: Icon(Icons.exit_to_app),
+      ),
     );
   }
 }

@@ -1,73 +1,96 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth0/flutter_auth0.dart';
-import 'package:first_app/ui/pages/wait/index.dart';
-import 'package:first_app/globals.dart';
+import 'package:first_app/providers/auth.dart';
+import 'package:first_app/models/appstate.dart';
 
-final String clientId = 'PJVgy3Vh9jo7Wxl6sSUZsicE6S4TXZjB';
-final String domain = 'actingweb.eu.auth0.com';
-
-final WebAuth web = new WebAuth(clientId: clientId, domain: domain);
-
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key key}) : super(key: key);
+class LoginPage extends StatelessWidget {
 
   @override
-  LoginScreenState createState() => new LoginScreenState();
+  Widget build(BuildContext context) {
+    var appState = AppStateModel.of(context, true);
+    final logo = Padding(
+      padding: EdgeInsets.all(40.0),
+      child: Image.asset('assets/actingweb-header-small.png'),
+    );
+    var welcomeText = "Welcome to ActingWeb!";
+    if (appState.authenticated) {
+      welcomeText = "Loading events...";
+    }
+    final welcome = Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Text(
+        welcomeText,
+        style: TextStyle(fontSize: 24.0, color: Colors.white),
+      ),
+    );
+    var body;
+    if (appState.authenticated) {
+      body = Column(
+        children: [logo, welcome],
+        mainAxisAlignment: MainAxisAlignment.center,
+      );
+    } else {
+      body = Column(
+        children: [logo, welcome, AuthPage()],
+        mainAxisAlignment: MainAxisAlignment.center,
+      );
+    }
+    return Scaffold(
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.all(28.0),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            Colors.grey,
+            Colors.lightBlueAccent,
+          ]),
+        ),
+        child: body,
+      ),
+    );
+  }
 }
 
-class LoginScreenState extends State<LoginScreen> {
-  var _result;
 
-  Future<String> _delegationToken() async {
-    if (_result == null) {
-      return null;
-    }
-    String token = await web.delegate(token: _result['id_token'], api: 'firebase');
-    return '''[Delegation Token Success] 
-    Access Token: $token''';
-  }
-
-  Future<String> _userInfo() async {
-    if (_result == null) {
-      return null;
-    }
-    dynamic response = await web.userInfo(token: _result['access_token']);
-    StringBuffer buffer = new StringBuffer();
-    response.forEach((k, v) => buffer.writeln('$k: $v'));
-    return '''[User Info] 
-    ${buffer.toString()}''';
-  }
-
-  void _refreshToken() {
-    web
-        .refreshToken(refreshToken: _result['refresh_token'])
-        .then((value) => print('response: $value'))
-        .catchError((err) => print('Error: $err'));
-  }
-
-  void _closeSessions() {
-    web.clearSession().catchError((err) => print(err));
-  }
+class AuthPage extends StatefulWidget {
 
   @override
-  initState() {
+  _AuthPageState createState() => _AuthPageState();
+
+}
+
+class _AuthPageState extends State<AuthPage> {
+
+  @override
+  void initState() {
     super.initState();
-    web.authorize(
-      audience: 'https://actingweb.eu.auth0.com/userinfo',
-      scope: 'openid email offline_access',
-    ).then((value) {
-      globalPrefs.setString('userToken', value['access_token']);
-      globalPrefs.setString('refreshToken', value['refresh_token']);
-      globalPrefs.setString('idToken', value['id_token']);
-      var expires = new DateTime.now().add(new Duration(seconds: value['expires_in']));
-      globalPrefs.setString('expires', expires.toIso8601String());
-      Navigator.pushNamed(context, "/HomePage");
+
+  }
+
+  void auth() {
+    new Auth0().authorize().then((res) {
+      if (res) {
+        Navigator.pushReplacementNamed(context, "/HomePage");
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 16.0),
+        child: RaisedButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          onPressed: () {
+            auth();
+          },
+          padding: EdgeInsets.all(12),
+          color: Colors.blueAccent,
+          child: Text('Log in', style: TextStyle(color: Colors.white)),
+        ),
+      ),
+    );
   }
 }
