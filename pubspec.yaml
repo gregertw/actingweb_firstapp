@@ -23,6 +23,7 @@ dependencies:
   scoped_model: ^1.0.1
   #rxdart: ^0.18.0
   shared_preferences: ^0.4.2
+  geolocator: ^2.1.1
 
 dev_dependencies:
   flutter_test:
