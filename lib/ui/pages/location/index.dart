@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
-import '../../widgets/placeholder.dart';
-
 class LocationStreamWidget extends StatefulWidget {
   @override
   State<LocationStreamWidget> createState() => _LocationStreamState();
@@ -54,10 +52,7 @@ class _LocationStreamState extends State<LocationStreamWidget> {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (snapshot.data == GeolocationStatus.denied) {
-            return const PlaceholderWidget('Location services disabled',
-                'Enable location services for this App using the device settings.');
-          }
+
 
           return new Flexible(child: _buildListView());
         });
@@ -165,10 +160,18 @@ class PositionListItemState extends State<PositionListItem> {
 
   static String _buildAddressString(Placemark placemark) {
     final String name = placemark.name ?? '';
+    final String street = placemark.thoroughfare ?? '';
+    final String streetnumber = placemark.subThoroughfare ?? '';
     final String city = placemark.locality ?? '';
     final String state = placemark.administrativeArea ?? '';
     final String country = placemark.country ?? '';
 
-    return '$name, $city, $state, $country';
+    String address;
+    if (state == city) {
+      address = '$name, $streetnumber $street, $city, $country';
+    } else {
+      address = '$name, $streetnumber $street, $city, $state, $country';
+    }
+    return address;
   }
 }
