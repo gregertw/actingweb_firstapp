@@ -5,11 +5,6 @@ TextStyle textStyle = const TextStyle(
     fontSize: 16.0,
     fontWeight: FontWeight.normal);
 
-ThemeData appTheme = new ThemeData(
-  hintColor: Colors.white,
-  primarySwatch: Colors.blue,
-);
-
 Color textFieldColor = const Color.fromRGBO(255, 255, 255, 0.1);
 
 Color primaryColor = const Color(0xFF00c497);
@@ -19,3 +14,8 @@ TextStyle buttonTextStyle = const TextStyle(
     fontSize: 14.0,
     fontFamily: "Nunito",
     fontWeight: FontWeight.bold);
+
+ThemeData appTheme = new ThemeData(
+  hintColor: Colors.white,
+  primarySwatch: Colors.blueGrey
+);

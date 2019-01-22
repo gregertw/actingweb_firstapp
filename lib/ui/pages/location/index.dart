@@ -87,7 +87,7 @@ class _LocationStreamState extends State<LocationStreamWidget> {
   }
 
   Color _determineButtonColor() {
-    return _isListening() ? Colors.red : Colors.green;
+    return _isListening() ? Colors.blue : Colors.greenAccent;
   }
 }
 
@@ -108,40 +108,42 @@ class PositionListItemState extends State<PositionListItem> {
 
   @override
   Widget build(BuildContext context) {
-    final Row row = Row(
-      children: <Widget>[
-        Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                'Lat: ${_position.latitude}',
-                style: const TextStyle(fontSize: 16.0, color: Colors.black),
-              ),
-              Text(
-                'Lon: ${_position.longitude}',
-                style: const TextStyle(fontSize: 16.0, color: Colors.black),
-              ),
-            ]),
-        Expanded(
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  _position.timestamp.toLocal().toString(),
-                  style: const TextStyle(fontSize: 14.0, color: Colors.grey),
-                )
-              ]),
+    final tiles = ListTile(
+        onTap: _onTap,
+        contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+        title: Text(
+          'Lat: ${_position.latitude}, Long: ${_position.longitude}',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-      ],
+        // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+        subtitle: Row(
+          children: <Widget>[
+            Icon(Icons.expand_more, color: Colors.white24),
+            Expanded(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      _position.timestamp.toLocal().toString(),
+                      style: const TextStyle(fontSize: 14.0, color: Colors.white24),
+                    ),
+                    Text(_address, style: TextStyle(color: Colors.white54)),
+                  ]),
+            ),
+          ],
+        ),
     );
 
-    return ListTile(
-      onTap: _onTap,
-      title: row,
-      subtitle: Text(_address),
+    return Card(
+      elevation: 8.0,
+      margin: new EdgeInsets.symmetric(horizontal: 7.0, vertical: 2.0),
+      child: Container(
+        decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+        child: tiles,
+      ),
     );
+
   }
 
   Future<void> _onTap() async {

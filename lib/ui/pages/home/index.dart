@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
+      backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -74,6 +75,8 @@ class _HomePageState extends State<HomePage> {
         onPressed: AppStateModel.of(context, false).logOut,
         tooltip: 'Log out',
         child: Icon(Icons.exit_to_app),
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
       ),
     );
   }
