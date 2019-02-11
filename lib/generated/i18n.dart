@@ -20,8 +20,14 @@ class S implements WidgetsLocalizations {
   TextDirection get textDirection => TextDirection.ltr;
 
   String get appTitle => "ActingWeb First App";
+  String get loginButton => "Log in";
   String get loginLoadEvents => "Loading events...";
   String get loginWelcomeText => "Welcome to ActingWeb";
+  String get logoutButton => "Log out";
+  String get startListening => "Start listening";
+  String get stopListening => "Stop listening";
+  String get unknown => "Unknown";
+  String latitudeLongitude(String lat, String long) => "Lat: $lat, Long: $long";
 }
 
 class $nb_NO extends S {
@@ -33,9 +39,21 @@ class $nb_NO extends S {
   @override
   String get loginLoadEvents => "Henter meldinger...";
   @override
+  String get startListening => "Start lytting";
+  @override
+  String get loginButton => "Logg inn";
+  @override
   String get loginWelcomeText => "Velkommen til ActingWeb";
   @override
+  String get stopListening => "Stopp lytting";
+  @override
+  String get logoutButton => "Logg ut";
+  @override
   String get appTitle => "ActingWeb Første App";
+  @override
+  String get unknown => "Ukjent";
+  @override
+  String latitudeLongitude(String lat, String long) => "Lat: $lat, Long: $long";
 }
 
 class $en extends S {

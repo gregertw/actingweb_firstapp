@@ -89,7 +89,7 @@ class _AuthPageState extends State<AuthPage> {
           },
           padding: EdgeInsets.all(12),
           color: Colors.blueAccent,
-          child: Text('Log in', style: TextStyle(color: Colors.white)),
+          child: Text(S.of(context).loginButton, style: TextStyle(color: Colors.white)),
         ),
       ),
     );

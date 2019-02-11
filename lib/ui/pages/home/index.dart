@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: AppStateModel.of(context, false).logOut,
-        tooltip: 'Log out',
+        tooltip: S.of(context).logoutButton,
         child: Icon(Icons.exit_to_app),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,

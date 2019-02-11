@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+// See https://github.com/long1eu/flutter_i18n/pull/33
+// until this PR is merged, the country code must be specified in the ARB-files
 import 'generated/i18n.dart';
 import 'globals.dart';
 import 'models/appstate.dart';

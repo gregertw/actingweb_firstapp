@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:first_app/generated/i18n.dart';
 
 class LocationStreamWidget extends StatefulWidget {
   @override
@@ -51,9 +51,6 @@ class _LocationStreamState extends State<LocationStreamWidget> {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
-
-
-
           return new Flexible(child: _buildListView());
         });
   }
@@ -83,7 +80,7 @@ class _LocationStreamState extends State<LocationStreamWidget> {
       _positionStreamSubscription.isPaused);
 
   Widget _buildButtonText() {
-    return Text(_isListening() ? 'Stop listening' : 'Start listening');
+    return Text(_isListening() ? S.of(context).stopListening : S.of(context).startListening);
   }
 
   Color _determineButtonColor() {
@@ -111,11 +108,10 @@ class PositionListItemState extends State<PositionListItem> {
     final tiles = ListTile(
         onTap: _onTap,
         contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-        title: Text(
-          'Lat: ${_position.latitude}, Long: ${_position.longitude}',
+        title: Text(S.of(context).latitudeLongitude(_position.latitude.toString(),
+            _position.longitude.toString()),
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
         subtitle: Row(
           children: <Widget>[
             Icon(Icons.expand_more, color: Colors.white24),
@@ -147,7 +143,7 @@ class PositionListItemState extends State<PositionListItem> {
   }
 
   Future<void> _onTap() async {
-    String address = 'unknown';
+    String address = S.of(context).unknown;
     final List<Placemark> placemarks = await Geolocator()
         .placemarkFromCoordinates(_position.latitude, _position.longitude);
 

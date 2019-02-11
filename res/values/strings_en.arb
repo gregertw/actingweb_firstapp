@@ -1,5 +1,11 @@
 {
   "appTitle": "ActingWeb First App",
   "loginWelcomeText": "Welcome to ActingWeb",
-  "loginLoadEvents": "Loading events..."
+  "loginLoadEvents": "Loading events...",
+  "loginButton": "Log in",
+  "logoutButton": "Log out",
+  "startListening": "Start listening",
+  "stopListening": "Stop listening",
+  "latitudeLongitude": "Lat: $lat, Long: $long",
+  "unknown": "Unknown"
 }
