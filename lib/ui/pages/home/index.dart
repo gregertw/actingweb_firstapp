@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:first_app/models/appstate.dart';
 import 'package:first_app/ui/pages/login/index.dart';
+import 'package:first_app/generated/i18n.dart';
 import '../location/index.dart';
 
 class HomePage extends StatefulWidget {
@@ -44,7 +45,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(S.of(context).appTitle),
       ),
       backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
       body: Center(

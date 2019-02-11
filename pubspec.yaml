@@ -15,7 +15,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_localizations:
+    sdk: flutter
   flutter_auth0:
     path: ../flutter-auth0
   cupertino_icons: ^0.1.2
@@ -28,7 +29,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.7.0"
+  flutter_launcher_icons: ^0.7.0
+  intl_translation: ^0.17.2
 
 flutter_icons:
   android: "launcher_icon"

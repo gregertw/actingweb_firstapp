@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'generated/i18n.dart';
 import 'globals.dart';
 import 'models/appstate.dart';
 import 'ui/pages/home/index.dart';
@@ -14,7 +16,7 @@ void main() async {
   var routes = <String, WidgetBuilder>{
     "/HomePage": (BuildContext context) => new ScopedModel<AppStateModel>(
         model: appState,
-        child: new HomePage(title: "ActingWeb App")
+        child: new HomePage()
     ),
     "/LoginPage": (BuildContext context) => new ScopedModel<AppStateModel>(
       model: appState,
@@ -23,10 +25,18 @@ void main() async {
   };
 
   runApp(new MaterialApp(
-    title: "ActingWeb First App",
+    onGenerateTitle: (context) => S.of(context).appTitle,
+    localizationsDelegates: [
+      S.delegate,
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+    ],
+    supportedLocales: S.delegate.supportedLocales,
+    localeListResolutionCallback: S.delegate.listResolution(fallback: const Locale('en', '')),
+    localeResolutionCallback: S.delegate.resolution(fallback: const Locale('en', '')),
     home: new ScopedModel<AppStateModel>(
         model: appState,
-        child: new HomePage(title: "ActingWeb App")
+        child: new HomePage()
     ),
     theme: appTheme,
     routes: routes,

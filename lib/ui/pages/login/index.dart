@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:first_app/providers/auth.dart';
 import 'package:first_app/models/appstate.dart';
+import 'package:first_app/generated/i18n.dart';
 
 class LoginPage extends StatelessWidget {
 
@@ -11,9 +12,9 @@ class LoginPage extends StatelessWidget {
       padding: EdgeInsets.all(40.0),
       child: Image.asset('assets/actingweb-header-small.png'),
     );
-    var welcomeText = "Welcome to ActingWeb!";
+    var welcomeText = S.of(context).loginWelcomeText;
     if (appState.authenticated) {
-      welcomeText = "Loading events...";
+      welcomeText = S.of(context).loginLoadEvents;
     }
     final welcome = Padding(
       padding: EdgeInsets.all(8.0),
