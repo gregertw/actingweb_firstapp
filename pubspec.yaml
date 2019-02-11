@@ -15,15 +15,27 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  flutter_localizations:
+    sdk: flutter
+  flutter_auth0:
+    path: ../flutter-auth0
   cupertino_icons: ^0.1.2
+  meta: ^1.1.6
+  scoped_model: ^1.0.1
+  #rxdart: ^0.18.0
+  shared_preferences: ^0.4.2
+  geolocator: ^2.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.7.0
+  intl_translation: ^0.17.2
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
@@ -36,6 +48,12 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  assets:
+    - assets/actingweb-header-small.png
+  fonts:
+      - family: Nunito
+        fonts:
+          - asset: assets/Nunito.ttf
   # To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg
