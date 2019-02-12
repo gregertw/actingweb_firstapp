@@ -29,6 +29,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  test: any
   flutter_launcher_icons: ^0.7.0
   intl_translation: ^0.17.2
 

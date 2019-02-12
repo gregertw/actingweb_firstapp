@@ -16,12 +16,12 @@ class AppStateModel extends Model {
   String get refreshToken => _refreshToken;
   DateTime get expires => _expires;
 
-  AppStateModel(prefs) {
-    _prefs = prefs;
+  AppStateModel() {
     refresh();
   }
 
-  void refresh() {
+  void refresh() async {
+    _prefs = await SharedPreferences.getInstance();
     // Check if the stored token has expired
     var expiresStr = _prefs.getString('expires');
     if (expiresStr != null) {
@@ -44,6 +44,14 @@ class AppStateModel extends Model {
     notifyListeners();
   }
 
+  void logIn(data) {
+    _prefs.setString('userToken', data['access_token']);
+    _prefs.setString('refreshToken', data['refresh_token']);
+    _prefs.setString('idToken', data['id_token']);
+    var expires = new DateTime.now().add(
+        new Duration(seconds: data['expires_in']));
+    _prefs.setString('expires', expires.toIso8601String());
+  }
   void logOut() {
     _authenticated = false;
     _userToken = null;

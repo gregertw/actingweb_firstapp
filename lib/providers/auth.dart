@@ -1,14 +1,18 @@
 import 'dart:async';
 import 'package:flutter_auth0/flutter_auth0.dart';
-import 'package:first_app/globals.dart';
-
-final String clientId = 'PJVgy3Vh9jo7Wxl6sSUZsicE6S4TXZjB';
-final String domain = 'actingweb.eu.auth0.com';
-
+import 'package:first_app/models/appstate.dart';
 
 class Auth0 {
   var _result;
-  final WebAuth web = new WebAuth(clientId: clientId, domain: domain);
+  final String clientId, domain;
+  final AppStateModel appState;
+  WebAuth web;
+
+  Auth0(this.appState,
+      {this.clientId:'PJVgy3Vh9jo7Wxl6sSUZsicE6S4TXZjB',
+        this.domain:'actingweb.eu.auth0.com'}){
+    web = new WebAuth(clientId: clientId, domain: domain);
+  }
 
   Future<String> _delegationToken() async {
     if (_result == null) {
@@ -43,17 +47,12 @@ class Auth0 {
 
   Future<bool> authorize() async {
     var _result = await web.authorize(
-      audience: 'https://actingweb.eu.auth0.com/userinfo',
+      audience: 'https://$domain/userinfo',
       scope: 'openid email offline_access',
     );
     var res = Map.from(_result);
     if (res.containsKey('access_token')) {
-      globalPrefs.setString('userToken', _result['access_token']);
-      globalPrefs.setString('refreshToken', _result['refresh_token']);
-      globalPrefs.setString('idToken', _result['id_token']);
-      var expires = new DateTime.now().add(
-          new Duration(seconds: _result['expires_in']));
-      globalPrefs.setString('expires', expires.toIso8601String());
+      this.appState.logIn(_result);
       return true;
     }
     return false;

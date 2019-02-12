@@ -68,7 +68,7 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   void auth() {
-    new Auth0().authorize().then((res) {
+    new Auth0(AppStateModel.of(context, true)).authorize().then((res) {
       if (res) {
         Navigator.pushReplacementNamed(context, "/HomePage");
       }

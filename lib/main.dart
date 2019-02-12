@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 // See https://github.com/long1eu/flutter_i18n/pull/33
 // until this PR is merged, the country code must be specified in the ARB-files
 import 'generated/i18n.dart';
-import 'globals.dart';
 import 'models/appstate.dart';
 import 'ui/pages/home/index.dart';
 import 'ui/pages/login/index.dart';
@@ -13,8 +11,7 @@ import 'ui/theme/style.dart';
 
 void main() async {
   // Get an instance so that globals is initialised
-  globalPrefs = await SharedPreferences.getInstance();
-  var appState = new AppStateModel(globalPrefs);
+  var appState = new AppStateModel();
   var routes = <String, WidgetBuilder>{
     "/HomePage": (BuildContext context) => new ScopedModel<AppStateModel>(
         model: appState,
