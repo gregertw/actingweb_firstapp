@@ -45,13 +45,27 @@ class AppStateModel extends Model {
   }
 
   void logIn(data) {
-    _prefs.setString('userToken', data['access_token']);
-    _prefs.setString('refreshToken', data['refresh_token']);
-    _prefs.setString('idToken', data['id_token']);
-    var expires = new DateTime.now().add(
-        new Duration(seconds: data['expires_in']));
-    _prefs.setString('expires', expires.toIso8601String());
+    if(data.containsKey('access_token')) {
+      _prefs.setString('userToken', data['access_token']);
+      _userToken = data['access_token'];
+      _authenticated = true;
+    }
+    if(data.containsKey('refresh_token')) {
+      _prefs.setString('refreshToken', data['refresh_token']);
+      _refreshToken = data['refresh_token'];
+    }
+    if(data.containsKey('id_token')) {
+      _prefs.setString('idToken', data['id_token']);
+      _idToken = data['id_token'];
+    }
+    if(data.containsKey('expires_in')) {
+      var _expires = new DateTime.now().add(
+          new Duration(seconds: data['expires_in']));
+      _prefs.setString('expires', _expires.toIso8601String());
+    }
+    notifyListeners();
   }
+
   void logOut() {
     _authenticated = false;
     _userToken = null;

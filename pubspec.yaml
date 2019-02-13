@@ -32,6 +32,8 @@ dev_dependencies:
   test: any
   flutter_launcher_icons: ^0.7.0
   intl_translation: ^0.17.2
+  convert: any
+  mockito: any
 
 flutter_icons:
   android: "launcher_icon"
