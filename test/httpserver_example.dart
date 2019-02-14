@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:first_app/models/appstate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// localhost certificate
 final List<int> cert = utf8.encode("""-----BEGIN CERTIFICATE-----
 MIIC+zCCAeOgAwIBAgIJALlbe3SOkNe1MA0GCSqGSIb3DQEBBQUAMBQxEjAQBgNV
 BAMMCWxvY2FsaG9zdDAeFw0xOTAyMTMwNzM2NTZaFw0yOTAyMTAwNzM2NTZaMBQx

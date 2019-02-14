@@ -13,6 +13,7 @@ void main() {
   // We need mock initial values for SharedPreferences
   SharedPreferences.setMockInitialValues({});
   // This is to keep our appstate
+  // NOTE!! We here also test the appstate related to authentication
   AppStateModel appState = AppStateModel();
 
   // We need a mock client to return the values that Auth0 would return

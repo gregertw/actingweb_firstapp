@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:first_app/providers/auth.dart';
 import 'package:first_app/models/appstate.dart';
+import 'package:first_app/providers/auth.dart';
 import 'package:first_app/generated/i18n.dart';
 
 class LoginPage extends StatelessWidget {
@@ -60,12 +60,6 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-
-  @override
-  void initState() {
-    super.initState();
-
-  }
 
   void auth() {
     new Auth0Client(AppStateModel.of(context, true)).authorize().then((res) {
