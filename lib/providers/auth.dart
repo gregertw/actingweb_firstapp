@@ -1,14 +1,12 @@
 import 'dart:async';
 import 'package:flutter_auth0/flutter_auth0.dart';
-import 'package:first_app/models/appstate.dart';
 
 class Auth0Client {
   var _result;
   final String clientId, domain;
-  final AppStateModel appState;
   WebAuth authClient;
 
-  Auth0Client(this.appState, {this.authClient,
+  Auth0Client({this.authClient,
         this.clientId:'PJVgy3Vh9jo7Wxl6sSUZsicE6S4TXZjB',
         this.domain:'actingweb.eu.auth0.com'}){
     if(authClient == null) {
@@ -47,17 +45,16 @@ class Auth0Client {
     authClient.clearSession().catchError((err) => print(err));
   }
 
-  Future<bool> authorize() async {
+  Future<Map<dynamic, dynamic>> authorize() async {
     var _result = await authClient.authorize(
       audience: 'https://$domain/userinfo',
       scope: 'openid email offline_access',
     );
     var res = Map.from(_result);
     if (res.containsKey('access_token')) {
-      this.appState.logIn(res);
-      return true;
+      return res;
     }
-    return false;
+    return null;
   }
 
 }

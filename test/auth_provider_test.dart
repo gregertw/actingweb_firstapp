@@ -31,12 +31,13 @@ void main() {
   test('authenticate', () async {
     // Let's create an Auth0 provider with our appstate and request it
     // to use our mock version of Auth0 lib
-    var c = Auth0Client(appState, authClient:mockClient);
+    var c = Auth0Client(authClient:mockClient);
     // Do the authorization that normally brings up the login window that leads
     // to a callback from Auth0 and finally to the log in information (that
     // we mocked above)
     var res = await c.authorize();
-    expect(res, true);
+    appState.logIn(res);
+    expect(res.containsKey('access_token'), true);
     expect(appState.authenticated, true);
     expect(appState.userToken, 'an_access_token');
   });
