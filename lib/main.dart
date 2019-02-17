@@ -8,10 +8,12 @@ import 'models/appstate.dart';
 import 'ui/pages/home/index.dart';
 import 'ui/pages/login/index.dart';
 import 'ui/theme/style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   // Get an instance so that globals is initialised
-  var appState = new AppStateModel();
+  var prefs =  await SharedPreferences.getInstance();
+  var appState = new AppStateModel(prefs);
   var routes = <String, WidgetBuilder>{
     "/HomePage": (BuildContext context) => new ScopedModel<AppStateModel>(
         model: appState,

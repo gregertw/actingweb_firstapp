@@ -62,10 +62,14 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
 
   void auth() {
-    new Auth0Client().authorize().then((res) {
+    var auth0 = Auth0Client();
+    auth0.authorize().then((res) {
       if (res.containsKey('access_token')) {
         AppStateModel.of(context, true).logIn(res);
-        Navigator.pushReplacementNamed(context, "/HomePage");
+        auth0.getUserInfo(res['access_token']).then((res2){
+          AppStateModel.of(context, true).setUserInfo(res2);
+          Navigator.pushReplacementNamed(context, "/HomePage");
+        });
       }
     });
   }

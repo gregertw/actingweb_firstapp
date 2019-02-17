@@ -8,13 +8,14 @@ import 'package:flutter_auth0/flutter_auth0.dart';
 // Create a class that mocks the auth0 library class
 class MockAuth extends Mock implements WebAuth {}
 
-void main() {
+void main() async {
 
   // We need mock initial values for SharedPreferences
   SharedPreferences.setMockInitialValues({});
+  var prefs = await SharedPreferences.getInstance();
   // This is to keep our appstate
   // NOTE!! We here also test the appstate related to authentication
-  AppStateModel appState = AppStateModel();
+  AppStateModel appState = AppStateModel(prefs);
 
   // We need a mock client to return the values that Auth0 would return
   var mockClient = MockAuth();

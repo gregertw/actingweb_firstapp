@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter_auth0/flutter_auth0.dart';
 
 class Auth0Client {
-  var _result;
   final String clientId, domain;
   WebAuth authClient;
 
@@ -14,35 +13,30 @@ class Auth0Client {
     }
   }
 
-  Future<String> _delegationToken() async {
-    if (_result == null) {
+  Future<String> firebaseDelegationToken(idToken) async {
+    if (idToken == null) {
       return null;
     }
-    String token = await authClient.delegate(token: _result['id_token'], api: 'firebase');
-    return '''[Delegation Token Success] 
-    Access Token: $token''';
+    String token = await authClient.delegate(token: idToken, api: 'firebase');
+    return token;
   }
 
-  Future<String> _userInfo() async {
-    if (_result == null) {
+  Future<dynamic> getUserInfo(accessToken) async {
+    if (accessToken == null) {
       return null;
     }
-    dynamic response = await authClient.userInfo(token: _result['access_token']);
-    StringBuffer buffer = new StringBuffer();
-    response.forEach((k, v) => buffer.writeln('$k: $v'));
-    return '''[User Info] 
-    ${buffer.toString()}''';
+    return  Map.from(await authClient.userInfo(token: accessToken));
   }
 
-  void _refreshToken() {
-    authClient
-        .refreshToken(refreshToken: _result['refresh_token'])
-        .then((value) => print('response: $value'))
-        .catchError((err) => print('Error: $err'));
+  Future<Map<dynamic, dynamic>> refreshToken(refreshToken) async {
+    if (refreshToken == null) {
+      return null;
+    }
+    return  Map.from(await authClient.refreshToken(refreshToken: refreshToken));
   }
 
-  void _closeSessions() {
-    authClient.clearSession().catchError((err) => print(err));
+  void closeSessions() {
+    authClient.clearSession();
   }
 
   Future<Map<dynamic, dynamic>> authorize() async {
