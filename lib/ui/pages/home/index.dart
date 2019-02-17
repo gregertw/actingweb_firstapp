@@ -27,9 +27,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var appState = AppStateModel.of(context, true);
-    // If user was logged in through the WaitPage(), LoginPage() has set
-    // the globalPrefs variables. Reload the prefs
-    appState.refresh();
     if (!appState.authenticated){
       return Scaffold(
         body: LoginPage(),
