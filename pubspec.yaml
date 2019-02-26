@@ -27,6 +27,7 @@ dependencies:
   geolocator: ^3.0.0
   firebase_core: ^0.3.1
   firebase_analytics: ^2.0.2+1
+  flutter_crashlytics: ^0.2.1+1
 
 dev_dependencies:
   flutter_test:

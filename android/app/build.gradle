@@ -66,4 +66,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
 
-apply plugin: 'com.google.gms.google-services'  // Gradle plugin
+apply plugin: 'com.google.gms.google-services'  // Gradle plugin for Google Services
+apply plugin: 'io.fabric'  // Google Firebase Crashlytics
