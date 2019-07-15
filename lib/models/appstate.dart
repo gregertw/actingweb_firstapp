@@ -87,6 +87,7 @@ class AppStateModel extends Model {
   }
 
   void logOut() {
+    Auth0Client().closeSessions();
     _authenticated = false;
     _userToken = null;
     _idToken = null;
