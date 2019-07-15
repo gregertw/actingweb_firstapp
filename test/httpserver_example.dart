@@ -1,8 +1,8 @@
 import 'package:test/test.dart';
 import 'dart:io';
 import 'dart:convert';
-import 'package:first_app/models/appstate.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:first_app/models/appstate.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 // localhost certificate
 final List<int> cert = utf8.encode("""-----BEGIN CERTIFICATE-----
@@ -56,25 +56,23 @@ T44MUkYLl7/T51eqO6Cu1B3U4GO97E73sOauWKwDW7ynvHMinbO8qwKWdOeEWyRH
 
 void main() {
   HttpServer server;
-  String url;
   setUp(() async {
     SecurityContext context = new SecurityContext();
     context.useCertificateChainBytes(cert);
     context.usePrivateKeyBytes(key);
     server = await HttpServer.bindSecure('localhost', 0, context);
-    url = "${server.address.host}:${server.port}";
+    // var url = "${server.address.host}:${server.port}";
     server.listen((HttpRequest request) {
       request.response.write('Hello, world!');
     });
   });
 
-  SharedPreferences.setMockInitialValues({});
-  AppStateModel appState = AppStateModel();
+  // var prefs = SharedPreferences.setMockInitialValues({});
+  // var appState = new AppStateModel(prefs);
 
   tearDown(() async {
     await server.close(force: true);
     server = null;
-    url = null;
   });
 
   // ...
