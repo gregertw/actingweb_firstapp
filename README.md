@@ -1,5 +1,7 @@
 # first_app: Starter app for a Flutter production app
 
+Maintainer: Greger Wedel, https://github.com/gregertw
+
 There are lots of simple Flutter app examples out there, but very few show how to tie together the elements
 you need to put an app into production. In my process of evaluating Flutter maturity and readiness for
 production apps, I started to put together the various elements into a single app. 
@@ -13,13 +15,24 @@ This app has the following elements:
 - Simple widget framework for handling logged-in, expired, and logged-out states
 - Testing using unit test framework and mocking
 - Localization using i18n and the Android Studio/IntelliJ flutter i18n plugin to generate boilerplate
-- (later) Testing of UI using widget tests
 - Use of a global UI theme
 - Custom icons for both iOS and Android
 - Use of Firebase Analytics for usage tracking
 - Use of Firebase Crashlytics for crash reporting
 - Use of a OS native capability (location tracking) using a published plugin (geolocator)
- 
+
+## Suggested improvements
+
+I'm happy to accept pull requests for any improvements that will make this starter app even more complete from
+a production app point of view. Here are some possible improvements:
+
+- Testing of UI using widget tests
+- Show how to send messages to the app
+- How to use Oauth2 to grant access to a service like Firebase database
+- How to set up a deployment pipeline with test app deployment
+- How to do A/B testing
+- How to use deep links
+
 ## How to get started
 
 The app relies on an Auth0 project, as well as a Google Firebase project. The currently configured test 
