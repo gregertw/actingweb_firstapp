@@ -75,7 +75,7 @@ same here) with Firebase using Add App. You will then drop into this project you
 and google-services.json files.
 
 **Note!!** If you make a new project and don't just modify this, make sure you add GoogleService-Info.plist 
-in Xcode as just dropping the file in will not work for iOS!
+in Xcode (to Runner) as just dropping the file in will not work for iOS!
 
 ## Some thoughts on state management
 
