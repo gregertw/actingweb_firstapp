@@ -87,7 +87,14 @@ class AppStateModel extends Model {
   }
 
   void logOut() {
-    Auth0Client().closeSessions();
+    /* When logging out, the app session is cleared and a new login is needed.
+    However, if Auth0 is configured with an IdP, like Google, and the account
+    is logged into Google on the device, the user will be directly logged in.
+    If closeSessions() is called, the Auth0 session and the IdP session will be 
+    logged out. However, the user will be redirected to the IdP login page, which
+    may be confusing.
+    */
+    // Auth0Client().closeSessions();
     _authenticated = false;
     _userToken = null;
     _idToken = null;
