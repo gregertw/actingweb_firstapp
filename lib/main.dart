@@ -14,7 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   // Firebase Crashlytics
-  bool isInDebugMode = false;
+  bool isInDebugMode = true;
 
   FlutterError.onError = (FlutterErrorDetails details) {
     if (isInDebugMode) {

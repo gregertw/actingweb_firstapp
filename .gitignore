@@ -1,7 +1,7 @@
 # File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
 
-# Created by https://www.gitignore.io/api/macos,visualstudiocode,android,dart,flutter,xcode
-# Edit at https://www.gitignore.io/?templates=macos,visualstudiocode,android,dart,flutter,xcode
+# Created by https://www.gitignore.io/api/android,dart,flutter,macos,visualstudiocode,xcode,cocoapods
+# Edit at https://www.gitignore.io/?templates=android,dart,flutter,macos,visualstudiocode,xcode,cocoapods
 
 ### Android ###
 # Built application files
@@ -90,6 +90,14 @@ lint/tmp/
 ### Android Patch ###
 gen-external-apklibs
 output.json
+
+### CocoaPods ###
+## CocoaPods GitIgnore Template
+
+# CocoaPods - Only use to conserve bandwidth / Save time on Pushing
+#           - Also handy if you have a large number of dependant pods
+#           - AS PER https://guides.cocoapods.org/using/using-cocoapods.html NEVER IGNORE THE LOCK FILE
+Pods/
 
 ### Dart ###
 # See https://www.dartlang.org/guides/libraries/private-files
@@ -235,7 +243,7 @@ DerivedData/
 ### Xcode Patch ###
 **/xcshareddata/WorkspaceSettings.xcsettings
 
-# End of https://www.gitignore.io/api/macos,visualstudiocode,android,dart,flutter,xcode
+# End of https://www.gitignore.io/api/android,dart,flutter,macos,visualstudiocode,xcode,cocoapods
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
 

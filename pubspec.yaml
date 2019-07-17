@@ -22,12 +22,11 @@ dependencies:
   cupertino_icons: ^0.1.2
   meta: ^1.1.6
   scoped_model: ^1.0.1
-  #rxdart: ^0.18.0
-  shared_preferences: ^0.4.2
-  geolocator: ^3.0.0
-  firebase_core: ^0.3.1
-  firebase_analytics: ^2.0.2+1
-  flutter_crashlytics: ^0.2.1+1
+  shared_preferences: ^0.5.3+4
+  geolocator: ^5.1.0
+  firebase_core: ^0.4.0
+  firebase_analytics: ^4.0.1
+  flutter_crashlytics: ^1.0.0
 
 dev_dependencies:
   flutter_test:
