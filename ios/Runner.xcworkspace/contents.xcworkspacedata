@@ -2,12 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "container:../build/ios/Runner.build/Release-iphoneos/Runner.build">
+      location = "group:Runner.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Runner.xcodeproj">
    </FileRef>
 </Workspace>
