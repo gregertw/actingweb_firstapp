@@ -21,6 +21,8 @@ This app has the following elements:
 - Use of Firebase Crashlytics for crash reporting
 - Use of a OS native capability (location tracking) using a published plugin (geolocator)
 
+See my blog post for a more detailed introduction to the various features: https://stuff.greger.io/2019/07/production-quality-flutter-starter-app.html
+
 ## Suggested improvements
 
 I'm happy to accept pull requests for any improvements that will make this starter app even more complete from
