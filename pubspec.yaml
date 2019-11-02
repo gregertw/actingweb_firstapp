@@ -10,30 +10,31 @@ description: An application that manages and receives alerts from ActingWeb acto
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">2.1.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flutter_auth0:
+  flutter_auth0:  
     path: ../flutter-auth0
+  #^0.5.0
   cupertino_icons: ^0.1.2
-  meta: ^1.1.6
+  meta: ^1.1.7
   scoped_model: ^1.0.1
   shared_preferences: ^0.5.3+4
-  geolocator: ^5.1.0
-  firebase_core: ^0.4.0
-  firebase_analytics: ^4.0.1
+  geolocator: ^5.1.4+2
+  firebase_core: ^0.4.0+9
+  firebase_analytics: ^5.0.2
   flutter_crashlytics: ^1.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   test: any
-  flutter_launcher_icons: ^0.7.0
-  intl_translation: ^0.17.2
+  flutter_launcher_icons: ^0.7.4
+  intl_translation: ^0.17.7
   convert: any
   mockito: any
 

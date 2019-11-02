@@ -250,3 +250,4 @@ DerivedData/
 .vscode/launch.json
 .idea/encodings.xml
 .idea/misc.xml
+ios/Flutter/flutter_export_environment.sh
