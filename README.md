@@ -46,6 +46,7 @@ But, first of all, check out the actingweb_firstapp code base. You can use any e
 i18n generation, you need (at this point) Android Studio/IntelliJ as flutter_i18n is a plugin for this editor 
 (Visual Studio Code support is in the works).
 
+*NOTE!!!*
 The plugin flutter_auth0 is expected in the directory above (../), so check out 
 https://github.com/gregertw/flutter-auth0 there. This app is configured to use io.actingweb.firstapp as 
 app identifier. You can use this identifier for
