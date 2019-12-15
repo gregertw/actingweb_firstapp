@@ -13,6 +13,11 @@ import 'ui/theme/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
+  // A breaking change in the platform messaging, as of Flutter 1.12.13+hotfix.5,
+  // we need to explicitly initialise bindings to get access to the BinaryMessenger
+  // https://groups.google.com/forum/#!msg/flutter-announce/sHAL2fBtJ1Y/mGjrKH3dEwAJ
+  WidgetsFlutterBinding.ensureInitialized();
+
   // Firebase Crashlytics
   bool isInDebugMode = true;
 

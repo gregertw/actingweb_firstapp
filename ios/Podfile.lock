@@ -16,6 +16,8 @@ PODS:
   - firebase_core (0.0.1):
     - Firebase/Core
     - Flutter
+  - firebase_core_web (0.1.0):
+    - Flutter
   - FirebaseAnalytics (6.0.3):
     - FirebaseCore (~> 6.0)
     - FirebaseInstanceID (~> 4.2)
@@ -39,7 +41,7 @@ PODS:
     - Crashlytics
     - Fabric
     - Flutter
-  - geolocator (5.1.4):
+  - geolocator (5.1.5):
     - Flutter
   - google_api_availability (2.0.1):
     - Flutter
@@ -76,17 +78,24 @@ PODS:
   - nanopb/encode (0.3.901)
   - shared_preferences (0.0.1):
     - Flutter
+  - shared_preferences_macos (0.0.1):
+    - Flutter
+  - shared_preferences_web (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
-  - Flutter (from `.symlinks/flutter/ios`)
+  - firebase_core_web (from `.symlinks/plugins/firebase_core_web/ios`)
+  - Flutter (from `Flutter`)
   - flutter_auth0 (from `.symlinks/plugins/flutter_auth0/ios`)
   - flutter_crashlytics (from `.symlinks/plugins/flutter_crashlytics/ios`)
   - geolocator (from `.symlinks/plugins/geolocator/ios`)
   - google_api_availability (from `.symlinks/plugins/google_api_availability/ios`)
   - location_permissions (from `.symlinks/plugins/location_permissions/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - shared_preferences_macos (from `.symlinks/plugins/shared_preferences_macos/ios`)
+  - shared_preferences_web (from `.symlinks/plugins/shared_preferences_web/ios`)
 
 SPEC REPOS:
   trunk:
@@ -105,8 +114,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
+  firebase_core_web:
+    :path: ".symlinks/plugins/firebase_core_web/ios"
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: Flutter
   flutter_auth0:
     :path: ".symlinks/plugins/flutter_auth0/ios"
   flutter_crashlytics:
@@ -119,27 +130,34 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/location_permissions/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
+  shared_preferences_macos:
+    :path: ".symlinks/plugins/shared_preferences_macos/ios"
+  shared_preferences_web:
+    :path: ".symlinks/plugins/shared_preferences_web/ios"
 
 SPEC CHECKSUMS:
   Crashlytics: 2dfd686bcb918dc10ee0e76f7f853fe42c7bd552
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 9445469655a98e9010737f4bc4720e5bda465873
-  firebase_analytics: 045e7ebe7b8a4d27357168072868ff082dca15a6
-  firebase_core: ae55ea92448ec8675d325da4db22cf3b4d58a54d
+  firebase_analytics: d83001d25b9a58ca5eda8db0ef566c02d7af5258
+  firebase_core: 87e4c7cef68de46c0326ce2ee907fc7e365ead7e
+  firebase_core_web: d501d8b946b60c8af265428ce483b0fff5ad52d1
   FirebaseAnalytics: 69fe25866d2ec87c6f02d72c3c9a82bce9c065a0
   FirebaseCore: 7ea99e200f0024262650be56623fbe6a7bef1707
   FirebaseInstanceID: 9782fcfb89e4d7da76cc28eac4b8543dc7be4a4b
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_auth0: 1d379ce1faf80f27b1058ef2502b6d0181561bdb
   flutter_crashlytics: 7b5bba7233066381c8e18343435342ba05f3053c
-  geolocator: c98cc4a1f2558c11fa5db0fccad80883cde6eb4f
+  geolocator: 80aba2bb48f8c7dfc5a8b70b9d13fc3edc8399c4
   google_api_availability: 163b30f802e6148c67f092aa4501c90ddd8eec8d
   GoogleAppMeasurement: 1e45fa601e6280c180880d57010390f6679cd971
   GoogleUtilities: d2b0e277a95962e09bb27f5cd42f5f0b6a506c7d
   location_permissions: 195ff2a1182fa9029ef3f2653156961ee5a1e40b
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
+  shared_preferences_macos: f3f29b71ccbb56bf40c9dd6396c9acf15e214087
+  shared_preferences_web: 141cce0c3ed1a1c5bf2a0e44f52d31eeb66e5ea9
 
-PODFILE CHECKSUM: 95b5ea3438a924d7cf1f0573644999c799219565
+PODFILE CHECKSUM: 3dbe063e9c90a5d7c9e4e76e70a821b9e2c1d271
 
 COCOAPODS: 1.8.4

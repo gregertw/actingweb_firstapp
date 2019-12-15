@@ -35,6 +35,17 @@ a production app point of view. Here are some possible improvements:
 - How to do A/B testing
 - How to use deep links
 
+## CHANGELOG
+
+Dec 15, 2019
+
+- Upgrade to Flutter 1.12.14+hotfix.5
+- Upgrade package dependencies to latest versions
+- Fix breaking change issue, ref https://groups.google.com/forum/#!msg/flutter-announce/sHAL2fBtJ1Y/mGjrKH3dEwAJ
+- Move to SDK version target 29 (from 28)
+- Add Podfile to version control
+
+
 ## How to get started
 
 The app relies on an Auth0 project, as well as a Google Firebase project. The currently configured test 

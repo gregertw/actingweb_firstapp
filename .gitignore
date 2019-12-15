@@ -251,3 +251,4 @@ DerivedData/
 .idea/encodings.xml
 .idea/misc.xml
 ios/Flutter/flutter_export_environment.sh
+ios/Flutter/Flutter.podspec
