@@ -44,6 +44,7 @@ Dec 15, 2019
 - Fix breaking change issue, ref https://groups.google.com/forum/#!msg/flutter-announce/sHAL2fBtJ1Y/mGjrKH3dEwAJ
 - Move to SDK version target 29 (from 28)
 - Add Podfile to version control
+- Move from flutter_crashlytics to firebase_crashlytics (official plugin)
 
 
 ## How to get started

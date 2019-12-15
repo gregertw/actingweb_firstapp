@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_crashlytics/flutter_crashlytics.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'dart:async';
 // See https://github.com/long1eu/flutter_i18n/pull/33
 // until this PR is merged, the country code must be specified in the ARB-files
@@ -15,24 +15,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   // A breaking change in the platform messaging, as of Flutter 1.12.13+hotfix.5,
   // we need to explicitly initialise bindings to get access to the BinaryMessenger
+  // This is needed by Crashlytics.
   // https://groups.google.com/forum/#!msg/flutter-announce/sHAL2fBtJ1Y/mGjrKH3dEwAJ
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Firebase Crashlytics
-  bool isInDebugMode = true;
+  // Set `enableInDevMode` to true to see reports while in debug mode
+  // This is only to be used for confirming that reports are being
+  // submitted as expected. It is not intended to be used for everyday
+  // development.
+  Crashlytics.instance.enableInDevMode = true;
 
-  FlutterError.onError = (FlutterErrorDetails details) {
-    if (isInDebugMode) {
-      // In development mode simply print to console.
-      FlutterError.dumpErrorToConsole(details);
-    } else {
-      // In production mode report to the application zone to report to
-      // Crashlytics.
-      Zone.current.handleUncaughtError(details.exception, details.stack);
-    }
-  };
-
-  await FlutterCrashlytics().initialize();
+  // Pass all uncaught errors from the framework to Crashlytics.
+  FlutterError.onError = Crashlytics.instance.recordFlutterError;
 
   // Get an instance so that globals is initialised
   var prefs =  await SharedPreferences.getInstance();
@@ -66,10 +60,6 @@ void main() async {
       theme: appTheme,
       routes: routes,
     ));
-  }, onError: (error, stackTrace) async {
-    // Whenever an error occurs, call the `reportCrash` function. This will send
-    // Dart errors to our dev console or Crashlytics depending on the environment.
-    await FlutterCrashlytics().reportCrash(error, stackTrace, forceCrash: false);
-  });
+  }, onError: Crashlytics.instance.recordError);
 
 }

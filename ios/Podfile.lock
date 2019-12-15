@@ -1,5 +1,5 @@
 PODS:
-  - Crashlytics (3.13.4):
+  - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
   - Fabric (1.10.2)
   - Firebase/Analytics (6.4.0):
@@ -17,6 +17,11 @@ PODS:
     - Firebase/Core
     - Flutter
   - firebase_core_web (0.1.0):
+    - Flutter
+  - firebase_crashlytics (0.0.1):
+    - Crashlytics
+    - Fabric
+    - Firebase/Core
     - Flutter
   - FirebaseAnalytics (6.0.3):
     - FirebaseCore (~> 6.0)
@@ -36,10 +41,6 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 6.0)
   - Flutter (1.0.0)
   - flutter_auth0 (0.0.1):
-    - Flutter
-  - flutter_crashlytics (0.0.1):
-    - Crashlytics
-    - Fabric
     - Flutter
   - geolocator (5.1.5):
     - Flutter
@@ -87,9 +88,9 @@ DEPENDENCIES:
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_core_web (from `.symlinks/plugins/firebase_core_web/ios`)
+  - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
   - Flutter (from `Flutter`)
   - flutter_auth0 (from `.symlinks/plugins/flutter_auth0/ios`)
-  - flutter_crashlytics (from `.symlinks/plugins/flutter_crashlytics/ios`)
   - geolocator (from `.symlinks/plugins/geolocator/ios`)
   - google_api_availability (from `.symlinks/plugins/google_api_availability/ios`)
   - location_permissions (from `.symlinks/plugins/location_permissions/ios`)
@@ -116,12 +117,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_core/ios"
   firebase_core_web:
     :path: ".symlinks/plugins/firebase_core_web/ios"
+  firebase_crashlytics:
+    :path: ".symlinks/plugins/firebase_crashlytics/ios"
   Flutter:
     :path: Flutter
   flutter_auth0:
     :path: ".symlinks/plugins/flutter_auth0/ios"
-  flutter_crashlytics:
-    :path: ".symlinks/plugins/flutter_crashlytics/ios"
   geolocator:
     :path: ".symlinks/plugins/geolocator/ios"
   google_api_availability:
@@ -136,18 +137,18 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_web/ios"
 
 SPEC CHECKSUMS:
-  Crashlytics: 2dfd686bcb918dc10ee0e76f7f853fe42c7bd552
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 9445469655a98e9010737f4bc4720e5bda465873
   firebase_analytics: d83001d25b9a58ca5eda8db0ef566c02d7af5258
   firebase_core: 87e4c7cef68de46c0326ce2ee907fc7e365ead7e
   firebase_core_web: d501d8b946b60c8af265428ce483b0fff5ad52d1
+  firebase_crashlytics: 0aa7aee0650dc57aff432c5e3fb6ae3ad9fc106b
   FirebaseAnalytics: 69fe25866d2ec87c6f02d72c3c9a82bce9c065a0
   FirebaseCore: 7ea99e200f0024262650be56623fbe6a7bef1707
   FirebaseInstanceID: 9782fcfb89e4d7da76cc28eac4b8543dc7be4a4b
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_auth0: 1d379ce1faf80f27b1058ef2502b6d0181561bdb
-  flutter_crashlytics: 7b5bba7233066381c8e18343435342ba05f3053c
   geolocator: 80aba2bb48f8c7dfc5a8b70b9d13fc3edc8399c4
   google_api_availability: 163b30f802e6148c67f092aa4501c90ddd8eec8d
   GoogleAppMeasurement: 1e45fa601e6280c180880d57010390f6679cd971
