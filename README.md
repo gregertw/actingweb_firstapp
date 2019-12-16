@@ -37,6 +37,11 @@ a production app point of view. Here are some possible improvements:
 
 ## CHANGELOG
 
+Dec 16, 2019
+
+- use new flutter_i18n plugin for Android Studio/IntelliJ that supports only specifying language (and not 
+  requires both language and country) in .arb files
+
 Dec 15, 2019
 
 - Upgrade to Flutter 1.12.14+hotfix.5

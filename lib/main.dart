@@ -3,8 +3,6 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'dart:async';
-// See https://github.com/long1eu/flutter_i18n/pull/33
-// until this PR is merged, the country code must be specified in the ARB-files
 import 'generated/i18n.dart';
 import 'models/appstate.dart';
 import 'ui/pages/home/index.dart';
@@ -51,8 +49,7 @@ void main() async {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      localeListResolutionCallback: S.delegate.listResolution(fallback: const Locale('en', '')),
-      localeResolutionCallback: S.delegate.resolution(fallback: const Locale('en', '')),
+      localeResolutionCallback: S.delegate.resolution(fallback: new Locale("en", "")),
       home: new ScopedModel<AppStateModel>(
           model: appState,
           child: new HomePage()
