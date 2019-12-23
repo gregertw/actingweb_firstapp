@@ -37,6 +37,11 @@ a production app point of view. Here are some possible improvements:
 
 ## CHANGELOG
 
+Dec 22, 2019
+
+- Clean up leftover comments
+- Add a proper theme and use it consistently through the app
+
 Dec 16, 2019
 
 - use new flutter_i18n plugin for Android Studio/IntelliJ that supports only specifying language (and not 
