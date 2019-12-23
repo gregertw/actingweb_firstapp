@@ -20,7 +20,6 @@ class LoginPage extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
       child: Text(
         welcomeText,
-        style: TextStyle(fontSize: 24.0, color: Colors.white),
       ),
     );
     var body;
@@ -42,7 +41,7 @@ class LoginPage extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(colors: [
             Colors.grey,
-            Colors.lightBlueAccent,
+            Theme.of(context).primaryColor
           ]),
         ),
         child: body,
@@ -87,8 +86,7 @@ class _AuthPageState extends State<AuthPage> {
             auth();
           },
           padding: EdgeInsets.all(12),
-          color: Colors.blueAccent,
-          child: Text(S.of(context).loginButton, style: TextStyle(color: Colors.white)),
+          child: Text(S.of(context).loginButton),
         ),
       ),
     );

@@ -28,7 +28,9 @@ void main() async {
 
   // Get an instance so that globals is initialised
   var prefs =  await SharedPreferences.getInstance();
+  // Let's initialise the app state with the stored preferences
   var appState = new AppStateModel(prefs);
+  // Build a route that can switch between homepage and login page
   var routes = <String, WidgetBuilder>{
     "/HomePage": (BuildContext context) => new ScopedModel<AppStateModel>(
         model: appState,
@@ -40,6 +42,8 @@ void main() async {
     ),
   };
 
+  // Use dart zone to define Crashlytics as error handler for errors 
+  // that occur outside runApp
   runZoned<Future<Null>>(() async {
     runApp(new MaterialApp(
       onGenerateTitle: (context) => S.of(context).appTitle,

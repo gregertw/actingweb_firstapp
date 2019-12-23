@@ -51,16 +51,16 @@ class _LocationStreamState extends State<LocationStreamWidget> {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
-          return new Flexible(child: _buildListView());
+          return new Flexible(child: _buildListView(context));
         });
   }
 
-  Widget _buildListView() {
+  Widget _buildListView(BuildContext context) {
     final List<Widget> listItems = <Widget>[
       ListTile(
         title: RaisedButton(
           child: _buildButtonText(),
-          color: _determineButtonColor(),
+          color: _determineButtonColor(context),
           padding: const EdgeInsets.all(8.0),
           onPressed: _toggleListening,
         ),
@@ -83,8 +83,8 @@ class _LocationStreamState extends State<LocationStreamWidget> {
     return Text(_isListening() ? S.of(context).stopListening : S.of(context).startListening);
   }
 
-  Color _determineButtonColor() {
-    return _isListening() ? Colors.blue : Colors.greenAccent;
+  Color _determineButtonColor(BuildContext context) {
+    return _isListening() ? Theme.of(context).primaryColorDark : Theme.of(context).primaryColorLight;
   }
 }
 
@@ -110,11 +110,10 @@ class PositionListItemState extends State<PositionListItem> {
         contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
         title: Text(S.of(context).latitudeLongitude(_position.latitude.toString(),
             _position.longitude.toString()),
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         subtitle: Row(
           children: <Widget>[
-            Icon(Icons.expand_more, color: Colors.white24),
+            Icon(Icons.expand_more),
             Expanded(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,9 +121,8 @@ class PositionListItemState extends State<PositionListItem> {
                   children: <Widget>[
                     Text(
                       _position.timestamp.toLocal().toString(),
-                      style: const TextStyle(fontSize: 14.0, color: Colors.white24),
                     ),
-                    Text(_address, style: TextStyle(color: Colors.white54)),
+                    Text(_address),
                   ]),
             ),
           ],
@@ -135,7 +133,7 @@ class PositionListItemState extends State<PositionListItem> {
       elevation: 8.0,
       margin: new EdgeInsets.symmetric(horizontal: 7.0, vertical: 2.0),
       child: Container(
-        decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+        decoration: BoxDecoration(),
         child: tiles,
       ),
     );
