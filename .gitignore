@@ -252,3 +252,4 @@ DerivedData/
 .idea/misc.xml
 ios/Flutter/flutter_export_environment.sh
 ios/Flutter/Flutter.podspec
+.flutter-plugins-dependencies
