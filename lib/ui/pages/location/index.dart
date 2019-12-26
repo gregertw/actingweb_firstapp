@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:first_app/generated/i18n.dart';
+import '../../../models/appstate.dart';
 
 class LocationStreamWidget extends StatefulWidget {
   @override
@@ -64,7 +65,7 @@ class _LocationStreamState extends State<LocationStreamWidget> {
           padding: const EdgeInsets.all(8.0),
           onPressed: _toggleListening,
         ),
-      ),
+      )
     ];
 
     listItems.addAll(_positions
@@ -105,6 +106,10 @@ class PositionListItemState extends State<PositionListItem> {
 
   @override
   Widget build(BuildContext context) {
+
+    var appState = AppStateModel.of(context, true);
+    appState.setLocation(_position.latitude, _position.longitude);
+
     final tiles = ListTile(
         onTap: _onTap,
         contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
