@@ -1,9 +1,9 @@
-import 'package:first_app/ui/theme/style.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app/models/appstate.dart';
 import 'package:first_app/ui/pages/login/index.dart';
 import 'package:first_app/generated/i18n.dart';
 import '../location/index.dart';
+import '../map/index.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -34,16 +34,17 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             LocationStreamWidget(),
+            OverlayMapPage(),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: AppStateModel.of(context, false).logOut,
-        tooltip: S.of(context).logoutButton,
-        child: Icon(Icons.exit_to_app),
-        backgroundColor: Theme.of(context).buttonColor,
-        foregroundColor: Theme.of(context).focusColor,
-      ),
+          onPressed: AppStateModel.of(context, false).logOut,
+          tooltip: S.of(context).logoutButton,
+          child: Icon(Icons.exit_to_app),
+          backgroundColor: Theme.of(context).buttonColor,
+          foregroundColor: Theme.of(context).focusColor,
+        )
     );
   }
 }

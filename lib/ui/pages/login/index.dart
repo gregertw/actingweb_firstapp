@@ -65,10 +65,9 @@ class _AuthPageState extends State<AuthPage> {
     auth0.authorize().then((res) {
       if (res.containsKey('access_token')) {
         AppStateModel.of(context, true).logIn(res);
-        auth0.getUserInfo(res['access_token']).then((res2){
-          AppStateModel.of(context, true).setUserInfo(res2);
-          Navigator.pushReplacementNamed(context, "/HomePage");
-        });
+        // Earlier, userinfo was retrieved here, but this failed as
+        // when the future returned, the context could be null and thus
+        // state could not be updated with user data.
       }
     });
   }

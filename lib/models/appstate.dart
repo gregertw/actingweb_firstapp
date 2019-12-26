@@ -11,7 +11,11 @@ class AppStateModel extends Model {
   DateTime _expires;
   String _email;
   final SharedPreferences prefs;
+  double _latitude = 0.0;
+  double _longitude = 0.0;
 
+  double get latitude => _latitude;
+  double get longitude => _longitude;
   bool get authenticated => _authenticated;
   String get userToken => _userToken;
   String get idToken => _idToken;
@@ -53,6 +57,12 @@ class AppStateModel extends Model {
     notifyListeners();
   }
 
+  void setLocation(double lat, double lon) {
+    _latitude = lat;
+    _longitude = lon;
+    notifyListeners();
+  }
+  
   void setUserInfo(data) {
     if (data == null) {
       return;
