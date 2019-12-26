@@ -20,6 +20,9 @@ This app has the following elements:
 - Use of Firebase Analytics for usage tracking
 - Use of Firebase Crashlytics for crash reporting
 - Use of a OS native capability (location tracking) using a published plugin (geolocator)
+- Use of Google Maps to present a map of the current location
+- Use of an independently defined new widget type called
+  AnchoredOverlay to overlay a map widget
 
 See my blog post for a more detailed introduction to the various features: https://stuff.greger.io/2019/07/production-quality-flutter-starter-app.html
 
@@ -36,6 +39,16 @@ a production app point of view. Here are some possible improvements:
 - How to use deep links
 
 ## CHANGELOG
+
+Dec 26, 2019
+
+- Add location (latitude, longitude) to global appstate
+- Remove .flutter-plugins-dependencies from version control
+- Fix firstApp -> firstapp in BUNDLE_ID for iOS 
+- Fix bug where attempt to store userinfo after logging in fails due to context being null and appstate
+  cannot be found
+- Add an overlay widget with Google Maps loading current location map
+
 
 Dec 22, 2019
 
@@ -72,11 +85,11 @@ i18n generation, you need (at this point) Android Studio/IntelliJ as flutter_i18
 The plugin flutter_auth0 is expected in the directory above (../), so check out 
 https://github.com/gregertw/flutter-auth0 there. This app is configured to use io.actingweb.firstapp as 
 app identifier. You can use this identifier for
-testing, but for your own app, you want to change this manually manually in android/app/build.gradle and 
-android/app/src/main/AndroidManifest.xml for Android. For iOS, you should change the product bundle identifier
+testing, but for your own app, you want to change this manually manually in ´android/app/build.gradle´ and 
+´android/app/src/main/AndroidManifest.xml´ for Android. For iOS, you should change the product bundle identifier
  in XCode (TODO).
 
-Also, in lib/providers/auth.dart you will find the instantiation of an auth0 object, this is where you change your
+Also, in ´lib/providers/auth.dart´ you will find the instantiation of an auth0 object, this is where you change your
 client id and domain used in Auth0 (see below for Auth0 setup). 
 
 Make sure you have available a device to run the app on, either a physical device or an emulator, then just
@@ -86,7 +99,8 @@ start debugging. You should be able to log into the app with your Google account
 ## Set up Auth0
 
 In Auth0, you need to configure a native app, add your allowed callback and logout URLs. The ones used for
-this test project is: io.actingweb.firstApp://actingweb.eu.auth0.com/ios/io.actingweb.firstApp/callback, io.actingweb.firstapp://actingweb.eu.auth0.com/android/io.actingweb.firstapp/callback
+this test project is: io.actingweb.firstApp://actingweb.eu.auth0.com/ios/io.actingweb.firstApp/callback, 
+io.actingweb.firstApp://actingweb.eu.auth0.com/android/io.actingweb.firstApp/callback
 As you can see, the callback URLs are based on the identifier + the Auth0 domain name of the project.
 
 Beyond that, a default project should work. If you are not able to get a login window when clicking on the Login
@@ -101,6 +115,33 @@ and google-services.json files.
 
 **Note!!** If you make a new project and don't just modify this, make sure you add GoogleService-Info.plist 
 in Xcode (to Runner) as just dropping the file in will not work for iOS!
+
+## Set up Google Maps (new Dec 26, 2019)
+
+A new AnchoredOverlay widget type has been added in `lib/ui/widgets/anchored_overlay.dart` to overlay a Google 
+map with current location and to add a button to toggle the overlay. 
+You need to edit `android/app/src/main/AndroidManifest.xml` and `ios/Runner/AppDelegate.m` to add your API key 
+for Google Maps (see https://cloud.google.com/maps-platform/). Search for `<your_google_maps_api_key_here>`.
+
+The google_maps_flutter flugin relies on a preview functionality in iOS that needs to be turned on in info.plist 
+(already added in this project) with:
+```
+  <key>io.flutter.embedded_views_preview</key>
+  <true/>
+```
+
+A new map UI page has been added to lib/ui/pages, and the OverlayMapPage() widget is loaded in 
+lib/ui/pages/index.dart:
+
+```
+children: <Widget>[
+            LocationStreamWidget(),
+            OverlayMapPage(),
+          ],
+```
+
+You can remove the overlay simply by removing the widget reference here. The OverlayMapPage widget relies on 
+the appstate scoped_model to pick up the location, while the location is set from `lib/ui/location/index.dart`.
 
 ## Some thoughts on state management
 
