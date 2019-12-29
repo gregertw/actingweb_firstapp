@@ -60,6 +60,8 @@ class _LocationStreamState extends State<LocationStreamWidget> {
     final List<Widget> listItems = <Widget>[
       ListTile(
         title: RaisedButton(
+          elevation: 20,
+          textTheme: ButtonTextTheme.primary,
           child: _buildButtonText(),
           color: _determineButtonColor(context),
           padding: const EdgeInsets.all(8.0),
@@ -106,43 +108,49 @@ class PositionListItemState extends State<PositionListItem> {
 
   @override
   Widget build(BuildContext context) {
-
     var appState = AppStateModel.of(context, true);
     appState.setLocation(_position.latitude, _position.longitude);
 
     final tiles = ListTile(
-        onTap: _onTap,
-        contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-        title: Text(S.of(context).latitudeLongitude(_position.latitude.toString(),
-            _position.longitude.toString()),
-        ),
-        subtitle: Row(
-          children: <Widget>[
-            Icon(Icons.expand_more),
-            Expanded(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      _position.timestamp.toLocal().toString(),
-                    ),
-                    Text(_address),
-                  ]),
-            ),
-          ],
-        ),
-    );
-
-    return Card(
-      elevation: 8.0,
-      margin: new EdgeInsets.symmetric(horizontal: 7.0, vertical: 2.0),
-      child: Container(
-        decoration: BoxDecoration(),
-        child: tiles,
+      onTap: _onTap,
+      contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 3.0),
+      title: Text(
+        S.of(context).latitudeLongitude(
+            _position.latitude.toString(), _position.longitude.toString()),
+      ),
+      subtitle: Row(
+        children: <Widget>[
+          Icon(Icons.expand_more),
+          Expanded(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Text(_address),
+                ]),
+          ),
+        ],
       ),
     );
 
+    return Container(
+        padding: const EdgeInsets.only(
+          left: 10.0,
+          bottom: 2.0,
+          top: 2.0,
+          right: 10.0
+        ),
+        decoration: BoxDecoration(),
+        child: Card(
+            elevation: 15.0,
+            margin: new EdgeInsets.symmetric(horizontal: 7.0, vertical: 7.0),
+            child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 2.0,
+                  bottom: 2.0,
+                  left: 2.0,
+                ),
+                child: tiles)));
   }
 
   Future<void> _onTap() async {

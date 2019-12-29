@@ -53,11 +53,11 @@ class _OverlayMapPageState extends State<OverlayMapPage> {
       return CenterAbout(
         position: Offset(offset.dx, offset.dy-150),
         child: Container(
-          width: 300,
-          height: 200,
+          width: 300.0,
+          height: 200.0,
           constraints: BoxConstraints(
-            maxHeight: 400.0,
-            maxWidth: 300.0
+            maxHeight: 300.0,
+            maxWidth: 400.0
           ),
           decoration: BoxDecoration(),
           child: GoogleMap(

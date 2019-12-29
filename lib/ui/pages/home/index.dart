@@ -25,26 +25,28 @@ class _HomePageState extends State<HomePage> {
       );
     }
     return Scaffold(
-      appBar: AppBar(
-        title: Text(S.of(context).appTitle),
-      ),
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            LocationStreamWidget(),
-            OverlayMapPage(),
-          ],
+        appBar: AppBar(
+          title: Text(S.of(context).appTitle),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).backgroundColor,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              LocationStreamWidget(),
+              OverlayMapPage(),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
           onPressed: AppStateModel.of(context, false).logOut,
           tooltip: S.of(context).logoutButton,
-          child: Icon(Icons.exit_to_app),
+          child: Icon(
+            Icons.exit_to_app,
+            color: Color(0xe81751ff),
+          ),
           backgroundColor: Theme.of(context).buttonColor,
           foregroundColor: Theme.of(context).focusColor,
-        )
-    );
+        ));
   }
 }
