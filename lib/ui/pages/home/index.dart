@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:first_app/models/appstate.dart';
 import 'package:first_app/ui/pages/login/index.dart';
 import 'package:first_app/generated/i18n.dart';
-import '../location/index.dart';
-import '../map/index.dart';
+import 'package:first_app/ui/pages/location/index.dart';
+import 'package:first_app/ui/pages/map/index.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);

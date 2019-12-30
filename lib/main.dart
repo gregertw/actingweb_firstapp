@@ -1,14 +1,14 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'dart:async';
-import 'generated/i18n.dart';
-import 'models/appstate.dart';
-import 'ui/pages/home/index.dart';
-import 'ui/pages/login/index.dart';
-import 'ui/theme/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:first_app/generated/i18n.dart';
+import 'package:first_app/models/appstate.dart';
+import 'package:first_app/ui/pages/home/index.dart';
+import 'package:first_app/ui/pages/login/index.dart';
+import 'package:first_app/ui/theme/style.dart';
 
 void main() async {
   // A breaking change in the platform messaging, as of Flutter 1.12.13+hotfix.5,

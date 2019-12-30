@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:first_app/generated/i18n.dart';
-import '../../../models/appstate.dart';
+import 'package:first_app/models/appstate.dart';
 
 class LocationStreamWidget extends StatefulWidget {
   @override

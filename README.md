@@ -40,35 +40,7 @@ a production app point of view. Here are some possible improvements:
 
 ## CHANGELOG
 
-Dec 26, 2019
-
-- Add location (latitude, longitude) to global appstate
-- Remove .flutter-plugins-dependencies from version control
-- Fix firstApp -> firstapp in BUNDLE_ID for iOS 
-- Fix bug where attempt to store userinfo after logging in fails due to context being null and appstate
-  cannot be found
-- Add an overlay widget with Google Maps loading current location map
-
-
-Dec 22, 2019
-
-- Clean up leftover comments
-- Add a proper theme and use it consistently through the app
-
-Dec 16, 2019
-
-- use new flutter_i18n plugin for Android Studio/IntelliJ that supports only specifying language (and not 
-  requires both language and country) in .arb files
-
-Dec 15, 2019
-
-- Upgrade to Flutter 1.12.14+hotfix.5
-- Upgrade package dependencies to latest versions
-- Fix breaking change issue, ref https://groups.google.com/forum/#!msg/flutter-announce/sHAL2fBtJ1Y/mGjrKH3dEwAJ
-- Move to SDK version target 29 (from 28)
-- Add Podfile to version control
-- Move from flutter_crashlytics to firebase_crashlytics (official plugin)
-
+See CHANGELOG.md
 
 ## How to get started
 

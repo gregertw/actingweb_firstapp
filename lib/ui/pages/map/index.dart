@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../widgets/anchored_overlay.dart';
-import '../../../models/appstate.dart';
+import 'package:first_app/ui/widgets/anchored_overlay.dart';
+import 'package:first_app/models/appstate.dart';
 
 
 class OverlayMapPage extends StatefulWidget {
