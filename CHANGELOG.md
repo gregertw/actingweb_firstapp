@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Jan 1, 2019
+
+- Add widget tests for all relevant widgets
+
 ## Dec 30, 2019
 
 - Fix file import to use package import (more correct)
