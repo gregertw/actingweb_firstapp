@@ -34,8 +34,9 @@ class AppStateModel extends Model {
       _expires = DateTime.parse(expiresStr);
       var remaining = _expires.difference(DateTime.now());
       if (remaining.inSeconds < 3600) {
-        var auth = await Auth0Client().refreshToken(prefs.getString('refreshToken'));
-        if (auth != null && auth.containsKey('access_token') ) {
+        var auth =
+            await Auth0Client().refreshToken(prefs.getString('refreshToken'));
+        if (auth != null && auth.containsKey('access_token')) {
           logIn(auth);
         } else {
           prefs.remove('userToken');
@@ -62,12 +63,12 @@ class AppStateModel extends Model {
     _longitude = lon;
     notifyListeners();
   }
-  
+
   void setUserInfo(data) {
     if (data == null) {
       return;
     }
-    if (data.containsKey('email')){
+    if (data.containsKey('email')) {
       prefs.setString('email', data['email']);
       _email = data['email'];
     }
@@ -75,22 +76,22 @@ class AppStateModel extends Model {
   }
 
   void logIn(data) {
-    if(data.containsKey('access_token')) {
+    if (data.containsKey('access_token')) {
       prefs.setString('userToken', data['access_token']);
       _userToken = data['access_token'];
       _authenticated = true;
     }
-    if(data.containsKey('refresh_token')) {
+    if (data.containsKey('refresh_token')) {
       prefs.setString('refreshToken', data['refresh_token']);
       _refreshToken = data['refresh_token'];
     }
-    if(data.containsKey('id_token')) {
+    if (data.containsKey('id_token')) {
       prefs.setString('idToken', data['id_token']);
       _idToken = data['id_token'];
     }
-    if(data.containsKey('expires_in')) {
-      var _expires = new DateTime.now().add(
-          new Duration(seconds: data['expires_in']));
+    if (data.containsKey('expires_in')) {
+      var _expires =
+          new DateTime.now().add(new Duration(seconds: data['expires_in']));
       prefs.setString('expires', _expires.toIso8601String());
     }
     notifyListeners();

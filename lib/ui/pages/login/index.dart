@@ -4,7 +4,6 @@ import 'package:first_app/providers/auth.dart';
 import 'package:first_app/generated/i18n.dart';
 
 class LoginPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     var appState = AppStateModel.of(context, true);
@@ -39,10 +38,8 @@ class LoginPage extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.all(28.0),
         decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            Colors.grey,
-            Theme.of(context).primaryColor
-          ]),
+          gradient: LinearGradient(
+              colors: [Colors.grey, Theme.of(context).primaryColor]),
         ),
         child: body,
       ),
@@ -50,16 +47,12 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-
 class AuthPage extends StatefulWidget {
-
   @override
   _AuthPageState createState() => _AuthPageState();
-
 }
 
 class _AuthPageState extends State<AuthPage> {
-
   void auth() {
     var auth0 = Auth0Client();
     auth0.authorize().then((res) {

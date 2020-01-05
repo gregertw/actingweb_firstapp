@@ -27,22 +27,22 @@ void main() async {
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
 
   // Get an instance so that globals is initialised
-  var prefs =  await SharedPreferences.getInstance();
+  var prefs = await SharedPreferences.getInstance();
   // Let's initialise the app state with the stored preferences
   var appState = new AppStateModel(prefs);
   // Build a route that can switch between homepage and login page
   var routes = <String, WidgetBuilder>{
     "/HomePage": (BuildContext context) => new ScopedModel<AppStateModel>(
-        model: appState,
-        child: new HomePage()
-    ),
+          model: appState,
+          child: new HomePage(),
+        ),
     "/LoginPage": (BuildContext context) => new ScopedModel<AppStateModel>(
-        model: appState,
-        child: new LoginPage()
-    ),
+          model: appState,
+          child: new LoginPage(),
+        ),
   };
 
-  // Use dart zone to define Crashlytics as error handler for errors 
+  // Use dart zone to define Crashlytics as error handler for errors
   // that occur outside runApp
   runZoned<Future<Null>>(() async {
     runApp(new MaterialApp(
@@ -53,14 +53,14 @@ void main() async {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      localeResolutionCallback: S.delegate.resolution(fallback: new Locale("en", "")),
+      localeResolutionCallback:
+          S.delegate.resolution(fallback: new Locale("en", "")),
       home: new ScopedModel<AppStateModel>(
-          model: appState,
-          child: new HomePage()
+        model: appState,
+        child: new HomePage(),
       ),
       theme: appTheme,
       routes: routes,
     ));
   }, onError: Crashlytics.instance.recordError);
-
 }

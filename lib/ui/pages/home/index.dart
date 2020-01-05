@@ -15,38 +15,38 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
     var appState = AppStateModel.of(context, true);
-    if (!appState.authenticated){
+    if (!appState.authenticated) {
       return Scaffold(
         body: LoginPage(),
       );
     }
     return Scaffold(
-        appBar: AppBar(
-          title: Text(S.of(context).appTitle),
+      appBar: AppBar(
+        title: Text(S.of(context).appTitle),
+      ),
+      backgroundColor: Theme.of(context).backgroundColor,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            LocationStreamWidget(),
+            OverlayMapPage(),
+          ],
         ),
-        backgroundColor: Theme.of(context).backgroundColor,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              LocationStreamWidget(),
-              OverlayMapPage(),
-            ],
-          ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: AppStateModel.of(context, false).logOut,
+        tooltip: S.of(context).logoutButton,
+        child: Icon(
+          Icons.exit_to_app,
+          color: Color(0xe81751ff),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: AppStateModel.of(context, false).logOut,
-          tooltip: S.of(context).logoutButton,
-          child: Icon(
-            Icons.exit_to_app,
-            color: Color(0xe81751ff),
-          ),
-          backgroundColor: Theme.of(context).buttonColor,
-          foregroundColor: Theme.of(context).focusColor,
-        ));
+        backgroundColor: Theme.of(context).buttonColor,
+        foregroundColor: Theme.of(context).focusColor,
+      ),
+    );
   }
 }

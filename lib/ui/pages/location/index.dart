@@ -16,11 +16,11 @@ class _LocationStreamState extends State<LocationStreamWidget> {
   void _toggleListening() {
     if (_positionStreamSubscription == null) {
       const LocationOptions locationOptions =
-      LocationOptions(accuracy: LocationAccuracy.best, distanceFilter: 10);
+          LocationOptions(accuracy: LocationAccuracy.best, distanceFilter: 10);
       final Stream<Position> positionStream =
-      Geolocator().getPositionStream(locationOptions);
+          Geolocator().getPositionStream(locationOptions);
       _positionStreamSubscription = positionStream.listen(
-              (Position position) => setState(() => _positions.add(position)));
+          (Position position) => setState(() => _positions.add(position)));
       _positionStreamSubscription.pause();
     }
 
@@ -67,7 +67,7 @@ class _LocationStreamState extends State<LocationStreamWidget> {
           padding: const EdgeInsets.all(8.0),
           onPressed: _toggleListening,
         ),
-      )
+      ),
     ];
 
     listItems.addAll(_positions
@@ -83,11 +83,15 @@ class _LocationStreamState extends State<LocationStreamWidget> {
       _positionStreamSubscription.isPaused);
 
   Widget _buildButtonText() {
-    return Text(_isListening() ? S.of(context).stopListening : S.of(context).startListening);
+    return Text(_isListening()
+        ? S.of(context).stopListening
+        : S.of(context).startListening);
   }
 
   Color _determineButtonColor(BuildContext context) {
-    return _isListening() ? Theme.of(context).primaryColorDark : Theme.of(context).primaryColorLight;
+    return _isListening()
+        ? Theme.of(context).primaryColorDark
+        : Theme.of(context).primaryColorLight;
   }
 }
 
@@ -134,23 +138,22 @@ class PositionListItemState extends State<PositionListItem> {
     );
 
     return Container(
-        padding: const EdgeInsets.only(
-          left: 10.0,
-          bottom: 2.0,
-          top: 2.0,
-          right: 10.0
+      padding:
+          const EdgeInsets.only(left: 10.0, bottom: 2.0, top: 2.0, right: 10.0),
+      decoration: BoxDecoration(),
+      child: Card(
+        elevation: 15.0,
+        margin: new EdgeInsets.symmetric(horizontal: 7.0, vertical: 7.0),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            top: 2.0,
+            bottom: 2.0,
+            left: 2.0,
+          ),
+          child: tiles,
         ),
-        decoration: BoxDecoration(),
-        child: Card(
-            elevation: 15.0,
-            margin: new EdgeInsets.symmetric(horizontal: 7.0, vertical: 7.0),
-            child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 2.0,
-                  bottom: 2.0,
-                  left: 2.0,
-                ),
-                child: tiles)));
+      ),
+    );
   }
 
   Future<void> _onTap() async {
