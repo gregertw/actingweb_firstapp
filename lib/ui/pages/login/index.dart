@@ -71,7 +71,7 @@ class _AuthPageState extends State<AuthPage> {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 16.0),
         child: RaisedButton(
-          key: Key('LoginButton'),
+          key: Key('LoginPage_LoginButton'),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(24),
           ),
