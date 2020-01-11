@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Jan 5, 2020
+
+- Use dart format and add commas to get recommended formatting for widgets
+
 ## Jan 1, 2019
 
 - Add widget tests for all relevant widgets
