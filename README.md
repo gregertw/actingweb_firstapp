@@ -91,8 +91,11 @@ in Xcode (to Runner) as just dropping the file in will not work for iOS!
 
 A new AnchoredOverlay widget type has been added in `lib/ui/widgets/anchored_overlay.dart` to overlay a Google 
 map with current location and to add a button to toggle the overlay. 
-You need to edit `android/app/src/main/AndroidManifest.xml` and `ios/Runner/AppDelegate.m` to add your API key 
-for Google Maps (see https://cloud.google.com/maps-platform/). Search for `<your_google_maps_api_key_here>`.
+You need to edit `android/app/src/main/AndroidManifest.xml` and `ios/Runner/AppDelegate.m` to update your API key 
+for Google Maps (see https://cloud.google.com/maps-platform/). 
+
+**IMPORTANT!!!! The keys being used are under a very low daily quota and has been added to git to make sure the app
+runs out of box. PLEASE change this as soon as possible and before you do your own development!**
 
 The google_maps_flutter flugin relies on a preview functionality in iOS that needs to be turned on in info.plist 
 (already added in this project) with:

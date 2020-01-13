@@ -19,7 +19,7 @@
         android:label="first_app"
         android:icon="@mipmap/launcher_icon">
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="<your_google_maps_api_key_here>"/>
+               android:value="AIzaSyD7fSvAPIz-31x_pMPJ3hR3xMcP8WjJxJ0"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"
