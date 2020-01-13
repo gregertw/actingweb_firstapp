@@ -31,7 +31,6 @@ See my blog post for a more detailed introduction to the various features: https
 I'm happy to accept pull requests for any improvements that will make this starter app even more complete from
 a production app point of view. Here are some possible improvements:
 
-- Testing of UI using widget tests
 - Show how to send messages to the app
 - How to use Oauth2 to grant access to a service like Firebase database
 - How to set up a deployment pipeline with test app deployment
@@ -114,6 +113,54 @@ children: <Widget>[
 
 You can remove the overlay simply by removing the widget reference here. The OverlayMapPage widget relies on 
 the appstate scoped_model to pick up the location, while the location is set from `lib/ui/location/index.dart`.
+
+## Tests
+
+Testing is important in all production applications. This application includes unit testing (in the test/ folder),
+widget testing (same folder) with mocks using mockito, and integration testing (with flutter_driver).
+
+To run the unit and widget tests, run `flutter test`. 
+
+### Integration Tests
+
+The integration tests run a real application on a device/simulator. This is done by having two processes: one 
+instrumented application and one test process. You will find the instrumented app in `flutter_driver/app.dart` 
+and the test app in `flutter/driver/app_test.dart`. The official introduction is found at 
+https://flutter.dev/docs/cookbook/testing/integration/introduction
+
+You can start an emulator and then run the integration tests with `flutter drive --target=test_driver/app.dart`.
+
+The application is built and loaded onto the emulator and the tests are run, which takes a long time.
+
+A better approach, especially if you are developing integration tests, is to run the two processes separately 
+(thanks to https://medium.com/flutter-community/hot-reload-for-flutter-integration-tests-e0478b63bd54 for the hint).
+
+First you run the observatory (the app to test), using 
+`flutter run --host-vmservice-port 8888 --disable-service-auth-codes test_driver/app.dart`. Once it is up and 
+running, you have an application you can hot reload ('r') or hot restart ('R'). 
+
+NOTE! A Flutter bug will give you earlier logs, this can be confusing! 
+https://github.com/flutter/flutter/issues/46815
+
+You then run the integration tests using `export VM_SERVICE_URL=http://127.0.0.1:8888/;dart test_driver/app_test.dart`. 
+You can change the tests (app_test.dart) and re-run without touching the app you test. Or you can change the app you 
+test and do hot reload/restart. 
+
+There is a .vscode/launch.json config that defines these and make them available from the command palette in Visual 
+Studio Code (Tasks: Run test tasks). It should be easy to add keyboard shortcuts or add similar configs to your 
+favourite IDE.
+
+### Mocking in Integration Tests
+
+In test_driver/app.dart, you will find dataHandler used by the enableFlutterDriverExtension() call. This allows
+two-way communication between the tested application and the tests (that can send messages using 
+driver.requestData('cmd')). This is an interesting technique to use to enable and disable mocks as you do the 
+testing.
+
+To simplify and make mocking dynamic, I have introduced mocks into the application state by adding a mocks object
+to the state (see `model/appstate.dart`). The mocks object is a map of objects that can be used throughout the application (i.e. dependency injection through app state). See in ui/login/index.dart and the _AuthPageState class 
+for an example with the Auth0Client.
+
 
 ## Some thoughts on state management
 

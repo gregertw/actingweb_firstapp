@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Jan 13, 2020
+
+- Fix flutter build apk issue that causes firebase_analytics to fail build
+- Fix ios target configs < 8.0
+- Add integration testing with flutter_driver
+
 ## Jan 5, 2020
 
 - Use dart format and add commas to get recommended formatting for widgets
