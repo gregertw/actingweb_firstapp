@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:first_app/providers/auth.dart';
+import 'package:first_app/mock/mockmap.dart';
 
 class AppStateModel extends Model {
   bool _authenticated = false;
@@ -13,6 +14,10 @@ class AppStateModel extends Model {
   final SharedPreferences prefs;
   double _latitude = 0.0;
   double _longitude = 0.0;
+  // We use a mockmap to enable and disable mock functions/classes.
+  // The mock should be injected as a dependency where external dependencies need
+  // to be mocked as part of testing.
+  MockMap _mocks = MockMap();
 
   double get latitude => _latitude;
   double get longitude => _longitude;
@@ -22,6 +27,7 @@ class AppStateModel extends Model {
   String get refreshToken => _refreshToken;
   DateTime get expires => _expires;
   String get email => _email;
+  MockMap get mocks => _mocks;
 
   AppStateModel(this.prefs) {
     refresh();
@@ -35,7 +41,7 @@ class AppStateModel extends Model {
       var remaining = _expires.difference(DateTime.now());
       if (remaining.inSeconds < 3600) {
         var auth =
-            await Auth0Client().refreshToken(prefs.getString('refreshToken'));
+            await Auth0Client(authClient:_mocks.getMock('authClient')).refreshToken(prefs.getString('refreshToken'));
         if (auth != null && auth.containsKey('access_token')) {
           logIn(auth);
         } else {

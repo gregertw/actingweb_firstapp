@@ -1,0 +1,33 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Flutter start test observatory",
+            "type": "shell",
+            "command": "flutter run --host-vmservice-port 8888 --disable-service-auth-codes test_driver/app.dart",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Flutter integration tests",
+            "type": "shell",
+            "command": "export VM_SERVICE_URL=http://127.0.0.1:8888/;dart test_driver/app_test.dart",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        }
+    ]
+}

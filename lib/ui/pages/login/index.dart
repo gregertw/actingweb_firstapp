@@ -54,7 +54,7 @@ class AuthPage extends StatefulWidget {
 
 class _AuthPageState extends State<AuthPage> {
   void auth() {
-    var auth0 = Auth0Client();
+    var auth0 = Auth0Client(authClient:AppStateModel.of(context, true).mocks.getMock('authClient'));
     auth0.authorize().then((res) {
       if (res.containsKey('access_token')) {
         AppStateModel.of(context, true).logIn(res);
