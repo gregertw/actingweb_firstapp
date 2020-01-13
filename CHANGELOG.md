@@ -2,6 +2,8 @@
 
 ## Jan 13, 2020
 
+- Add test API keys for Google Maps to the git repo to make it run out of the box
+  (yes, it has a daily, low quota)
 - Fix flutter build apk issue that causes firebase_analytics to fail build
 - Fix ios target configs < 8.0
 - Add integration testing with flutter_driver
