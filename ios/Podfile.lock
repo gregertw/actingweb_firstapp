@@ -42,9 +42,9 @@ PODS:
   - Flutter (1.0.0)
   - flutter_auth0 (0.0.1):
     - Flutter
-  - geolocator (5.1.5):
+  - geolocator (5.2.0):
     - Flutter
-  - google_api_availability (2.0.1):
+  - google_api_availability (2.0.2):
     - Flutter
   - google_maps_flutter (0.0.1):
     - Flutter
@@ -78,7 +78,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (6.2.3):
     - GoogleUtilities/Logger
-  - location_permissions (2.0.3):
+  - "location_permissions (2.0.4+1)":
     - Flutter
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
@@ -153,21 +153,21 @@ SPEC CHECKSUMS:
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 9445469655a98e9010737f4bc4720e5bda465873
   firebase_analytics: d83001d25b9a58ca5eda8db0ef566c02d7af5258
-  firebase_core: 87e4c7cef68de46c0326ce2ee907fc7e365ead7e
+  firebase_core: 9bd2e66a276153e219a87ff39dfecb6b671f524a
   firebase_core_web: d501d8b946b60c8af265428ce483b0fff5ad52d1
-  firebase_crashlytics: 0aa7aee0650dc57aff432c5e3fb6ae3ad9fc106b
+  firebase_crashlytics: 0066966d67fee22065fdcf1c9703a97c4fdbae2e
   FirebaseAnalytics: 69fe25866d2ec87c6f02d72c3c9a82bce9c065a0
   FirebaseCore: 7ea99e200f0024262650be56623fbe6a7bef1707
   FirebaseInstanceID: 9782fcfb89e4d7da76cc28eac4b8543dc7be4a4b
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_auth0: 1d379ce1faf80f27b1058ef2502b6d0181561bdb
-  geolocator: 80aba2bb48f8c7dfc5a8b70b9d13fc3edc8399c4
-  google_api_availability: 163b30f802e6148c67f092aa4501c90ddd8eec8d
+  geolocator: cf6ecc0e5beffb31a51aee7ad6e49a49b293df32
+  google_api_availability: 6f1017d3a61be12be3bd9f929cc5b2606f24ae7f
   google_maps_flutter: d0dd62f5a7d39bae61057eb9f52dd778d99c7c6c
   GoogleAppMeasurement: 1e45fa601e6280c180880d57010390f6679cd971
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   GoogleUtilities: d2b0e277a95962e09bb27f5cd42f5f0b6a506c7d
-  location_permissions: 195ff2a1182fa9029ef3f2653156961ee5a1e40b
+  location_permissions: 360d12ecd1c94a4cab68585f508be1d5ad944c8b
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
   shared_preferences_macos: f3f29b71ccbb56bf40c9dd6396c9acf15e214087
