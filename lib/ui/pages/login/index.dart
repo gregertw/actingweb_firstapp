@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:first_app/models/appstate.dart';
+import 'package:provider/provider.dart';
 import 'package:first_app/providers/auth.dart';
 import 'package:first_app/generated/i18n.dart';
 
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var appState = AppStateModel.of(context, true);
+    var appState = Provider.of<AppStateModel>(context, listen: false);
     final logo = Padding(
       padding: EdgeInsets.all(40.0),
       child: Image.asset('assets/actingweb-header-small.png'),
@@ -47,17 +48,15 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class AuthPage extends StatefulWidget {
-  @override
-  _AuthPageState createState() => _AuthPageState();
-}
-
-class _AuthPageState extends State<AuthPage> {
-  void auth() {
-    var auth0 = Auth0Client(authClient:AppStateModel.of(context, true).mocks.getMock('authClient'));
+class AuthPage extends StatelessWidget {
+  void auth(BuildContext context) {
+    var auth0 = Auth0Client(
+        authClient: Provider.of<AppStateModel>(context, listen: false)
+            .mocks
+            .getMock('authClient'));
     auth0.authorize().then((res) {
       if (res.containsKey('access_token')) {
-        AppStateModel.of(context, true).logIn(res);
+        Provider.of<AppStateModel>(context, listen: false).logIn(res);
         // Earlier, userinfo was retrieved here, but this failed as
         // when the future returned, the context could be null and thus
         // state could not be updated with user data.
@@ -76,7 +75,7 @@ class _AuthPageState extends State<AuthPage> {
             borderRadius: BorderRadius.circular(24),
           ),
           onPressed: () {
-            auth();
+            auth(context);
           },
           padding: EdgeInsets.all(12),
           child: Text(S.of(context).loginButton),

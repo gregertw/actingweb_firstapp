@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:scoped_model/scoped_model.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:first_app/models/appstate.dart';
@@ -14,22 +14,23 @@ import 'package:first_app/ui/pages/login/index.dart';
 // Helper function to encapsulate code needed to instantiate the HomePage() widget
 dynamic initWidget(WidgetTester tester, AppStateModel state) {
   return tester.pumpWidget(
-        new MaterialApp(
-          onGenerateTitle: (context) => S.of(context).appTitle,
-          localizationsDelegates: [
-            S.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          supportedLocales: S.delegate.supportedLocales,
-          localeResolutionCallback: S.delegate.resolution(fallback: new Locale("en", "")),
-          theme: appTheme,
-          home: new ScopedModel<AppStateModel>(
-              model: state,
-              child: new HomePage()
-          )
-        )
-      );
+    new MaterialApp(
+      onGenerateTitle: (context) => S.of(context).appTitle,
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
+      localeResolutionCallback:
+          S.delegate.resolution(fallback: new Locale("en", "")),
+      theme: appTheme,
+      home: new ChangeNotifierProvider.value(
+        value: state,
+        child: new HomePage(),
+      ),
+    ),
+  );
 }
 
 void main() async {
@@ -54,24 +55,22 @@ void main() async {
     await initWidget(tester, logoutState);
     expect(find.byType(LoginPage), findsOneWidget);
   });
-  
+
   testWidgets('logged-in homepage widget', (WidgetTester tester) async {
     await initWidget(tester, loginState);
-  
+
     // We should find both the map toggle button and the log out button
     expect(find.byType(FloatingActionButton), findsNWidgets(2));
     expect(find.byType(LocationStreamWidget), findsOneWidget);
     expect(find.byType(OverlayMapPage), findsOneWidget);
   });
 
-testWidgets('log out of homepage widget', (WidgetTester tester) async {
+  testWidgets('log out of homepage widget', (WidgetTester tester) async {
     await initWidget(tester, loginState);
-  
+
     // Find the log out button
     final finder = find.descendant(
-      of: find.byType(Scaffold),
-      matching: find.byIcon(Icons.exit_to_app)
-      );
+        of: find.byType(Scaffold), matching: find.byIcon(Icons.exit_to_app));
     // and tap it to log out
     await tester.tap(finder);
     await tester.pump();
@@ -80,6 +79,5 @@ testWidgets('log out of homepage widget', (WidgetTester tester) async {
     expect(find.byType(LoginPage), findsOneWidget);
     // And authenticated state should be false
     expect(loginState.authenticated, false);
-    
   });
 }

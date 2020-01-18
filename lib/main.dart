@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -44,20 +44,20 @@ void main() async {
       supportedLocales: S.delegate.supportedLocales,
       localeResolutionCallback:
           S.delegate.resolution(fallback: new Locale("en", "")),
-      home: new ScopedModel<AppStateModel>(
-        model: appState,
+      home: new ChangeNotifierProvider.value(
+        value: appState,
         child: new HomePage(),
       ),
       theme: appTheme,
       routes: <String, WidgetBuilder>{
-        "/HomePage": (BuildContext context) => new ScopedModel<AppStateModel>(
-              model: appState,
-              child: new HomePage(),
-            ),
-        "/LoginPage": (BuildContext context) => new ScopedModel<AppStateModel>(
-              model: appState,
-              child: new LoginPage(),
-            ),
+        "/HomePage": (BuildContext context) => new ChangeNotifierProvider.value(
+        value: appState,
+        child: new HomePage(),
+      ),
+        "/LoginPage": (BuildContext context) => new ChangeNotifierProvider.value(
+        value: appState,
+        child: new LoginPage(),
+      ),
       },
     ));
   }, onError: Crashlytics.instance.recordError);

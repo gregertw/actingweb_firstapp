@@ -168,8 +168,16 @@ for an example with the Auth0Client.
 ## Some thoughts on state management
 
 In investigating the various state management approaches, Brian Egan's http://fluttersamples.com/ was very 
-helpful. I tried out a few approaches and ended up on scoped_model as an approach that is intuitive, plays well
-with the Flutter principles of app design, and that is powerful enough to support a production app.
-
+helpful. I tried out a few approaches and initially ended up on scoped_model as an approach that is intuitive, 
+plays well with the Flutter principles of app design, and that is powerful enough to support a production app.
 State management is a matter of taste, but I was trying to find the set of app architectural approaches that
 fit with Flutter and that can support a bigger team of developers.
+
+This choice turned out to be a pretty good one as the team behind scoped_model also worked on the provider package
+which in 2019 became the recommended way to provide widget trees with state updates. Provider is not entirely a 
+replacement of scoped_model, quoted from the provider home: "A mixture between dependency injection (DI) and 
+state management, built with widgets for widgets." 
+In the process of replacing scoped_model with provider, I chose not to add a more powerful state management 
+package (like MobX), but rather use simple classes with the ChangeNotifier mixin. This is all that is needed for 
+provider to pick up notifyListeners() calls.
+ 

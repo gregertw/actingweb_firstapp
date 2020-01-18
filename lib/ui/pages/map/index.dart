@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:first_app/ui/widgets/anchored_overlay.dart';
-import 'package:first_app/models/appstate.dart';
+import 'package:first_app/models/locstate.dart';
 
 class OverlayMapPage extends StatefulWidget {
   @override
@@ -28,8 +29,8 @@ class _OverlayMapPageState extends State<OverlayMapPage> {
 
   @override
   Widget build(BuildContext context) {
-    final lat = AppStateModel.of(context, false).latitude;
-    final lon = AppStateModel.of(context, false).longitude;
+    final lat = Provider.of<LocStateModel>(context).latitude;
+    final lon = Provider.of<LocStateModel>(context).longitude;
 
     if (_lat != lat || _lon != lon) {
       _lat = lat;

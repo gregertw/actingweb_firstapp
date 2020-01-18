@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:first_app/providers/auth.dart';
 import 'package:first_app/mock/mockmap.dart';
 
-class AppStateModel extends Model {
+class AppStateModel with ChangeNotifier {
   bool _authenticated = false;
   String _userToken;
   String _idToken;
@@ -12,15 +11,11 @@ class AppStateModel extends Model {
   DateTime _expires;
   String _email;
   final SharedPreferences prefs;
-  double _latitude = 0.0;
-  double _longitude = 0.0;
   // We use a mockmap to enable and disable mock functions/classes.
   // The mock should be injected as a dependency where external dependencies need
   // to be mocked as part of testing.
   MockMap _mocks = MockMap();
 
-  double get latitude => _latitude;
-  double get longitude => _longitude;
   bool get authenticated => _authenticated;
   String get userToken => _userToken;
   String get idToken => _idToken;
@@ -61,12 +56,6 @@ class AppStateModel extends Model {
     }
     _idToken = prefs.getString('idToken');
     _refreshToken = prefs.getString('refreshToken');
-    notifyListeners();
-  }
-
-  void setLocation(double lat, double lon) {
-    _latitude = lat;
-    _longitude = lon;
     notifyListeners();
   }
 
@@ -121,6 +110,4 @@ class AppStateModel extends Model {
     notifyListeners();
   }
 
-  static AppStateModel of(BuildContext context, rebuild) =>
-      ScopedModel.of<AppStateModel>(context, rebuildOnChange: rebuild);
 }

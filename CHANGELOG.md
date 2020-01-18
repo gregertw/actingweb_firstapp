@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Jan 18, 2020
+
+- Replace scoped_model with provider (scoped_model deprecated and provider is recommended)
+
 ## Jan 13, 2020
 
 - Add test API keys for Google Maps to the git repo to make it run out of the box
