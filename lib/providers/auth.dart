@@ -38,13 +38,17 @@ class AuthClient {
   }
 
   Future<Map<dynamic, dynamic>> authorize() async {
-    var _result = await authClient.webAuth.authorize({
-      'audience': 'https://$domain/userinfo',
-      'scope': 'openid email offline_access',
-    });
-    var res = Map.from(_result);
-    if (res.containsKey('access_token')) {
-      return res;
+    try {
+      var _result = await authClient.webAuth.authorize({
+        'audience': 'https://$domain/userinfo',
+        'scope': 'openid email offline_access',
+      });
+      var res = Map.from(_result);
+      if (res.containsKey('access_token')) {
+        return res;
+      }
+    } catch (e) {
+      print('Error: $e');
     }
     return null;
   }

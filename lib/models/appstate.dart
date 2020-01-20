@@ -100,7 +100,7 @@ class AppStateModel with ChangeNotifier {
     logged out. However, the user will be redirected to the IdP login page, which
     may be confusing.
     */
-    // Auth0Client().closeSessions();
+    //AuthClient(authClient:_mocks.getMock('authClient')).closeSessions();
     _authenticated = false;
     _userToken = null;
     _idToken = null;
