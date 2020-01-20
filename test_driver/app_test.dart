@@ -34,10 +34,11 @@ void main() {
     });
 
     test('logs in', () async {
-      // Push exit button if it's there to log us out
-      await driver
+      // Push exit button if it's there to log us out.
+      // Commented it out as setupAll() now makes sure we are logged out.
+      /*await driver
           .tap(exitButtonFinder, timeout: Duration(milliseconds: 200))
-          .catchError((e) {});
+          .catchError((e) {});*/
       // We should now have a login button
       await driver.waitFor(loginButtonFinder);
       driver.requestData('mockLogin');
