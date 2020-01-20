@@ -8,6 +8,7 @@ import 'package:first_app/ui/pages/map/index.dart';
 import 'package:first_app/models/locstate.dart';
 import 'package:first_app/generated/i18n.dart';
 import 'package:first_app/ui/theme/style.dart';
+import 'package:first_app/mock/mock_geolocator.dart';
 
 // Helper function to encapsulate code needed to instantiate the HomePage() widget
 dynamic initWidget(WidgetTester tester, LocStateModel state) {
@@ -36,7 +37,7 @@ void main() async {
   // underlying system, we need to make sure everything is initialised
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  var state = LocStateModel(null);
+  var state = LocStateModel(MockGeolocator());
   // Test location Oslo, Norway
   state.addLocation(Position(latitude: 59.893777, longitude: 10.7150951));
   testWidgets('OverlayMapPage', (WidgetTester tester) async {
