@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Jan 20, 2020
+
+- Replace local flutter-auth0 package with released package
+- Fix ios build issues that caused Framework for App not found
+
 ## Jan 18, 2020
 
 - Replace scoped_model with provider (scoped_model deprecated and provider is recommended)

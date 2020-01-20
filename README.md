@@ -53,21 +53,23 @@ i18n generation, you need (at this point) Android Studio/IntelliJ as flutter_i18
 (Visual Studio Code support is in the works).
 
 *NOTE!!!*
-The plugin flutter_auth0 is expected in the directory above (../), so check out 
-https://github.com/gregertw/flutter-auth0 there. This app is configured to use io.actingweb.firstapp as 
+The plugin flutter_auth0 is configured to use io.actingweb.firstapp as 
 app identifier. You can use this identifier for
 testing, but for your own app, you want to change this manually manually in ´android/app/build.gradle´ and 
 ´android/app/src/main/AndroidManifest.xml´ for Android. For iOS, you should change the product bundle identifier
- in XCode (TODO).
+ in XCode.
 
-Also, in ´lib/providers/auth.dart´ you will find the instantiation of an auth0 object, this is where you change your
-client id and domain used in Auth0 (see below for Auth0 setup). 
+Also, in ´lib/providers/auth.dart´ you will find the instantiation of an auth0 object, this is where you 
+change your client id and domain used in Auth0 (see below for Auth0 setup). 
 
 Make sure you have available a device to run the app on, either a physical device or an emulator, then just
 start debugging. You should be able to log into the app with your Google account (note! your personal details
  will show up in the admin console of the ActingWeb Auth0 project).
 
 ## Set up Auth0
+
+Note that the first version of this app used unpublished flutter-auth0 package. As it now has been relased,
+this has been replaced with the published version.
 
 In Auth0, you need to configure a native app, add your allowed callback and logout URLs. The ones used for
 this test project is: io.actingweb.firstApp://actingweb.eu.auth0.com/ios/io.actingweb.firstApp/callback, 
