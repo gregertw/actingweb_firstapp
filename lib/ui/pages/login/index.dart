@@ -50,7 +50,7 @@ class LoginPage extends StatelessWidget {
 
 class AuthPage extends StatelessWidget {
   void auth(BuildContext context) {
-    var auth0 = Auth0Client(
+    var auth0 = AuthClient(
         authClient: Provider.of<AppStateModel>(context, listen: false)
             .mocks
             .getMock('authClient'));

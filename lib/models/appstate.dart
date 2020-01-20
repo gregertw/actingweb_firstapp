@@ -36,7 +36,7 @@ class AppStateModel with ChangeNotifier {
       var remaining = _expires.difference(DateTime.now());
       if (remaining.inSeconds < 3600) {
         var auth =
-            await Auth0Client(authClient:_mocks.getMock('authClient')).refreshToken(prefs.getString('refreshToken'));
+            await AuthClient(authClient:_mocks.getMock('authClient')).refreshToken(prefs.getString('refreshToken'));
         if (auth != null && auth.containsKey('access_token')) {
           logIn(auth);
         } else {
@@ -100,7 +100,7 @@ class AppStateModel with ChangeNotifier {
     logged out. However, the user will be redirected to the IdP login page, which
     may be confusing.
     */
-    // Auth0Client().closeSessions();
+    //AuthClient(authClient:_mocks.getMock('authClient')).closeSessions();
     _authenticated = false;
     _userToken = null;
     _idToken = null;

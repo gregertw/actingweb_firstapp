@@ -39,8 +39,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".RedirectUriReceiver">
+        <activity 
+            android:name="io.flutter.plugins.flutterauth0.AuthenticationReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
