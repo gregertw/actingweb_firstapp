@@ -10,7 +10,7 @@ import 'package:first_app/ui/pages/home/index.dart';
 import 'package:first_app/ui/pages/login/index.dart';
 import 'package:first_app/providers/auth.dart';
 import 'package:first_app/ui/theme/style.dart';
-import 'package:first_app/mock/mock_webauth.dart';
+import 'package:first_app/mock/mock_auth0.dart';
 import 'package:first_app/mock/mock_geolocator.dart';
 
 void main() async {
@@ -22,7 +22,7 @@ void main() async {
     switch (msg) {
       case "mockLogin":
         {
-          appState.mocks.enableMock('authClient', MockWebAuth());
+          appState.mocks.enableMock('authClient', MockAuth0());
         }
         break;
       case "mockGeo":
@@ -38,7 +38,7 @@ void main() async {
       case "clearSession":
         {
           // Use the real Auth0Client to get rid of any logon state
-          Auth0Client().closeSessions();
+          AuthClient().closeSessions();
         }
         break;
       default:
@@ -58,7 +58,7 @@ void main() async {
   // Use the real Auth0Client to get rid of any logon state
   // First time on a hot restart of observervatory, this will result in an attempted
   // login, so hot restart (R) needs to be done twice.
-  Auth0Client().closeSessions();
+  AuthClient().closeSessions();
 
   runApp(
     new MaterialApp(
