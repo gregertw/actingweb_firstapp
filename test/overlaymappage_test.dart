@@ -36,7 +36,7 @@ void main() async {
   // underlying system, we need to make sure everything is initialised
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  var state = LocStateModel();
+  var state = LocStateModel(null);
   // Test location Oslo, Norway
   state.addLocation(Position(latitude: 59.893777, longitude: 10.7150951));
   testWidgets('OverlayMapPage', (WidgetTester tester) async {

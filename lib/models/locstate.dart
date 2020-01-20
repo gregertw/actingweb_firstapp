@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocStateModel with ChangeNotifier {
+  Geolocator locator;
   // Represent latest location
   Position _lastPos = Position(longitude: 0.0, latitude: 0.0);
   GeolocationStatus _geoAccessStatus;
@@ -12,13 +13,25 @@ class LocStateModel with ChangeNotifier {
 
   double get latitude => _lastPos.latitude;
   double get longitude => _lastPos.longitude;
-  bool get isPaused => _positionStreamSubscription.isPaused;
+  bool isPaused() {
+    if (_positionStreamSubscription == null) {
+      return true;
+    }
+    return _positionStreamSubscription.isPaused;
+  }
+
   List<Position> get positions => List.from(_pointList.keys);
   List<Placemark> get placemarks => List.from(_pointList.values);
   LinkedHashMap<Position, Placemark> get pointList => _pointList;
 
+  LocStateModel(this.locator) {
+    if (this.locator == null) {
+      this.locator = Geolocator();
+    }
+  }
+
   Future<bool> available() async {
-    _geoAccessStatus = await Geolocator().checkGeolocationPermissionStatus();
+    _geoAccessStatus = await this.locator.checkGeolocationPermissionStatus();
     if (_geoAccessStatus == GeolocationStatus.granted) {
       return true;
     }
@@ -31,14 +44,22 @@ class LocStateModel with ChangeNotifier {
   void addLocation(Position pos) {
     _pointList[pos] = null;
     _lastPos = pos;
-    Geolocator().placemarkFromCoordinates(pos.latitude, pos.longitude).then((pm) {
-      _pointList[pos] = pm.first;
+    this
+        .locator
+        .placemarkFromCoordinates(pos.latitude, pos.longitude)
+        .then((pm) {
+      if (pm != null) {
+        _pointList[pos] = pm.first;
+      }
       notifyListeners();
     });
     notifyListeners();
   }
 
   Placemark getPlacemark(Position pos) {
+    if (pos == null) {
+      return null;
+    }
     return _pointList[pos];
   }
 
@@ -71,15 +92,16 @@ class LocStateModel with ChangeNotifier {
       const LocationOptions locationOptions =
           LocationOptions(accuracy: LocationAccuracy.best, distanceFilter: 10);
       final Stream<Position> positionStream =
-          Geolocator().getPositionStream(locationOptions);
+          this.locator.getPositionStream(locationOptions);
       _positionStreamSubscription =
           positionStream.listen((Position position) => addLocation(position));
       //_positionStreamSubscription.pause();
-    }
-    if (_positionStreamSubscription.isPaused) {
-      _positionStreamSubscription.resume();
     } else {
-      _positionStreamSubscription.pause();
+      if (_positionStreamSubscription.isPaused) {
+        _positionStreamSubscription.resume();
+      } else {
+        _positionStreamSubscription.pause();
+      }
     }
     notifyListeners();
   }

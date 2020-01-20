@@ -11,6 +11,7 @@ import 'package:first_app/ui/pages/login/index.dart';
 import 'package:first_app/providers/auth.dart';
 import 'package:first_app/ui/theme/style.dart';
 import 'package:first_app/mock/mock_webauth.dart';
+import 'package:first_app/mock/mock_geolocator.dart';
 
 void main() async {
 
@@ -21,7 +22,12 @@ void main() async {
     switch (msg) {
       case "mockLogin":
         {
-          appState.mocks.enableMock('authClient', new MockWebAuth());
+          appState.mocks.enableMock('authClient', MockWebAuth());
+        }
+        break;
+      case "mockGeo":
+        {
+          appState.mocks.enableMock('geolocator', MockGeolocator());
         }
         break;
       case "clearMocks":

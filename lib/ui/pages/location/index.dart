@@ -21,6 +21,7 @@ class LocationStreamWidget extends StatelessWidget {
     final List<Widget> listItems = <Widget>[
       ListTile(
         title: RaisedButton(
+          key: Key('LocationPage_StartListeningButton'),
           elevation: 20,
           textTheme: ButtonTextTheme.primary,
           child: Text(Provider.of<LocStateModel>(context).isListening()
@@ -67,6 +68,7 @@ class PositionListItem extends StatelessWidget {
             left: 2.0,
           ),
           child: ListTile(
+            key: Key('LocationPage_LocationTile'),
             contentPadding:
                 EdgeInsets.symmetric(horizontal: 15.0, vertical: 3.0),
             title: Text(

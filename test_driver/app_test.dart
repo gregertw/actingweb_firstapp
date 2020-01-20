@@ -8,6 +8,8 @@ void main() {
     // be the same as the Strings we used for the Keys.
     final loginButtonFinder = find.byValueKey('LoginPage_LoginButton');
     final exitButtonFinder = find.byValueKey('HomePage_ExitButton');
+    final startListeningButtonFinder = find.byValueKey('LocationPage_StartListeningButton');
+    final locationTileFinder = find.byValueKey('LocationPage_LocationTile');
 
     FlutterDriver driver;
 
@@ -39,9 +41,12 @@ void main() {
       // We should now have a login button
       await driver.waitFor(loginButtonFinder);
       driver.requestData('mockLogin');
+      driver.requestData('mockGeo');
       // Then, tap the login button.
       await driver.tap(loginButtonFinder);
       await driver.waitFor(exitButtonFinder);
+      await driver.tap(startListeningButtonFinder);
+      await driver.waitFor(locationTileFinder);
     });
   }); // group('first_app')
 }
