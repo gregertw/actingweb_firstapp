@@ -1,6 +1,8 @@
 # first_app: Starter app for a Flutter production app
 
-Maintainer: Greger Wedel, https://github.com/gregertw
+**Maintainer**: Greger Wedel, https://github.com/gregertw
+
+**Latest build and artifacts**: [![Codemagic build status](https://api.codemagic.io/apps/5e23f3b4c5faa6a356815277/5e23f3b4c5faa6a356815276/status_badge.svg)](https://codemagic.io/apps/5e23f3b4c5faa6a356815277/5e23f3b4c5faa6a356815276/latest_build)
 
 There are lots of simple Flutter app examples out there, but very few show how to tie together the elements
 you need to put an app into production. In my process of evaluating Flutter maturity and readiness for
