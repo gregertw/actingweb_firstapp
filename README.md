@@ -26,7 +26,7 @@ This app has the following elements:
 - Use of an independently defined new widget type called
   AnchoredOverlay to overlay a map widget
 
-See my blog post for a more detailed introduction to the various features: https://stuff.greger.io/2019/07/production-quality-flutter-starter-app.html
+See my blog post for a more detailed introduction to the various features: https://stuff.greger.io/2019/07/production-quality-flutter-starter-app.html, also this update post explains the latest changes: https://stuff.greger.io/2020/01/production-quality-flutter-starter-app-take-two.html
 
 ## Suggested improvements
 
