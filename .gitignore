@@ -493,3 +493,4 @@ ios/Flutter/Flutter.podspec
 .flutter-plugins-dependencies
 gradle/wrapper/gradle-wrapper.jar
 gradle/wrapper/gradle-wrapper.properties
+android/key.properties
