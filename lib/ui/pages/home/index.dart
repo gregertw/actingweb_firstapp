@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:first_app/models/appstate.dart';
 import 'package:first_app/models/locstate.dart';
 import 'package:first_app/ui/pages/login/index.dart';
-import 'package:first_app/generated/i18n.dart';
+import 'package:first_app/generated/l10n.dart';
 import 'package:first_app/ui/pages/location/index.dart';
 import 'package:first_app/ui/pages/map/index.dart';
 

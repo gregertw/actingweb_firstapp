@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:first_app/models/appstate.dart';
-import 'package:first_app/generated/i18n.dart';
+import 'package:first_app/generated/l10n.dart';
 import 'package:first_app/ui/theme/style.dart';
 import 'package:first_app/ui/pages/home/index.dart';
 import 'package:first_app/ui/pages/location/index.dart';
@@ -22,8 +22,6 @@ dynamic initWidget(WidgetTester tester, AppStateModel state) {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      localeResolutionCallback:
-          S.delegate.resolution(fallback: new Locale("en", "")),
       theme: appTheme,
       home: new ChangeNotifierProvider.value(
         value: state,
@@ -53,12 +51,13 @@ void main() async {
 
   testWidgets('logged-out homepage widget', (WidgetTester tester) async {
     await initWidget(tester, logoutState);
+    await tester.pump();
     expect(find.byType(LoginPage), findsOneWidget);
   });
 
   testWidgets('logged-in homepage widget', (WidgetTester tester) async {
     await initWidget(tester, loginState);
-
+    await tester.pump();
     // We should find both the map toggle button and the log out button
     expect(find.byType(FloatingActionButton), findsNWidgets(2));
     expect(find.byType(LocationStreamWidget), findsOneWidget);
@@ -67,7 +66,7 @@ void main() async {
 
   testWidgets('log out of homepage widget', (WidgetTester tester) async {
     await initWidget(tester, loginState);
-
+    await tester.pump();
     // Find the log out button
     final finder = find.descendant(
         of: find.byType(Scaffold), matching: find.byIcon(Icons.exit_to_app));

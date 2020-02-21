@@ -6,7 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:first_app/ui/pages/map/index.dart';
 import 'package:first_app/models/locstate.dart';
-import 'package:first_app/generated/i18n.dart';
+import 'package:first_app/generated/l10n.dart';
 import 'package:first_app/ui/theme/style.dart';
 import 'package:first_app/mock/mock_geolocator.dart';
 
@@ -21,8 +21,6 @@ dynamic initWidget(WidgetTester tester, LocStateModel state) {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      localeResolutionCallback:
-          S.delegate.resolution(fallback: new Locale("en", "")),
       theme: appTheme,
       home: new ChangeNotifierProvider.value(
         value: state,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:first_app/models/appstate.dart';
 import 'package:provider/provider.dart';
 import 'package:first_app/providers/auth.dart';
-import 'package:first_app/generated/i18n.dart';
+import 'package:first_app/generated/l10n.dart';
 
 class LoginPage extends StatelessWidget {
   @override

@@ -1,0 +1,11 @@
+{
+    "appTitle": "ActingWeb Første App",
+    "loginWelcomeText": "Velkommen til ActingWeb",
+    "loginLoadEvents": "Henter meldinger...",
+    "loginButton": "Logg inn",
+    "logoutButton": "Logg ut",
+    "startListening": "Start lytting",
+    "stopListening": "Stopp lytting",
+    "latitudeLongitude": "Lat: $lat, Long: $long",
+    "unknown": "Ukjent"
+  }

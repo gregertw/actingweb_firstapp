@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:first_app/generated/i18n.dart';
+import 'package:first_app/generated/l10n.dart';
 import 'package:first_app/models/locstate.dart';
 
+String latitudeLongitude(String lat, String long) => "Lat: $lat, Long: $long";
 class LocationStreamWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -72,8 +73,8 @@ class PositionListItem extends StatelessWidget {
             contentPadding:
                 EdgeInsets.symmetric(horizontal: 15.0, vertical: 3.0),
             title: Text(
-              S.of(context).latitudeLongitude(_position.latitude.toString(),
-                  _position.longitude.toString()),
+                latitudeLongitude(_position.latitude.toString(), _position.longitude.toString(),
+              ),
             ),
             subtitle: Row(
               children: <Widget>[

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:first_app/ui/pages/location/index.dart';
 import 'package:first_app/mock/mock_geolocator.dart';
-import 'package:first_app/generated/i18n.dart';
+import 'package:first_app/generated/l10n.dart';
 import 'package:first_app/ui/theme/style.dart';
 
 // Helper function to encapsulate code needed to instantiate the HomePage() widget
@@ -19,8 +19,6 @@ dynamic initWidget(WidgetTester tester, LocStateModel locstate) {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      localeResolutionCallback:
-          S.delegate.resolution(fallback: new Locale("en", "")),
       theme: appTheme,
       home: Scaffold(
         appBar: AppBar(),
@@ -45,6 +43,7 @@ void main() async {
   state = LocStateModel(MockGeolocator());
   testWidgets('LocationPage', (WidgetTester tester) async {
     await initWidget(tester, state);
+    await tester.pump();
     expect(find.byType(LocationStreamWidget), findsOneWidget);
     // Wait for button to appear
     await tester.pump(Duration(seconds: 1));

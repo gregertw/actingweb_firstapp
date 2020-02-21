@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:first_app/generated/i18n.dart';
+import 'package:first_app/generated/l10n.dart';
 import 'package:first_app/models/appstate.dart';
 import 'package:first_app/ui/pages/home/index.dart';
 import 'package:first_app/ui/pages/login/index.dart';
@@ -35,6 +35,7 @@ void main() async {
   // that occur outside runApp
   runZoned<Future<Null>>(() async {
     runApp(new MaterialApp(
+      debugShowCheckedModeBanner: false,
       onGenerateTitle: (context) => S.of(context).appTitle,
       localizationsDelegates: [
         S.delegate,
@@ -42,8 +43,6 @@ void main() async {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      localeResolutionCallback:
-          S.delegate.resolution(fallback: new Locale("en", "")),
       home: new ChangeNotifierProvider.value(
         value: appState,
         child: new HomePage(),
