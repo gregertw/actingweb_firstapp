@@ -40,7 +40,7 @@ void main() async {
   state.addLocation(Position(latitude: 59.893777, longitude: 10.7150951));
   testWidgets('OverlayMapPage', (WidgetTester tester) async {
     await initWidget(tester, state);
-
+    await tester.pump();
     expect(find.byType(FloatingActionButton), findsOneWidget);
     expect(find.byType(AnchoredOverlay), findsOneWidget);
     expect(find.byType(OverlayBuilder), findsOneWidget);
