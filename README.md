@@ -2,6 +2,11 @@
 
 **Maintainer**: Greger Wedel, https://github.com/gregertw
 
+Listed on: 
+<a href="https://github.com/Solido/awesome-flutter">
+   <img alt="Awesome Flutter" src="https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square" />
+</a>
+
 **Latest build and artifacts**: [![Codemagic build status](https://api.codemagic.io/apps/5e23f3b4c5faa6a356815277/5e23f3b4c5faa6a356815276/status_badge.svg)](https://codemagic.io/apps/5e23f3b4c5faa6a356815277/5e23f3b4c5faa6a356815276/latest_build)
 
 There are lots of simple Flutter app examples out there, but very few show how to tie together the elements
