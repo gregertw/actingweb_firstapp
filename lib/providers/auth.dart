@@ -18,19 +18,29 @@ class AuthClient {
     if (accessToken == null) {
       return null;
     }
-    var client = Auth0Auth(
-        authClient.auth.clientId, authClient.auth.client.baseUrl,
-        bearer: 'user access_token');
-    return Map.from(await client.getUserInfo());
+    try {
+      var client = Auth0Auth(
+          authClient.auth.clientId, authClient.auth.client.baseUrl,
+          bearer: 'user access_token');
+      return Map.from(await client.getUserInfo());
+    } catch (e) {
+      print('Error: $e');
+      return null;
+    }
   }
 
   Future<Map<dynamic, dynamic>> refreshToken(refreshToken) async {
     if (refreshToken == null) {
       return null;
     }
-    return Map.from(await authClient.webAuth.client.refreshToken({
-      'refreshToken': 'user refresh_token',
-    }));
+    try {
+      return Map.from(await authClient.webAuth.client.refreshToken({
+        'refreshToken': 'user refresh_token',
+      }));
+    } catch (e) {
+      print('Error: $e');
+      return null;
+    }
   }
 
   void closeSessions() {
