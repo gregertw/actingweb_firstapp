@@ -25,15 +25,20 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "748007732162-qltuqb4v2eqfgvafp290mqtpntk9joea.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "748007732162-0cf1ta4grookc448qqsujtp1kbs8u8r4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "io.actingweb.firstApp"
+              }
+            }
+          ]
         }
       }
     }
