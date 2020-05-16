@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## May 16, 2020
+
+- Upgrade to latest Flutter 1.17.1 and tools
+
 ## Jan 20, 2020
 
 - Replace local flutter-auth0 package with released package

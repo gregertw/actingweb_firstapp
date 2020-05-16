@@ -33,7 +33,7 @@ void main() async {
 
   // Use dart zone to define Crashlytics as error handler for errors
   // that occur outside runApp
-  runZoned<Future<Null>>(() async {
+  runZonedGuarded<Future<Null>>(() async {
     runApp(new MaterialApp(
       debugShowCheckedModeBanner: false,
       onGenerateTitle: (context) => S.of(context).appTitle,
@@ -59,5 +59,5 @@ void main() async {
       ),
       },
     ));
-  }, onError: Crashlytics.instance.recordError);
+  }, Crashlytics.instance.recordError);
 }
