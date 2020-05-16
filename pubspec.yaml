@@ -35,7 +35,7 @@ dev_dependencies:
     sdk: flutter
   test: any
   flutter_launcher_icons: ^0.7.4
-  intl_translation: ^0.17.7
+  intl_translation: ^0.17.9
   convert: any
   mockito: any
 
