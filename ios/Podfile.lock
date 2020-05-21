@@ -56,9 +56,11 @@ PODS:
   - Flutter (1.0.0)
   - flutter_auth0 (0.0.1):
     - Flutter
-  - geolocator (5.2.0):
+  - flutter_plugin_android_lifecycle (0.0.1):
     - Flutter
-  - google_api_availability (2.0.2):
+  - geolocator (5.3.1):
+    - Flutter
+  - google_api_availability (2.0.4):
     - Flutter
   - google_maps_flutter (0.0.1):
     - Flutter
@@ -96,7 +98,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (6.5.0):
     - GoogleUtilities/Logger
-  - "location_permissions (2.0.4+1)":
+  - location_permissions (2.0.5):
     - Flutter
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
@@ -118,6 +120,7 @@ DEPENDENCIES:
   - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
   - Flutter (from `Flutter`)
   - flutter_auth0 (from `.symlinks/plugins/flutter_auth0/ios`)
+  - flutter_plugin_android_lifecycle (from `.symlinks/plugins/flutter_plugin_android_lifecycle/ios`)
   - geolocator (from `.symlinks/plugins/geolocator/ios`)
   - google_api_availability (from `.symlinks/plugins/google_api_availability/ios`)
   - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
@@ -158,6 +161,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_auth0:
     :path: ".symlinks/plugins/flutter_auth0/ios"
+  flutter_plugin_android_lifecycle:
+    :path: ".symlinks/plugins/flutter_plugin_android_lifecycle/ios"
   geolocator:
     :path: ".symlinks/plugins/geolocator/ios"
   google_api_availability:
@@ -177,10 +182,10 @@ SPEC CHECKSUMS:
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 5d77105d9740a07ca6b16927ca971db7e860faaf
-  firebase_analytics: 077331cde46ef3df84b4a98662c49201927dd6db
-  firebase_core: 9bd2e66a276153e219a87ff39dfecb6b671f524a
+  firebase_analytics: dacdcfc524d722fff13dcff942f0dfa47e6be567
+  firebase_core: 0d8be0e0d14c4902953aeb5ac5d7316d1fe4b978
   firebase_core_web: d501d8b946b60c8af265428ce483b0fff5ad52d1
-  firebase_crashlytics: 0066966d67fee22065fdcf1c9703a97c4fdbae2e
+  firebase_crashlytics: bd8c58df07f107cb7e1a20cb190b9a468e0a69fd
   FirebaseAnalytics: e83e64b1231dedcd9ddd4bdecd9bcfd6ba341679
   FirebaseCore: 4aeb81ff53dcd9a3634ca725dc1fb8c2a4622046
   FirebaseCoreDiagnostics: 5e78803ab276bc5b50340e3c539c06c3de35c649
@@ -189,21 +194,22 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 6668efc1655a4052c083f287a7141f1ead12f9c2
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_auth0: 1d379ce1faf80f27b1058ef2502b6d0181561bdb
-  geolocator: cf6ecc0e5beffb31a51aee7ad6e49a49b293df32
-  google_api_availability: 6f1017d3a61be12be3bd9f929cc5b2606f24ae7f
-  google_maps_flutter: d0dd62f5a7d39bae61057eb9f52dd778d99c7c6c
+  flutter_plugin_android_lifecycle: dc0b544e129eebb77a6bfb1239d4d1c673a60a35
+  geolocator: 460cc8e850b616f8c0e90944c86517d91ccbb686
+  google_api_availability: 15fa42a8cd83c0a6738507ffe6e87096f12abcb8
+  google_maps_flutter: df4e7de95264aa0a2f11aac0fc7e313acb8ffc7e
   GoogleAppMeasurement: a08a43b8677b95ed51fcef880e36737334d804fd
   GoogleDataTransport: 574a983e829327d7c18f2627f65d9e80164ea8a4
   GoogleDataTransportCCTSupport: cad3cd6cdbdbad6b5c2c9206ec413402755faaaa
   GoogleMaps: 55da829c68aa931f3ae982b9e341cc2f3d89c587
   GoogleUtilities: f8de7ddf8c706f58e9b405d53e38bbdaa2731e5a
-  location_permissions: 360d12ecd1c94a4cab68585f508be1d5ad944c8b
+  location_permissions: 4a49d4e5bec5b653643e551ab77963cc99bb0e4a
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
-  shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
+  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   shared_preferences_macos: f3f29b71ccbb56bf40c9dd6396c9acf15e214087
   shared_preferences_web: 141cce0c3ed1a1c5bf2a0e44f52d31eeb66e5ea9
 
-PODFILE CHECKSUM: 49ec7d4076524b7e225c38b98147173651ac4b9d
+PODFILE CHECKSUM: 8685ee79ad9489b94b9f1ac3974f4638bb57b02e
 
 COCOAPODS: 1.8.4
