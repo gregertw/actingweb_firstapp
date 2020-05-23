@@ -65,13 +65,13 @@ class AppStateModel with ChangeNotifier {
     });
     _firebaseMessaging.getToken().then((String token) {
       assert(token != null);
-      print("Token: $token");
+      print("Firebase messaging token: $token");
     });
   }
 
   AppStateModel(this.prefs) {
     refresh();
-    initMessaging();
+    //initMessaging();
   }
 
   void refresh() async {
