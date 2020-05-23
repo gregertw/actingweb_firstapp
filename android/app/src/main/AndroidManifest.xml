@@ -18,7 +18,7 @@
     <!-- firebase_messaging: To receive background messages, a custom application init must be added.
          It is found in actingwebApplication.java in android/app/src/main/io/actingweb/ -->
     <application
-        android:name="io.actingweb.application.actingwebApplication"
+        android:name=".Application"
         android:label="first_app"
         android:icon="@mipmap/launcher_icon">
         <meta-data android:name="com.google.android.geo.API_KEY"
