@@ -2,6 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:first_app/providers/auth.dart';
 import 'package:first_app/mock/mockmap.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+Future<dynamic> firstappBackgroundMessageHandler(Map<String, dynamic> message) {
+  if (message.containsKey('data')) {
+    // Handle data message
+    final dynamic data = message['data'];
+    print("Data in message: $data");
+  }
+
+  if (message.containsKey('notification')) {
+    // Handle notification message
+    final dynamic notification = message['notification'];
+    print("Notification in message: $notification");
+  }
+  return Future<void>.value();
+}
 
 class AppStateModel with ChangeNotifier {
   bool _authenticated = false;
@@ -16,6 +32,8 @@ class AppStateModel with ChangeNotifier {
   // to be mocked as part of testing.
   MockMap _mocks = MockMap();
 
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
   bool get authenticated => _authenticated;
   String get userToken => _userToken;
   String get idToken => _idToken;
@@ -24,8 +42,36 @@ class AppStateModel with ChangeNotifier {
   String get email => _email;
   MockMap get mocks => _mocks;
 
+  void initMessaging() {
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+      },
+      onBackgroundMessage: firstappBackgroundMessageHandler,
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+      },
+    );
+
+    _firebaseMessaging.requestNotificationPermissions(
+      const IosNotificationSettings(
+            sound: true, badge: true, alert: true, provisional: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+    _firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      print("Token: $token");
+    });
+  }
+
   AppStateModel(this.prefs) {
     refresh();
+    initMessaging();
   }
 
   void refresh() async {
