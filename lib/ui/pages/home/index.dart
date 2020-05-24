@@ -8,6 +8,20 @@ import 'package:first_app/ui/pages/location/index.dart';
 import 'package:first_app/ui/pages/map/index.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+Future<dynamic> firstappBackgroundMessageHandler(Map<String, dynamic> message) {
+  if (message.containsKey('data')) {
+    // Handle data message
+    final dynamic data = message['data'];
+    print("Data in message: $data");
+  }
+
+  if (message.containsKey('notification')) {
+    // Handle notification message
+    final dynamic notification = message['notification'];
+    print("Notification in message: $notification");
+  }
+  return Future<void>.value();
+}
 
 class HomePage extends StatelessWidget {
 

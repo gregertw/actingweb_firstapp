@@ -3,21 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:first_app/providers/auth.dart';
 import 'package:first_app/mock/mockmap.dart';
 
-Future<dynamic> firstappBackgroundMessageHandler(Map<String, dynamic> message) {
-  if (message.containsKey('data')) {
-    // Handle data message
-    final dynamic data = message['data'];
-    print("Data in message: $data");
-  }
-
-  if (message.containsKey('notification')) {
-    // Handle notification message
-    final dynamic notification = message['notification'];
-    print("Notification in message: $notification");
-  }
-  return Future<void>.value();
-}
-
 class AppStateModel with ChangeNotifier {
   bool _authenticated = false;
   String _userToken;
