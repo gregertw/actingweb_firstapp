@@ -2,7 +2,7 @@ import 'package:test/test.dart';
 import 'package:first_app/models/appstate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:first_app/providers/auth.dart';
-import 'package:first_app/mock/mock_auth0.dart';
+import 'package:first_app/mock/mock_appauth.dart';
 
 
 void main() async {
@@ -14,18 +14,18 @@ void main() async {
   AppStateModel appState = AppStateModel(prefs);
 
   // We need a mock client to return the values that Auth0 would return
-  var mockClient = MockAuth0();
+  var mockClient = MockFlutterAppAuth();
 
   test('initially not logged in', () {
     expect(appState.authenticated, false);
   });
 
   test('authenticate', () async {
-    // Let's create an Auth0 provider with our appstate and request it
-    // to use our mock version of Auth0 lib
+    // Let's create an Appauth provider with our appstate and request it
+    // to use our mock version of Appauth lib
     var c = AuthClient(authClient: mockClient);
     // Do the authorization that normally brings up the login window that leads
-    // to a callback from Auth0 and finally to the log in information (that
+    // to a callback from Appauth and finally to the log in information (that
     // we mocked above)
     var res = await c.authorize();
     appState.logIn(res);

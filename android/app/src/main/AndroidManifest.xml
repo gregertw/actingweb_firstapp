@@ -40,17 +40,5 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity 
-            android:name="io.flutter.plugins.flutterauth0.AuthenticationReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data
-                    android:host="actingweb.eu.auth0.com"
-                    android:pathPrefix="/android/${applicationId}/callback"
-                    android:scheme="${applicationId}" />
-            </intent-filter>
-        </activity>
     </application>
 </manifest>

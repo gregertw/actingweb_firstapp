@@ -27,12 +27,10 @@
 	<array>
 		<dict>
 			<key>CFBundleTypeRole</key>
-			<string>None</string>
-			<key>CFBundleURLName</key>
-			<string>actingweb.eu.auth0.com</string>
+			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+				<string>io.identityserver.demo</string>
 			</array>
 		</dict>
 	</array>
