@@ -17,8 +17,8 @@ This app has the following elements:
 
 - Separation of business logic in models and providers, and UI in a separate folder structure
 - Use of scoped_model for app state management
-- State management of login and login token using Auth0 including permanent storage for restarts
-- Use of a plugin that is not published (flutter_auth0)
+- Authentication and authorization using the https://appauth.io/ OpenID Connect and OAuth2 library
+- State management of login and login token including permanent storage for restarts
 - Simple widget framework for handling logged-in, expired, and logged-out states
 - Testing using unit test framework and mocking
 - Localization using i18n and the Android Studio/IntelliJ flutter i18n plugin to generate boilerplate
@@ -50,7 +50,7 @@ See CHANGELOG.md
 
 ## How to get started
 
-The app relies on an Auth0 project, as well as a Google Firebase project. The currently configured test 
+The app relies on a Google Firebase project. The currently configured test 
 projects are available for your testing, but obviously you will not be able to log into these projects, so
 the value of that is just that you can test the app without doing any code changes. To start tinkering, you
 will want to create your own Auth0 and Firebase projects.
@@ -59,34 +59,36 @@ But, first of all, check out the actingweb_firstapp code base. You can use any e
 i18n generation, you need (at this point) Android Studio/IntelliJ as flutter_i18n is a plugin for this editor 
 (Visual Studio Code support is in the works).
 
-*NOTE!!!*
-The plugin flutter_auth0 is configured to use io.actingweb.firstapp as 
-app identifier. You can use this identifier for
-testing, but for your own app, you want to change this manually manually in ´android/app/build.gradle´ and 
-´android/app/src/main/AndroidManifest.xml´ for Android. For iOS, you should change the product bundle identifier
- in XCode.
-
-Also, in ´lib/providers/auth.dart´ you will find the instantiation of an auth0 object, this is where you 
-change your client id and domain used in Auth0 (see below for Auth0 setup). 
-
 Make sure you have available a device to run the app on, either a physical device or an emulator, then just
-start debugging. You should be able to log into the app with your Google account (note! your personal details
- will show up in the admin console of the ActingWeb Auth0 project).
+start debugging. You should be able to log into the app with your Google account.
 
-## Set up Auth0
+## Authentication and Authorization
 
-Note that the first version of this app used unpublished flutter-auth0 package. As it now has been relased,
-this has been replaced with the published version.
+### A Comment on Auth0 (old authn/authz)
 
-In Auth0, you need to configure a native app, add your allowed callback and logout URLs. The ones used for
-this test project is: io.actingweb.firstApp://actingweb.eu.auth0.com/ios/io.actingweb.firstApp/callback, 
-io.actingweb.firstApp://actingweb.eu.auth0.com/android/io.actingweb.firstApp/callback
-As you can see, the callback URLs are based on the identifier + the Auth0 domain name of the project.
+This project previously used Auth0. Early on, an unpublished flutter_auth0 library was the only way to get proper social login support and was also a good example of including unpublished library code. The flutter_auth0 plugin was eventually published, but the Auth0 company did not show any interest in enabling the Flutter community. Although the flutter_auth0 plugin worked well, a single developer supported library is always risky and given that the intention of this starter app is to show choices that a professional developer team would make, flutter_auth0 was never really the right choice. After tinkering with adding device messaging using Firebase, I discovered a conflict between flutter_auth0 and Firebase Messaging pretty deep in native Android. I thus decided to replace Auth0 with something that could show a more robust implementation pattern and better support a professional development team.
 
-Beyond that, a default project should work. If you are not able to get a login window when clicking on the Login
-button, try using the new Universal Login in Auth0.
+### Authentication and Authorization
 
-## Set up Firebase Analytics
+This app uses a demo Identiy Provider (IdP) server for authentication. The library appauth (https://appauth.io) and its Flutter plugin flutter_appauth adds OpenID Connect support to the app. 
+
+The demo.identityserver.io IdP service is used as the authorization server and as a test for an API gateway. See https://medium.com/@darutk/diagrams-of-all-the-openid-connect-flows-6968e3990660  (example #1 with response_type=code and openid included in the scope) for a visual overview of the flow used. 
+
+The OAuth2 authorization flow is used, and the appauth library function authorizeAndExchangeCode() is used to do both the login at demo.identiyserver.io to get the code, and then exchange the code for both an id token and an access token from the token endpoint on the demo.identiyserver.io server. Finally, the getUserInfo() function in auth.dart (lib/providers/) uses a test API endpoint with the access token to retrieve information about the logged in user.
+
+If your app is just using Google APIs and only accepts Google logins, you could replace the IdP with Google and end up with an access token to access Google APIs on behalf of the user's account. See how at https://github.com/openid/AppAuth-Android/blob/master/app/README-Google.md
+
+To learn more about how the appauth library, this is a good reference: https://github.com/openid/AppAuth-Android/tree/master/app
+
+### Setup of Appauth
+
+The appauth plugin is documented at https://pub.dev/packages/flutter_appauth. The Android and iOS setups are fairly simple. In build.gradle (android/) and Info.plist (ios/Runner/) you need to register the custom URL for your app (here: io.actingweb.firstapp). You should then use the same custom URL scheme in the redirectURL used in the AuthClient (see lib/provisers/auth.dart).
+
+The custom URL scheme is used in the request to the IdP server as the redirect URL after successful authentication (and since there are more scopes specified as default, successful authorization to those scopes). The login happens in the mobile's browser and the IdP will redirect the browser to this custom scheme, which again will open up the Flutter app. This allows the app the
+process the redirect, which includes a code (and more). Finally, these details are used to connect to the token endpoint to get
+the access token and id token.
+
+## Setup of Firebase Analytics
 
 Go to https://firebase.google.com/docs/flutter/setup to set up Firebase for Flutter. The procedure in its
 simplest form is to register the app identifier for iOS and Android (may be same or different, but is the 

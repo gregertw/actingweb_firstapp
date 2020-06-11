@@ -53,11 +53,8 @@ android {
         // This is for appauth
         // This needs to match the domain of the redirectUrl used for AuthClient
         // See https://github.com/openid/AppAuth-Android/tree/master/app
-        // To implement catching the auth code in the app, see:
-        // https://github.com/openid/AppAuth-Android/blob/master/app/AndroidManifest.xml and
-        // https://github.com/openid/AppAuth-iOS/tree/master/Examples/Example-iOS_Swift-Carthage
         manifestPlaceholders = [
-                'appAuthRedirectScheme': 'io.identityserver.demo'
+                'appAuthRedirectScheme': 'io.actingweb.firstapp'
         ]
     }
 

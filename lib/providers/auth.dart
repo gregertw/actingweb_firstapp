@@ -11,7 +11,7 @@ class AuthClient {
   // Default configs for using the demo.identityserver.io ConnectId service
   // Either use the discoveryUrl or the authzEndpoint and tokenEndpoint (to skip discovery)
   static const String _clientId = 'native.code';
-  static const String _redirectUrl = 'io.identityserver.demo:/oauthredirect';
+  static const String _redirectUrl = 'io.actingweb.firstapp:/oauthredirect';
   static const String _discoveryUrl =
       'https://demo.identityserver.io/.well-known/openid-configuration';
   static const List<String> _scopes = <String>[

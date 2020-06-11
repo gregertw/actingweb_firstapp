@@ -30,7 +30,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>io.identityserver.demo</string>
+				<string>io.actingweb.firstApp</string>
 			</array>
 		</dict>
 	</array>
