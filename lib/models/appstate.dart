@@ -84,9 +84,8 @@ class AppStateModel with ChangeNotifier {
       prefs.setString('idToken', data['id_token']);
       _idToken = data['id_token'];
     }
-    if (data.containsKey('expires_in')) {
-      var _expires =
-          new DateTime.now().add(new Duration(seconds: data['expires_in']));
+    if (data.containsKey('expires')) {
+      var _expires = data['expires'];
       prefs.setString('expires', _expires.toIso8601String());
     }
     notifyListeners();
