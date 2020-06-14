@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Jun 14, 2020
+
+- Remove flutter_asuth0 and thus Auth0 support and replace with flutter_appauth (https://appauth.io) and use a demo identityserver
+- Release version 1.2.0
+
 ## May 16, 2020
 
 - Upgrade to latest Flutter 1.17.1 and tools
