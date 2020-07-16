@@ -10,7 +10,7 @@ class AuthClient {
 
   // Default configs for using the demo.identityserver.io ConnectId service
   // Either use the discoveryUrl or the authzEndpoint and tokenEndpoint (to skip discovery)
-  static const String _clientId = 'native.code';
+  static const String _clientId = 'interactive.public.short';
   static const String _redirectUrl = 'io.actingweb.firstapp:/oauthredirect';
   static const String _discoveryUrl =
       'https://demo.identityserver.io/.well-known/openid-configuration';
@@ -49,7 +49,7 @@ class AuthClient {
       final http.Response httpResponse = await http.get(
           'https://demo.identityserver.io/api/test',
           headers: <String, String>{'Authorization': 'Bearer $accessToken'});
-        _userInfo = httpResponse.statusCode == 200 ? httpResponse.body : '';
+      _userInfo = httpResponse.statusCode == 200 ? httpResponse.body : '';
 
       return _userInfo;
     } catch (e) {
@@ -64,10 +64,10 @@ class AuthClient {
     }
     try {
       final TokenResponse result = await authClient.token(TokenRequest(
-        _clientId, _redirectUrl,
-        refreshToken: refreshToken,
-        discoveryUrl: _discoveryUrl,
-        scopes: _scopes));
+          _clientId, _redirectUrl,
+          refreshToken: refreshToken,
+          discoveryUrl: _discoveryUrl,
+          scopes: _scopes));
       return Map.from({
         'refreshToken': result.accessToken,
         'expiry': result.accessTokenExpirationDateTime,
@@ -86,10 +86,8 @@ class AuthClient {
           AuthorizationTokenRequest(
             clientId,
             redirectUrl,
-            serviceConfiguration: AuthorizationServiceConfiguration(
-              authzEndpoint,
-              tokenEndpoint
-            ),
+            serviceConfiguration:
+                AuthorizationServiceConfiguration(authzEndpoint, tokenEndpoint),
             scopes: this.scopes,
           ),
         );
@@ -103,7 +101,7 @@ class AuthClient {
           ),
         );
       }
-      if (_result.accessToken != null) {
+      if (_result != null && _result.accessToken != null) {
         return Map.from({
           'access_token': _result.accessToken,
           'expires': _result.accessTokenExpirationDateTime,
@@ -115,6 +113,6 @@ class AuthClient {
     } catch (e) {
       print('Error: $e');
     }
-    return null;
+    return Map.from({});
   }
 }

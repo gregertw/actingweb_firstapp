@@ -35,8 +35,8 @@ class AppStateModel with ChangeNotifier {
       _expires = DateTime.parse(expiresStr);
       var remaining = _expires.difference(DateTime.now());
       if (remaining.inSeconds < 3600) {
-        var auth =
-            await AuthClient(authClient:_mocks.getMock('authClient')).refreshToken(prefs.getString('refreshToken'));
+        var auth = await AuthClient(authClient: _mocks.getMock('authClient'))
+            .refreshToken(prefs.getString('refreshToken'));
         if (auth != null && auth.containsKey('access_token')) {
           logIn(auth);
         } else {
@@ -71,6 +71,9 @@ class AppStateModel with ChangeNotifier {
   }
 
   void logIn(data) {
+    if (data == null) {
+      return;
+    }
     if (data.containsKey('access_token')) {
       prefs.setString('userToken', data['access_token']);
       _userToken = data['access_token'];
@@ -108,5 +111,4 @@ class AppStateModel with ChangeNotifier {
     prefs.clear();
     notifyListeners();
   }
-
 }
