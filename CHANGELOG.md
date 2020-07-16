@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Jul 16, 2020
+
+- Changed client id code for demo.identityserver.io as they have changed the codes they use
+
 ## Jun 14, 2020
 
 - Remove flutter_asuth0 and thus Auth0 support and replace with flutter_appauth (https://appauth.io) and use a demo identityserver
