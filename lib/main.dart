@@ -9,6 +9,51 @@ import 'package:first_app/models/appstate.dart';
 import 'package:first_app/ui/pages/home/index.dart';
 import 'package:first_app/ui/pages/login/index.dart';
 import 'package:first_app/ui/theme/style.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+Future<dynamic> firstappBackgroundMessageHandler(Map<String, dynamic> message) {
+  if (message.containsKey('data')) {
+    // Handle data message
+    final dynamic data = message['data'];
+    print("Data in message: $data");
+  }
+
+  if (message.containsKey('notification')) {
+    // Handle notification message
+    final dynamic notification = message['notification'];
+    print("Notification in message: $notification");
+  }
+  return Future<void>.value();
+}
+
+final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+void initMessaging() {
+  _firebaseMessaging.configure(
+    onMessage: (Map<String, dynamic> message) async {
+      print("onMessage: $message");
+    },
+    onBackgroundMessage: firstappBackgroundMessageHandler,
+    onLaunch: (Map<String, dynamic> message) async {
+      print("onLaunch: $message");
+    },
+    onResume: (Map<String, dynamic> message) async {
+      print("onResume: $message");
+    },
+  );
+
+  _firebaseMessaging.requestNotificationPermissions(
+      const IosNotificationSettings(
+          sound: true, badge: true, alert: true, provisional: true));
+  _firebaseMessaging.onIosSettingsRegistered
+      .listen((IosNotificationSettings settings) {
+    print("Settings registered: $settings");
+  });
+  _firebaseMessaging.getToken().then((String token) {
+    assert(token != null);
+    print("Firebase messaging token: $token");
+  });
+}
 
 void main() async {
   // A breaking change in the platform messaging, as of Flutter 1.12.13+hotfix.5,
@@ -31,6 +76,8 @@ void main() async {
   // Let's initialise the app state with the stored preferences
   var appState = new AppStateModel(prefs);
 
+  initMessaging();
+
   // Use dart zone to define Crashlytics as error handler for errors
   // that occur outside runApp
   runZonedGuarded<Future<Null>>(() async {
@@ -50,13 +97,14 @@ void main() async {
       theme: appTheme,
       routes: <String, WidgetBuilder>{
         "/HomePage": (BuildContext context) => new ChangeNotifierProvider.value(
-        value: appState,
-        child: new HomePage(),
-      ),
-        "/LoginPage": (BuildContext context) => new ChangeNotifierProvider.value(
-        value: appState,
-        child: new LoginPage(),
-      ),
+              value: appState,
+              child: new HomePage(),
+            ),
+        "/LoginPage": (BuildContext context) =>
+            new ChangeNotifierProvider.value(
+              value: appState,
+              child: new LoginPage(),
+            ),
       },
     ));
   }, Crashlytics.instance.recordError);

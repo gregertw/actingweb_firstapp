@@ -27,7 +27,7 @@ dependencies:
   firebase_core: ^0.4.3+2
   firebase_analytics: ^5.0.9
   firebase_crashlytics: ^0.1.2+4
-  firebase_messaging: ^6.0.15 
+  firebase_messaging: ^6.0.16
 
 dev_dependencies:
   flutter_test:
