@@ -34,10 +34,10 @@ void main() async {
   SharedPreferences.setMockInitialValues({});
   var prefs = await SharedPreferences.getInstance();
   // We have one logged in state and one logged out, to be used with various tests
-  state = AppStateModel(prefs);
+  state = AppStateModel(prefs, null);
   testWidgets('LoginPage', (WidgetTester tester) async {
     await initWidget(tester, state);
-    
+
     await tester.pump();
     expect(find.byType(Image), findsOneWidget);
     expect(find.byType(Text), findsNWidgets(2));

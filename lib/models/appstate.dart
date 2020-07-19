@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:first_app/providers/auth.dart';
 import 'package:first_app/mock/mockmap.dart';
 
@@ -11,6 +12,7 @@ class AppStateModel with ChangeNotifier {
   DateTime _expires;
   String _email;
   final SharedPreferences prefs;
+  final FirebaseAnalytics analytics;
   // We use a mockmap to enable and disable mock functions/classes.
   // The mock should be injected as a dependency where external dependencies need
   // to be mocked as part of testing.
@@ -24,8 +26,20 @@ class AppStateModel with ChangeNotifier {
   String get email => _email;
   MockMap get mocks => _mocks;
 
-  AppStateModel(this.prefs) {
+  AppStateModel(this.prefs, this.analytics) {
     refresh();
+  }
+
+  Future<void> sendAnalyticsEvent(
+      String name, Map<String, dynamic> params) async {
+    if (this.analytics == null) {
+      return;
+    }
+    await this.analytics.logEvent(
+          name: name,
+          parameters: params,
+        );
+    print('Sent analytics events: $name');
   }
 
   void refresh() async {
@@ -91,6 +105,7 @@ class AppStateModel with ChangeNotifier {
       var _expires = data['expires'];
       prefs.setString('expires', _expires.toIso8601String());
     }
+    sendAnalyticsEvent('login', null);
     notifyListeners();
   }
 

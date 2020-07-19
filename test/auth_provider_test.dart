@@ -4,14 +4,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:first_app/providers/auth.dart';
 import 'package:first_app/mock/mock_appauth.dart';
 
-
 void main() async {
   // We need mock initial values for SharedPreferences
   SharedPreferences.setMockInitialValues({});
   var prefs = await SharedPreferences.getInstance();
   // This is to keep our appstate
   // NOTE!! We here also test the appstate related to authentication
-  AppStateModel appState = AppStateModel(prefs);
+  AppStateModel appState = AppStateModel(prefs, null);
 
   // We need a mock client to return the values that Auth0 would return
   var mockClient = MockFlutterAppAuth();

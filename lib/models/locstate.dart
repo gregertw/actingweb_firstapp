@@ -44,15 +44,19 @@ class LocStateModel with ChangeNotifier {
   void addLocation(Position pos) {
     _pointList[pos] = null;
     _lastPos = pos;
-    this
-        .locator
-        .placemarkFromCoordinates(pos.latitude, pos.longitude)
-        .then((pm) {
-      if (pm != null) {
-        _pointList[pos] = pm.first;
-      }
-      notifyListeners();
-    });
+    try {
+      this
+          .locator
+          .placemarkFromCoordinates(pos.latitude, pos.longitude)
+          .then((pm) {
+        if (pm != null) {
+          _pointList[pos] = pm.first;
+        }
+        notifyListeners();
+      });
+    } catch (e) {
+      return;
+    }
     notifyListeners();
   }
 

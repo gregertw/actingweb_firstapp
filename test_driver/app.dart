@@ -13,7 +13,6 @@ import 'package:first_app/mock/mock_appauth.dart';
 import 'package:first_app/mock/mock_geolocator.dart';
 
 void main() async {
-
   AppStateModel appState;
 
   // ignore: missing_return
@@ -54,7 +53,7 @@ void main() async {
   // We don't want any state we cannot control when testing
   prefs.clear();
   // Let's initialise the app state with the stored preferences
-  appState = new AppStateModel(prefs);
+  appState = new AppStateModel(prefs, null);
 
   runApp(
     new MaterialApp(
@@ -72,11 +71,12 @@ void main() async {
       theme: appTheme,
       routes: <String, WidgetBuilder>{
         "/HomePage": (BuildContext context) => new ChangeNotifierProvider.value(
-        value: appState,
+              value: appState,
               child: new HomePage(),
             ),
-        "/LoginPage": (BuildContext context) => new ChangeNotifierProvider.value(
-        value: appState,
+        "/LoginPage": (BuildContext context) =>
+            new ChangeNotifierProvider.value(
+              value: appState,
               child: new LoginPage(),
             ),
       },
