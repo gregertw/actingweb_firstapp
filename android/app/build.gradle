@@ -87,5 +87,5 @@ dependencies {
     api 'com.google.firebase:firebase-core:17.2.1'
 }
 
-apply plugin: 'com.google.gms.google-services'  // Gradle plugin for Google Services
 apply plugin: 'io.fabric'  // Google Firebase Crashlytics
+apply plugin: 'com.google.gms.google-services'  // Gradle plugin for Google Services
