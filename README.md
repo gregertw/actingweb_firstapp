@@ -26,6 +26,7 @@ This app has the following elements:
 - Custom icons for both iOS and Android
 - Use of Firebase Analytics for usage tracking
 - Use of Firebase Crashlytics for crash reporting
+- Use of Firebase Cloud Messaging for push notifications
 - Use of a OS native capability (location tracking) using a published plugin (geolocator)
 - Use of Google Maps to present a map of the current location
 - Use of an independently defined new widget type called
@@ -95,8 +96,63 @@ simplest form is to register the app identifier for iOS and Android (may be same
 same here) with Firebase using Add App. You will then drop into this project your own GoogleService-Info.plist 
 and google-services.json files.
 
-**Note!!** If you make a new project and don't just modify this, make sure you add GoogleService-Info.plist 
+**Note!!** If you make a new project and don't just modify this project, make sure you add GoogleService-Info.plist 
 in Xcode (to Runner) as just dropping the file in will not work for iOS!
+
+MaterialApp() has this extra code to record navigation from screen to screen:
+```
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: analytics),
+```
+
+However, if you want to customize the names of the screens in the analytics reports, you should set the screen 
+name and class explicitly in each widget using:
+```
+await analytics.setCurrentScreen(
+      screenName: 'Analytics Demo',
+      screenClassOverride: 'AnalyticsDemo',
+    );
+```
+
+## Setup of Firebase Cloud Messaging
+
+This project also has set up Firebase Cloud Messaging, allowing you to send
+push notifications to the app. You need to turn on Cloud Messaging in the Firebase Console.
+
+For iOS, you also need to generate a key and upload that to Firebase, see https://pub.dev/packages/firebase_messaging.
+
+**Note!!** This app can receive notifications while in the background or terminated through the onResume() and onLaunch() events. You should only use so-called "notification" messages and not "data" messages for this (though you can have extra key/value pairs in the "data" section). For both Android and iOS, the notification will appear in the system tray and the app is launched and onResume() or onLaunch() triggered. It is also possible to make app react directly from the background to notifications. However, this requires custom logic for Android and iOS and is not straightforward, so be warned. There is also a bug related to background handling: https://github.com/FirebaseExtended/flutterfire/issues/1763
+
+**Note2!!** The iOS simulator does not support background notifications, only onResume() will be triggered.
+
+The app will write the FCM token to console. In order to send a notification, you need to construct a payload like this (this is for shell and replace the `<token>` with the app's token):
+```
+export DATA='{"notification": {"body": "this is a body","title": "this is a title"}, "priority": "high", "data": {"click_action": "FLUTTER_NOTIFICATION_CLICK", "id": "1", "status": "done"}, "to": "<token>"}'
+```
+
+The "notification" part will be delivered either to system tray (background or not running) or directly. The click_action is required for Android only and for onResume() and onLaunch() to work (i.e. will not have an impact when the Android app is in the foreground). For iOS, the extra click_action will be included, but does no harm.
+
+The "id" and "status" elements in "data" are just example data payload that can be used by the app. Here you can send a URL or any other data. 
+
+**Note** that on iOS, these keys will appear on the root level of the message json and not within the "data" element. 
+
+To send the above payload, you can use curl:
+
+```
+curl https://fcm.googleapis.com/fcm/send -H "Content-Type:application/json" -X POST -d "$DATA" -H "Authorization: key=<key>"
+```
+
+Here `<key>` must be replaced with the Firebase Cloud Messaging API server key (found in the Settings of the Firebase app under Cloud Messaging).
+
+**So, in sum: Use "notification" to send a title and a message and the "data" element to send extra data. Except that all the "data" elements will appear on the root level of the message json in iOS, the behaviour will be similar for both Android and iOS.**
+
+**Note!!** Read this if you want to use another flutter fplugin for notifications (for further customisations etc). You then need to turn off so-called method swizzling for iOS on to allow other notification plugins. You then need to notify FCM about reception of the message yourself (https://firebase.google.com/docs/cloud-messaging/ios/receive) 
+
+This is how you set swizzling off (in Info.plist):
+```
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
+```
 
 ## Set up Google Maps (new Dec 26, 2019)
 

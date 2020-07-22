@@ -14,21 +14,6 @@ import 'package:first_app/ui/pages/home/index.dart';
 import 'package:first_app/ui/pages/login/index.dart';
 import 'package:first_app/ui/theme/style.dart';
 
-Future<dynamic> firstappBackgroundMessageHandler(Map<String, dynamic> message) {
-  if (message.containsKey('data')) {
-    // Handle data message
-    final dynamic data = message['data'];
-    print("Data in message: $data");
-  }
-
-  if (message.containsKey('notification')) {
-    // Handle notification message
-    final dynamic notification = message['notification'];
-    print("Notification in message: $notification");
-  }
-  return Future<void>.value();
-}
-
 final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
 void initMessaging() {
@@ -36,8 +21,7 @@ void initMessaging() {
     onMessage: (Map<String, dynamic> message) async {
       print("onMessage: $message");
     },
-    onBackgroundMessage:
-        Platform.isIOS ? null : firstappBackgroundMessageHandler,
+    onBackgroundMessage: null,
     onLaunch: (Map<String, dynamic> message) async {
       print("onLaunch: $message");
     },
@@ -46,9 +30,8 @@ void initMessaging() {
     },
   );
 
-  _firebaseMessaging.requestNotificationPermissions(
-      const IosNotificationSettings(
-          sound: true, badge: true, alert: true, provisional: true));
+  _firebaseMessaging
+      .requestNotificationPermissions(const IosNotificationSettings());
   _firebaseMessaging.onIosSettingsRegistered
       .listen((IosNotificationSettings settings) {
     print("Settings registered: $settings");
@@ -82,6 +65,7 @@ void main() async {
   // Let's initialise the app state with the stored preferences
   var appState = new AppStateModel(prefs, analytics);
 
+  // Initialise Firebase messaging
   initMessaging();
 
   // Use dart zone to define Crashlytics as error handler for errors
