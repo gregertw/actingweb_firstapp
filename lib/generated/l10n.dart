@@ -8,8 +8,12 @@ import 'intl/messages_all.dart';
 // Made by Localizely
 // **************************************************************************
 
+// ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
+
 class S {
   S();
+  
+  static S current;
   
   static const AppLocalizationDelegate delegate =
     AppLocalizationDelegate();
@@ -19,7 +23,9 @@ class S {
     final localeName = Intl.canonicalizedLocale(name); 
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
-      return S();
+      S.current = S();
+      
+      return S.current;
     });
   } 
 
@@ -27,6 +33,7 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `ActingWeb First App`
   String get appTitle {
     return Intl.message(
       'ActingWeb First App',
@@ -36,6 +43,7 @@ class S {
     );
   }
 
+  /// `Welcome to ActingWeb`
   String get loginWelcomeText {
     return Intl.message(
       'Welcome to ActingWeb',
@@ -45,6 +53,7 @@ class S {
     );
   }
 
+  /// `Loading events...`
   String get loginLoadEvents {
     return Intl.message(
       'Loading events...',
@@ -54,6 +63,7 @@ class S {
     );
   }
 
+  /// `Log in`
   String get loginButton {
     return Intl.message(
       'Log in',
@@ -63,6 +73,7 @@ class S {
     );
   }
 
+  /// `Log out`
   String get logoutButton {
     return Intl.message(
       'Log out',
@@ -72,6 +83,7 @@ class S {
     );
   }
 
+  /// `Start listening`
   String get startListening {
     return Intl.message(
       'Start listening',
@@ -81,6 +93,7 @@ class S {
     );
   }
 
+  /// `Stop listening`
   String get stopListening {
     return Intl.message(
       'Stop listening',
@@ -90,6 +103,7 @@ class S {
     );
   }
 
+  /// `Lat: $lat, Long: $long`
   String get latitudeLongitude {
     return Intl.message(
       'Lat: \$lat, Long: \$long',
@@ -99,6 +113,7 @@ class S {
     );
   }
 
+  /// `Unknown`
   String get unknown {
     return Intl.message(
       'Unknown',
