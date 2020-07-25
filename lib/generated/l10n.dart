@@ -8,8 +8,12 @@ import 'intl/messages_all.dart';
 // Made by Localizely
 // **************************************************************************
 
+// ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
+
 class S {
   S();
+  
+  static S current;
   
   static const AppLocalizationDelegate delegate =
     AppLocalizationDelegate();
@@ -19,7 +23,9 @@ class S {
     final localeName = Intl.canonicalizedLocale(name); 
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
-      return S();
+      S.current = S();
+      
+      return S.current;
     });
   } 
 
@@ -27,6 +33,7 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `ActingWeb First App`
   String get appTitle {
     return Intl.message(
       'ActingWeb First App',
@@ -36,6 +43,7 @@ class S {
     );
   }
 
+  /// `Welcome to ActingWeb`
   String get loginWelcomeText {
     return Intl.message(
       'Welcome to ActingWeb',
@@ -45,6 +53,7 @@ class S {
     );
   }
 
+  /// `Loading events...`
   String get loginLoadEvents {
     return Intl.message(
       'Loading events...',
@@ -54,6 +63,7 @@ class S {
     );
   }
 
+  /// `Log in`
   String get loginButton {
     return Intl.message(
       'Log in',
@@ -63,6 +73,7 @@ class S {
     );
   }
 
+  /// `Log out`
   String get logoutButton {
     return Intl.message(
       'Log out',
@@ -72,6 +83,7 @@ class S {
     );
   }
 
+  /// `Start listening`
   String get startListening {
     return Intl.message(
       'Start listening',
@@ -81,6 +93,7 @@ class S {
     );
   }
 
+  /// `Stop listening`
   String get stopListening {
     return Intl.message(
       'Stop listening',
@@ -90,6 +103,7 @@ class S {
     );
   }
 
+  /// `Lat: $lat, Long: $long`
   String get latitudeLongitude {
     return Intl.message(
       'Lat: \$lat, Long: \$long',
@@ -99,10 +113,211 @@ class S {
     );
   }
 
+  /// `Unknown`
   String get unknown {
     return Intl.message(
       'Unknown',
       name: 'unknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ok`
+  String get okButton {
+    return Intl.message(
+      'Ok',
+      name: 'okButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Click to view...`
+  String get clickToView {
+    return Intl.message(
+      'Click to view...',
+      name: 'clickToView',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `testuser@demoserver.io`
+  String get drawerEmail {
+    return Intl.message(
+      'testuser@demoserver.io',
+      name: 'drawerEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Test User`
+  String get drawerUser {
+    return Intl.message(
+      'Test User',
+      name: 'drawerUser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Click to view details...`
+  String get drawerHeaderInitialName {
+    return Intl.message(
+      'Click to view details...',
+      name: 'drawerHeaderInitialName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `...`
+  String get drawerHeaderInitialEmail {
+    return Intl.message(
+      '...',
+      name: 'drawerHeaderInitialEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `N/A`
+  String get drawerEmptyName {
+    return Intl.message(
+      'N/A',
+      name: 'drawerEmptyName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ``
+  String get drawerEmptyEmail {
+    return Intl.message(
+      '',
+      name: 'drawerEmptyEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refresh tokens`
+  String get drawerRefreshTokens {
+    return Intl.message(
+      'Refresh tokens',
+      name: 'drawerRefreshTokens',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tokens refreshed`
+  String get drawerRefreshTokensResultTitle {
+    return Intl.message(
+      'Tokens refreshed',
+      name: 'drawerRefreshTokensResultTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See user details for the new tokens.`
+  String get drawerRefreshTokensResultMsg {
+    return Intl.message(
+      'See user details for the new tokens.',
+      name: 'drawerRefreshTokensResultMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get user info`
+  String get drawerGetUserInfo {
+    return Intl.message(
+      'Get user info',
+      name: 'drawerGetUserInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User info retrieved`
+  String get drawerGetUserInfoResultTitle {
+    return Intl.message(
+      'User info retrieved',
+      name: 'drawerGetUserInfoResultTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User details have been updated.`
+  String get drawerGetUserInfoResultMsg {
+    return Intl.message(
+      'User details have been updated.',
+      name: 'drawerGetUserInfoResultMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current localisation`
+  String get drawerLocalisation {
+    return Intl.message(
+      'Current localisation',
+      name: 'drawerLocalisation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Locale changed`
+  String get drawerLocalisationResultTitle {
+    return Intl.message(
+      'Locale changed',
+      name: 'drawerLocalisationResultTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Changed to `
+  String get drawerLocalisationResultMsg {
+    return Intl.message(
+      'Changed to ',
+      name: 'drawerLocalisationResultMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User token`
+  String get drawerButtomSheetUserToken {
+    return Intl.message(
+      'User token',
+      name: 'drawerButtomSheetUserToken',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Id token`
+  String get drawerButtomSheetIdToken {
+    return Intl.message(
+      'Id token',
+      name: 'drawerButtomSheetIdToken',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expires`
+  String get drawerButtomSheetExpires {
+    return Intl.message(
+      'Expires',
+      name: 'drawerButtomSheetExpires',
       desc: '',
       args: [],
     );

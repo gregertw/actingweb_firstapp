@@ -7,6 +7,7 @@ import 'package:first_app/models/appstate.dart';
 import 'package:first_app/generated/l10n.dart';
 import 'package:first_app/ui/theme/style.dart';
 import 'package:first_app/ui/pages/home/index.dart';
+import 'package:first_app/ui/pages/home/drawer.dart';
 import 'package:first_app/ui/pages/location/index.dart';
 import 'package:first_app/ui/pages/map/index.dart';
 import 'package:first_app/ui/pages/login/index.dart';
@@ -58,25 +59,36 @@ void main() async {
   testWidgets('logged-in homepage widget', (WidgetTester tester) async {
     await initWidget(tester, loginState);
     await tester.pump();
-    // We should find both the map toggle button and the log out button
-    expect(find.byType(FloatingActionButton), findsNWidgets(2));
+    expect(find.byKey(Key("HomePage_Scaffold")), findsOneWidget);
+    expect(find.byType(AppBar), findsOneWidget);
+    // We should find the map toggle button
+    expect(find.byType(FloatingActionButton), findsOneWidget);
     expect(find.byType(LocationStreamWidget), findsOneWidget);
     expect(find.byType(OverlayMapPage), findsOneWidget);
   });
 
-  testWidgets('log out of homepage widget', (WidgetTester tester) async {
+  testWidgets('open drawer', (WidgetTester tester) async {
     await initWidget(tester, loginState);
     await tester.pump();
-    // Find the log out button
+    // Find the menu button
     final finder = find.descendant(
-        of: find.byType(Scaffold), matching: find.byIcon(Icons.exit_to_app));
-    // and tap it to log out
+        of: find.byKey(Key("HomePage_Scaffold")),
+        matching: find.byTooltip("Open navigation menu"));
+    // and tap it to open
     await tester.tap(finder);
     await tester.pump();
 
-    // We should be back to the LoginPage
-    expect(find.byType(LoginPage), findsOneWidget);
-    // And authenticated state should be false
-    expect(loginState.authenticated, false);
+    // We should have opened the drawer
+    expect(find.byType(HomePageDrawer), findsOneWidget);
+    expect(
+        find.descendant(
+            of: find.byType(HomePageDrawer),
+            matching: find.byType(UserAccountsDrawerHeader)),
+        findsOneWidget);
+    // Number of menu items
+    expect(
+        find.descendant(
+            of: find.byType(HomePageDrawer), matching: find.byType(ListTile)),
+        findsNWidgets(4));
   });
 }
