@@ -4,6 +4,7 @@
 
 - Added a drawer menu, moved logout into menu, added menu options to refresh tokens and get user info, as well as to view
   user details
+- Bump version to 1.3.0+4
 
 ## Jul 16, 2020
 
