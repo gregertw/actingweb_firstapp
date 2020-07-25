@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Jul 25, 2020
+
+- Added a drawer menu, moved logout into menu, added menu options to refresh tokens and get user info, as well as to view
+  user details
+
 ## Jul 16, 2020
 
 - Changed client id code for demo.identityserver.io as they have changed the codes they use
