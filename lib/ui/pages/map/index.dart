@@ -76,6 +76,7 @@ class _OverlayMapPageState extends State<OverlayMapPage> {
         );
       },
       child: FloatingActionButton(
+        key: Key('OverlayMap_ToggleButton'),
         onPressed: () {
           setState(() {
             _show = !_show;

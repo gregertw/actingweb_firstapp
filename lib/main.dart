@@ -35,12 +35,13 @@ void main() async {
   // that occur outside runApp
   runZonedGuarded<Future<Null>>(() async {
     runApp(new MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false, // set to true to see the debug banner
       onGenerateTitle: (context) => S.of(context).appTitle,
       localizationsDelegates: [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
       home: new ChangeNotifierProvider.value(
@@ -50,13 +51,14 @@ void main() async {
       theme: appTheme,
       routes: <String, WidgetBuilder>{
         "/HomePage": (BuildContext context) => new ChangeNotifierProvider.value(
-        value: appState,
-        child: new HomePage(),
-      ),
-        "/LoginPage": (BuildContext context) => new ChangeNotifierProvider.value(
-        value: appState,
-        child: new LoginPage(),
-      ),
+              value: appState,
+              child: new HomePage(),
+            ),
+        "/LoginPage": (BuildContext context) =>
+            new ChangeNotifierProvider.value(
+              value: appState,
+              child: new LoginPage(),
+            ),
       },
     ));
   }, Crashlytics.instance.recordError);

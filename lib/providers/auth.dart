@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:http/http.dart' as http;
 
@@ -51,7 +52,7 @@ class AuthClient {
           headers: <String, String>{'Authorization': 'Bearer $accessToken'});
       _userInfo = httpResponse.statusCode == 200 ? httpResponse.body : '';
 
-      return _userInfo;
+      return json.decode(_userInfo);
     } catch (e) {
       print('Error: $e');
       return null;
@@ -63,14 +64,17 @@ class AuthClient {
       return null;
     }
     try {
-      final TokenResponse result = await authClient.token(TokenRequest(
+      final TokenResponse _result = await authClient.token(TokenRequest(
           _clientId, _redirectUrl,
           refreshToken: refreshToken,
           discoveryUrl: _discoveryUrl,
           scopes: _scopes));
       return Map.from({
-        'refreshToken': result.accessToken,
-        'expiry': result.accessTokenExpirationDateTime,
+        'access_token': _result.accessToken,
+        'expires': _result.accessTokenExpirationDateTime,
+        'id_token': _result.idToken,
+        'refresh_token': _result.refreshToken,
+        'additional_params': _result.tokenAdditionalParameters,
       });
     } catch (e) {
       print('Error: $e');

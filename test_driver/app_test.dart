@@ -7,9 +7,13 @@ void main() {
     // test suite. Note: the Strings provided to the `byValueKey` method must
     // be the same as the Strings we used for the Keys.
     final loginButtonFinder = find.byValueKey('LoginPage_LoginButton');
-    final exitButtonFinder = find.byValueKey('HomePage_ExitButton');
-    final startListeningButtonFinder = find.byValueKey('LocationPage_StartListeningButton');
+    final startListeningButtonFinder =
+        find.byValueKey('LocationPage_StartListeningButton');
     final locationTileFinder = find.byValueKey('LocationPage_LocationTile');
+    final mapToggleButton = find.byValueKey('OverlayMap_ToggleButton');
+    final mapOverlayFinder = find.byType('GoogleMap');
+    final openDrawerMenuButton = find.byTooltip("Open navigation menu");
+    final exitButtonFinder = find.byValueKey('DrawerMenuTile_LogOut');
 
     FlutterDriver driver;
 
@@ -19,7 +23,7 @@ void main() {
       // Clear any earlier mocks
       driver.requestData('clearMocks');
       // Clear any actual logged in sessions
-      driver.requestData('clearSessions');
+      driver.requestData('clearSession');
     });
     // Close the connection to the driver after the tests have completed.
     tearDownAll(() async {
@@ -45,9 +49,28 @@ void main() {
       driver.requestData('mockGeo');
       // Then, tap the login button.
       await driver.tap(loginButtonFinder);
-      await driver.waitFor(exitButtonFinder);
       await driver.tap(startListeningButtonFinder);
       await driver.waitFor(locationTileFinder);
+    });
+
+    test('listen to location', () async {
+      await driver.tap(startListeningButtonFinder);
+      await driver.waitFor(locationTileFinder);
+    });
+
+    test('toggle map', () async {
+      await driver.tap(mapToggleButton);
+      await driver.waitFor(mapOverlayFinder);
+      await driver.tap(mapToggleButton);
+      await driver.waitForAbsent(mapOverlayFinder);
+    });
+    test('open drawer menu', () async {
+      await driver.tap(openDrawerMenuButton);
+      await driver.waitFor(exitButtonFinder);
+    });
+    test('log out', () async {
+      await driver.tap(exitButtonFinder);
+      await driver.waitFor(loginButtonFinder);
     });
   }); // group('first_app')
 }
