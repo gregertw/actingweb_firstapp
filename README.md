@@ -40,9 +40,7 @@ See my blog post for a more detailed introduction to the various features: https
 I'm happy to accept pull requests for any improvements that will make this starter app even more complete from
 a production app point of view. Here are some possible improvements:
 
-- Show how to send messages to the app
 - How to use Oauth2 to grant access to a service like Firebase database
-- How to set up a deployment pipeline with test app deployment
 - How to do A/B testing
 - How to use deep links
 
