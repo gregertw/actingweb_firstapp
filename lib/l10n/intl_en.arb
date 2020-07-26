@@ -29,6 +29,6 @@
     "drawerLocalisationResultMsg": "Changed to ",
     "drawerButtomSheetUserToken": "User token",
     "drawerButtomSheetIdToken": "Id token",
-    "drawerButtomSheetExpires": "Expires",
     "drawerButtomSheetFCMToken": "Firebase messaging token"
+    "drawerButtomSheetExpires": "Expires"
   }

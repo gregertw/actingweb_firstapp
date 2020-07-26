@@ -68,6 +68,8 @@ class HomePageDrawer extends StatelessWidget {
             title: Text(S.of(context).drawerGetUserInfo),
             onTap: () {
               _userInfo(context);
+              _showFlushbar(context, S.of(context).drawerGetUserInfoResultTitle,
+                  S.of(context).drawerGetUserInfoResultMsg);
             },
           ),
           ListTile(
