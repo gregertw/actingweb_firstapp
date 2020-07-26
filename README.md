@@ -20,6 +20,7 @@ This app has the following elements:
 - Authentication and authorization using the https://appauth.io/ OpenID Connect and OAuth2 library
 - State management of login and login token including permanent storage for restarts
 - Simple widget framework for handling logged-in, expired, and logged-out states
+- Basic UI with sliding drawer menu and menu options
 - Testing using unit test framework and mocking
 - Localization using i18n and the Android Studio/IntelliJ flutter i18n plugin to generate boilerplate
 - Use of a global UI theme

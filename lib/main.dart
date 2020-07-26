@@ -71,7 +71,7 @@ void main() async {
   // that occur outside runApp
   runZonedGuarded<Future<Null>>(() async {
     runApp(new MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false, // set to true to see the debug banner
       navigatorObservers: [
         FirebaseAnalyticsObserver(analytics: analytics),
       ],
@@ -80,6 +80,7 @@ void main() async {
         S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
       home: new ChangeNotifierProvider.value(

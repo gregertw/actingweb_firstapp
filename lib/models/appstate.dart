@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:first_app/providers/auth.dart';
 import 'package:first_app/mock/mockmap.dart';
+import 'package:first_app/generated/l10n.dart';
 
 class AppStateModel with ChangeNotifier {
   bool _authenticated = false;
@@ -11,6 +13,8 @@ class AppStateModel with ChangeNotifier {
   String _refreshToken;
   DateTime _expires;
   String _email;
+  String _name;
+  String _locale;
   final SharedPreferences prefs;
   final FirebaseAnalytics analytics;
   // We use a mockmap to enable and disable mock functions/classes.
@@ -24,10 +28,49 @@ class AppStateModel with ChangeNotifier {
   String get refreshToken => _refreshToken;
   DateTime get expires => _expires;
   String get email => _email;
+  String get name => _name;
   MockMap get mocks => _mocks;
+  String get locale => _locale;
 
   AppStateModel(this.prefs, this.analytics) {
     refresh();
+    // this will load locale from prefs
+    // Note that you need to use
+    // Intl.defaultLocale = appState.locale;
+    // in your main page(s) builders to apply a loaded locale from prefs
+    // as the widget tree will not automatically refresh until build time
+    // See lib/ui/pages/home/index.dart for an example.
+    setLocale(null);
+  }
+
+  void setLocale(String loc) {
+    if (loc == null) {
+      loc = prefs.getString('locale');
+      if (loc == null) {
+        loc = Intl.getCurrentLocale().substring(0, 2);
+      }
+    }
+    _locale = loc;
+    S.load(Locale(_locale));
+    prefs.setString('locale', _locale);
+    notifyListeners();
+  }
+
+  void switchLocale() {
+    final _locales = S.delegate.supportedLocales;
+    if (_locales.length == 1) {
+      return;
+    }
+    int ind = 0;
+    _locales.asMap().forEach((key, value) {
+      if (value.languageCode == _locale) {
+        ind = key + 1;
+      }
+    });
+    if (ind >= _locales.length) {
+      ind = 0;
+    }
+    setLocale(_locales[ind].languageCode);
   }
 
   Future<void> sendAnalyticsEvent(
@@ -81,6 +124,10 @@ class AppStateModel with ChangeNotifier {
       prefs.setString('email', data['email']);
       _email = data['email'];
     }
+    if (data.containsKey('name')) {
+      prefs.setString('name', data['name']);
+      _name = data['name'];
+    }
     notifyListeners();
   }
 
@@ -102,7 +149,7 @@ class AppStateModel with ChangeNotifier {
       _idToken = data['id_token'];
     }
     if (data.containsKey('expires')) {
-      var _expires = data['expires'];
+      _expires = data['expires'];
       prefs.setString('expires', _expires.toIso8601String());
     }
     sendAnalyticsEvent('login', null);
@@ -110,12 +157,9 @@ class AppStateModel with ChangeNotifier {
   }
 
   void logOut() {
-    /* When logging out, the app session is cleared and a new login is needed.
-    However, if Auth0 is configured with an IdP, like Google, and the account
-    is logged into Google on the device, the user will be directly logged in.
-    If closeSessions() is called, the Auth0 session and the IdP session will be 
-    logged out. However, the user will be redirected to the IdP login page, which
-    may be confusing.
+    /* Here you can also close the sessions with the AuthClient
+       (if supported). closeSessions() is not implemented here as it
+       involves clearing cookies in the webview (for demo.identityprovider.io).
     */
     //AuthClient(authClient:_mocks.getMock('authClient')).closeSessions();
     _authenticated = false;

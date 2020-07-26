@@ -17,6 +17,7 @@ void main() async {
 
   // ignore: missing_return
   Future<String> dataHandler(String msg) async {
+    print("Got driver message: $msg");
     switch (msg) {
       case "mockLogin":
         {
@@ -35,12 +36,11 @@ void main() async {
         break;
       case "clearSession":
         {
-          // We don't really have a way to close closeSessions
-          // The token expires within 60 min
-          //AuthClient().closeSessions();
+          appState.logOut();
         }
         break;
       default:
+        throw ("Not a valid driver message!!");
         break;
     }
   }
@@ -62,6 +62,7 @@ void main() async {
         S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
       home: new ChangeNotifierProvider.value(

@@ -122,6 +122,206 @@ class S {
       args: [],
     );
   }
+
+  /// `Ok`
+  String get okButton {
+    return Intl.message(
+      'Ok',
+      name: 'okButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Click to view...`
+  String get clickToView {
+    return Intl.message(
+      'Click to view...',
+      name: 'clickToView',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `testuser@demoserver.io`
+  String get drawerEmail {
+    return Intl.message(
+      'testuser@demoserver.io',
+      name: 'drawerEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Test User`
+  String get drawerUser {
+    return Intl.message(
+      'Test User',
+      name: 'drawerUser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Click to view details...`
+  String get drawerHeaderInitialName {
+    return Intl.message(
+      'Click to view details...',
+      name: 'drawerHeaderInitialName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `...`
+  String get drawerHeaderInitialEmail {
+    return Intl.message(
+      '...',
+      name: 'drawerHeaderInitialEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `N/A`
+  String get drawerEmptyName {
+    return Intl.message(
+      'N/A',
+      name: 'drawerEmptyName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ``
+  String get drawerEmptyEmail {
+    return Intl.message(
+      '',
+      name: 'drawerEmptyEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refresh tokens`
+  String get drawerRefreshTokens {
+    return Intl.message(
+      'Refresh tokens',
+      name: 'drawerRefreshTokens',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tokens refreshed`
+  String get drawerRefreshTokensResultTitle {
+    return Intl.message(
+      'Tokens refreshed',
+      name: 'drawerRefreshTokensResultTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See user details for the new tokens.`
+  String get drawerRefreshTokensResultMsg {
+    return Intl.message(
+      'See user details for the new tokens.',
+      name: 'drawerRefreshTokensResultMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get user info`
+  String get drawerGetUserInfo {
+    return Intl.message(
+      'Get user info',
+      name: 'drawerGetUserInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User info retrieved`
+  String get drawerGetUserInfoResultTitle {
+    return Intl.message(
+      'User info retrieved',
+      name: 'drawerGetUserInfoResultTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User details have been updated.`
+  String get drawerGetUserInfoResultMsg {
+    return Intl.message(
+      'User details have been updated.',
+      name: 'drawerGetUserInfoResultMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current localisation`
+  String get drawerLocalisation {
+    return Intl.message(
+      'Current localisation',
+      name: 'drawerLocalisation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Locale changed`
+  String get drawerLocalisationResultTitle {
+    return Intl.message(
+      'Locale changed',
+      name: 'drawerLocalisationResultTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Changed to `
+  String get drawerLocalisationResultMsg {
+    return Intl.message(
+      'Changed to ',
+      name: 'drawerLocalisationResultMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User token`
+  String get drawerButtomSheetUserToken {
+    return Intl.message(
+      'User token',
+      name: 'drawerButtomSheetUserToken',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Id token`
+  String get drawerButtomSheetIdToken {
+    return Intl.message(
+      'Id token',
+      name: 'drawerButtomSheetIdToken',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expires`
+  String get drawerButtomSheetExpires {
+    return Intl.message(
+      'Expires',
+      name: 'drawerButtomSheetExpires',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
