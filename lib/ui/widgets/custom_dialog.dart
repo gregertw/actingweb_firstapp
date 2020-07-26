@@ -59,7 +59,7 @@ class CustomDialog extends StatelessWidget {
               SelectableText(description,
                   enableInteractiveSelection: true,
                   maxLines: 15,
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: 12.0,
                   )),

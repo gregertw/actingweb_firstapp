@@ -263,6 +263,26 @@ class S {
     );
   }
 
+  /// `User info retrieval failed`
+  String get drawerGetUserInfoFailedTitle {
+    return Intl.message(
+      'User info retrieval failed',
+      name: 'drawerGetUserInfoFailedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try to refresh token first!`
+  String get drawerGetUserInfoFailedMsg {
+    return Intl.message(
+      'Try to refresh token first!',
+      name: 'drawerGetUserInfoFailedMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Current localisation`
   String get drawerLocalisation {
     return Intl.message(
@@ -318,6 +338,16 @@ class S {
     return Intl.message(
       'Expires',
       name: 'drawerButtomSheetExpires',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Firebase messaging token`
+  String get drawerButtomSheetFCMToken {
+    return Intl.message(
+      'Firebase messaging token',
+      name: 'drawerButtomSheetFCMToken',
       desc: '',
       args: [],
     );

@@ -22,10 +22,13 @@
     "drawerGetUserInfo": "Get user info",
     "drawerGetUserInfoResultTitle": "User info retrieved",
     "drawerGetUserInfoResultMsg": "User details have been updated.",
+    "drawerGetUserInfoFailedTitle": "User info retrieval failed",
+    "drawerGetUserInfoFailedMsg": "Try to refresh token first!",
     "drawerLocalisation": "Current localisation",
     "drawerLocalisationResultTitle": "Locale changed",
     "drawerLocalisationResultMsg": "Changed to ",
     "drawerButtomSheetUserToken": "User token",
     "drawerButtomSheetIdToken": "Id token",
+    "drawerButtomSheetFCMToken": "Firebase messaging token"
     "drawerButtomSheetExpires": "Expires"
   }

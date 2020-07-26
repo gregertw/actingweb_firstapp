@@ -36,6 +36,11 @@ class HomePageDrawer extends StatelessWidget {
           'email': S.of(context).drawerEmail,
           'name': S.of(context).drawerUser
         }));
+        _showFlushbar(context, S.of(context).drawerGetUserInfoResultTitle,
+            S.of(context).drawerGetUserInfoResultMsg);
+      } else {
+        _showFlushbar(context, S.of(context).drawerGetUserInfoFailedTitle,
+            S.of(context).drawerGetUserInfoFailedMsg);
       }
     });
   }
@@ -129,6 +134,20 @@ Widget buildDrawerHeader(BuildContext context) {
                 subtitle: Text(appState.email == null
                     ? S.of(context).drawerEmptyEmail
                     : appState.email),
+              ),
+              ListTile(
+                title: Text(S.of(context).drawerButtomSheetFCMToken),
+                subtitle: Text(S.of(context).clickToView),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => CustomDialog(
+                      title: S.of(context).drawerButtomSheetFCMToken,
+                      description: appState.fcmToken,
+                      buttonText: S.of(context).okButton,
+                    ),
+                  );
+                },
               ),
               ListTile(
                 title: Text(S.of(context).drawerButtomSheetUserToken),

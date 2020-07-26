@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:first_app/providers/auth.dart';
 import 'package:first_app/mock/mock_appauth.dart';
 
-
 void main() async {
   // We need mock initial values for SharedPreferences
   SharedPreferences.setMockInitialValues({});

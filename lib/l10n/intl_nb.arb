@@ -22,10 +22,13 @@
     "drawerGetUserInfo": "Hent brukerinformasjon",
     "drawerGetUserInfoResultTitle": "Brukerinformasjon oppdatert",
     "drawerGetUserInfoResultMsg": "Brukerinformasjon har blitt oppdatert.",
+    "drawerGetUserInfoFailedTitle": "Henting av brukerinformasjon feilet",
+    "drawerGetUserInfoFailedMsg": "Forsøk å oppfrisk tokens først!",
     "drawerLocalisation": "Nåværende lokalisering",
     "drawerLocalisationResultTitle": "Lokalisering endret",
     "drawerLocalisationResultMsg": "Endret til ",
     "drawerButtomSheetUserToken": "Bruker token",
     "drawerButtomSheetIdToken": "Id token",
-    "drawerButtomSheetExpires": "Utløper"
+    "drawerButtomSheetExpires": "Utløper",
+    "drawerButtomSheetFCMToken": "Firebase meldingstoken"
   }

@@ -3,12 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:first_app/generated/l10n.dart';
 import 'package:first_app/models/appstate.dart';
 import 'package:first_app/ui/pages/home/index.dart';
 import 'package:first_app/ui/pages/login/index.dart';
 import 'package:first_app/ui/theme/style.dart';
+
+final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
 
 void main() async {
   // A breaking change in the platform messaging, as of Flutter 1.12.13+hotfix.5,
@@ -26,16 +31,21 @@ void main() async {
   // Pass all uncaught errors from the framework to Crashlytics.
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
 
+  FirebaseAnalytics analytics = FirebaseAnalytics();
+
   // Get an instance so that globals are initialised
   var prefs = await SharedPreferences.getInstance();
   // Let's initialise the app state with the stored preferences
-  var appState = new AppStateModel(prefs);
+  var appState = new AppStateModel(prefs, analytics, firebaseMessaging);
 
   // Use dart zone to define Crashlytics as error handler for errors
   // that occur outside runApp
   runZonedGuarded<Future<Null>>(() async {
     runApp(new MaterialApp(
       debugShowCheckedModeBanner: false, // set to true to see the debug banner
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: analytics),
+      ],
       onGenerateTitle: (context) => S.of(context).appTitle,
       localizationsDelegates: [
         S.delegate,

@@ -37,7 +37,7 @@ void main() async {
   state = AppStateModel(prefs);
   testWidgets('LoginPage', (WidgetTester tester) async {
     await initWidget(tester, state);
-    
+
     await tester.pump();
     expect(find.byType(Image), findsOneWidget);
     expect(find.byType(Text), findsNWidgets(2));
