@@ -53,7 +53,7 @@ void main() async {
   // We don't want any state we cannot control when testing
   prefs.clear();
   // Let's initialise the app state with the stored preferences
-  appState = new AppStateModel(prefs, null);
+  appState = new AppStateModel(prefs);
 
   runApp(
     new MaterialApp(

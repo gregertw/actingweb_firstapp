@@ -38,8 +38,8 @@ void main() async {
   SharedPreferences.setMockInitialValues({});
   var prefs = await SharedPreferences.getInstance();
   // We have one logged in state and one logged out, to be used with various tests
-  loginState = AppStateModel(prefs, null);
-  logoutState = AppStateModel(prefs, null);
+  loginState = AppStateModel(prefs);
+  logoutState = AppStateModel(prefs);
 
   // Ensure we have a logged in state before testing HomePage as LoginPage() is rendered if
   // we are not authenticated

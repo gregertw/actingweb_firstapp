@@ -11,7 +11,7 @@ void main() {
   SharedPreferences.setMockInitialValues({});
   setUp(() async {
     var prefs = await SharedPreferences.getInstance();
-    state = AppStateModel(prefs, null);
+    state = AppStateModel(prefs);
   });
   test('not logged in', () {
     expect(state.authenticated, false);

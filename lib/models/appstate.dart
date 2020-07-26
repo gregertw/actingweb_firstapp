@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:first_app/providers/auth.dart';
 import 'package:first_app/mock/mockmap.dart';
 import 'package:first_app/generated/l10n.dart';
@@ -15,8 +16,10 @@ class AppStateModel with ChangeNotifier {
   String _email;
   String _name;
   String _locale;
+  String _fcmToken;
   final SharedPreferences prefs;
   final FirebaseAnalytics analytics;
+  final FirebaseMessaging messaging;
   // We use a mockmap to enable and disable mock functions/classes.
   // The mock should be injected as a dependency where external dependencies need
   // to be mocked as part of testing.
@@ -31,8 +34,9 @@ class AppStateModel with ChangeNotifier {
   String get name => _name;
   MockMap get mocks => _mocks;
   String get locale => _locale;
+  String get fcmToken => _fcmToken;
 
-  AppStateModel(this.prefs, this.analytics) {
+  AppStateModel(this.prefs, [this.analytics, this.messaging]) {
     refresh();
     // this will load locale from prefs
     // Note that you need to use
@@ -41,6 +45,40 @@ class AppStateModel with ChangeNotifier {
     // as the widget tree will not automatically refresh until build time
     // See lib/ui/pages/home/index.dart for an example.
     setLocale(null);
+    // Initialise Firebase messaging
+    _initMessaging();
+  }
+
+  void _initMessaging() {
+    if (messaging == null) {
+      return;
+    }
+    messaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+      },
+      onBackgroundMessage: null,
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+      },
+    );
+
+    messaging.requestNotificationPermissions(const IosNotificationSettings());
+    messaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+    messaging.getToken().then((String token) {
+      assert(token != null);
+      print("Firebase messaging token: $token");
+      _fcmToken = token;
+    });
+    messaging.onTokenRefresh.listen((newToken) {
+      _fcmToken = newToken;
+    });
   }
 
   void setLocale(String loc) {

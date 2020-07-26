@@ -10,7 +10,7 @@ void main() async {
   var prefs = await SharedPreferences.getInstance();
   // This is to keep our appstate
   // NOTE!! We here also test the appstate related to authentication
-  AppStateModel appState = AppStateModel(prefs, null);
+  AppStateModel appState = AppStateModel(prefs);
 
   // We need a mock client to return the values that Auth0 would return
   var mockClient = MockFlutterAppAuth();

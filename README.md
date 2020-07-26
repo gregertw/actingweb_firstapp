@@ -126,7 +126,8 @@ For iOS, you also need to generate a key and upload that to Firebase, see https:
 
 **Note2!!** The iOS simulator does not support background notifications, only onResume() will be triggered.
 
-The app will write the FCM token to console. In order to send a notification, you need to construct a payload like this (this is for shell and replace the `<token>` with the app's token):
+The app will write the FCM token to console, but you can also go into the drawer menu and click on the menu header area displaying name and email to view all details, including the Firebase messaging token. 
+In order to send a notification, you need to construct a payload like this (this is for shell and replace the `<token>` with the app's token):
 ```
 export DATA='{"notification": {"body": "this is a body","title": "this is a title"}, "priority": "high", "data": {"click_action": "FLUTTER_NOTIFICATION_CLICK", "id": "1", "status": "done"}, "to": "<token>"}'
 ```

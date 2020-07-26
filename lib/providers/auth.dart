@@ -51,6 +51,9 @@ class AuthClient {
           'https://demo.identityserver.io/api/test',
           headers: <String, String>{'Authorization': 'Bearer $accessToken'});
       _userInfo = httpResponse.statusCode == 200 ? httpResponse.body : '';
+      if (_userInfo.length == 0) {
+        return null;
+      }
 
       return json.decode(_userInfo);
     } catch (e) {

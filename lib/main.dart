@@ -13,33 +13,7 @@ import 'package:first_app/ui/pages/home/index.dart';
 import 'package:first_app/ui/pages/login/index.dart';
 import 'package:first_app/ui/theme/style.dart';
 
-final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-
-void initMessaging() {
-  _firebaseMessaging.configure(
-    onMessage: (Map<String, dynamic> message) async {
-      print("onMessage: $message");
-    },
-    onBackgroundMessage: null,
-    onLaunch: (Map<String, dynamic> message) async {
-      print("onLaunch: $message");
-    },
-    onResume: (Map<String, dynamic> message) async {
-      print("onResume: $message");
-    },
-  );
-
-  _firebaseMessaging
-      .requestNotificationPermissions(const IosNotificationSettings());
-  _firebaseMessaging.onIosSettingsRegistered
-      .listen((IosNotificationSettings settings) {
-    print("Settings registered: $settings");
-  });
-  _firebaseMessaging.getToken().then((String token) {
-    assert(token != null);
-    print("Firebase messaging token: $token");
-  });
-}
+final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
 
 void main() async {
   // A breaking change in the platform messaging, as of Flutter 1.12.13+hotfix.5,
@@ -62,10 +36,7 @@ void main() async {
   // Get an instance so that globals are initialised
   var prefs = await SharedPreferences.getInstance();
   // Let's initialise the app state with the stored preferences
-  var appState = new AppStateModel(prefs, analytics);
-
-  // Initialise Firebase messaging
-  initMessaging();
+  var appState = new AppStateModel(prefs, analytics, firebaseMessaging);
 
   // Use dart zone to define Crashlytics as error handler for errors
   // that occur outside runApp
