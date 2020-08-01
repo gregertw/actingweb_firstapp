@@ -47,6 +47,7 @@ void main() async {
     appState.mocks.enableMock('authClient', MockFlutterAppAuth());
     appState.mocks.enableMock('geolocator', MockGeolocator());
   }
+
   // Use dart zone to define Crashlytics as error handler for errors
   // that occur outside runApp
   runZonedGuarded<Future<Null>>(() async {

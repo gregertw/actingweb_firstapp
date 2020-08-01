@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Aug 1, 2020
+
+- Added support for web (for Flutter beta)
+- Added generated_plugin_registrant.dart and AppDelegate.swift (unused) 
+  to be compatible flutter create . (which refreshed ios, android, and web folders)
+
 ## Jul 26, 2020
 
 - Added support for Firebase messaging, including access to the token from the drawer menu 

@@ -15,6 +15,7 @@ production apps, I started to put together the various elements into a single ap
 
 This app has the following elements:
 
+- Support for iOS, Android, and web
 - Separation of business logic in models and providers, and UI in a separate folder structure
 - Use of provider for app state management
 - Authentication and authorization using the https://appauth.io/ OpenID Connect and OAuth2 library
@@ -61,6 +62,31 @@ i18n generation, you need (at this point) Android Studio/IntelliJ as flutter_i18
 
 Make sure you have available a device to run the app on, either a physical device or an emulator, then just
 start debugging. You should be able to log into the app with the described demo accounts or your Google account.
+
+## Support for Web
+
+A web version of app is available at https://gregertw.github.io/actingweb_firstapp_web
+
+The web version uses the mock system also used by the tests to bypass login (appauth is still not supported for
+ Flutter web) and geo location (geolocator is not supported for Flutter web). Finally, the Google maps plugin
+is not supported, so a warning message is showed instead of a proper map. All in all, the web app does not 
+show anything else the basic UI structure.
+
+Flutter has beta support for web, https://flutter.dev/web. To enable beta, you need to do the following:
+```
+ flutter channel beta
+ flutter upgrade
+ flutter config --enable-web
+ ```
+
+ See https://flutter.dev/docs/get-started/web.
+
+Also note that your Firebase project must be configured with a web app (under General settings). The config script
+snippet you get from setting up the web must replace the Firebase app config in web/index.html. 
+
+The kIsWeb global variable is used to detect if the app is running on web and mocks are used. Please note
+that this should not be done for a production app as authentication is bypassed. The variable is also used in
+appstate.dart to do the correct Firebase Messaging initialisation.
 
 ## Authentication and Authorization
 
@@ -154,7 +180,7 @@ This is how you set swizzling off (in Info.plist):
 	<false/>
 ```
 
-## Set up Google Maps (new Dec 26, 2019)
+## Set up Google Maps
 
 A new AnchoredOverlay widget type has been added in `lib/ui/widgets/anchored_overlay.dart` to overlay a Google 
 map with current location and to add a button to toggle the overlay. 
