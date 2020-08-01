@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,24 +54,27 @@ class AppStateModel with ChangeNotifier {
     if (messaging == null) {
       return;
     }
-    messaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-      },
-      onBackgroundMessage: null,
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-      },
-    );
-
-    messaging.requestNotificationPermissions(const IosNotificationSettings());
-    messaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
-    });
+    // On Web platform the iOS specific code is not ignored transparently
+    // as for Android
+    if (!kIsWeb) {
+      messaging.requestNotificationPermissions(const IosNotificationSettings());
+      messaging.onIosSettingsRegistered
+          .listen((IosNotificationSettings settings) {
+        print("Settings registered: $settings");
+      });
+      messaging.configure(
+        onMessage: (Map<String, dynamic> message) async {
+          print("onMessage: $message");
+        },
+        onBackgroundMessage: null,
+        onLaunch: (Map<String, dynamic> message) async {
+          print("onLaunch: $message");
+        },
+        onResume: (Map<String, dynamic> message) async {
+          print("onResume: $message");
+        },
+      );
+    }
     messaging.getToken().then((String token) {
       assert(token != null);
       print("Firebase messaging token: $token");
