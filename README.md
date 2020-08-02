@@ -80,7 +80,7 @@ Flutter has beta support for web, https://flutter.dev/web. To enable beta, you n
  flutter config --enable-web
  ```
 
- See https://flutter.dev/docs/get-started/web.
+ See https://flutter.dev/docs/get-started/web. If you get errors, do `flutter clean`.
 
 Also note that your Firebase project (google.com) must be configured with a web app (under General settings). 
 The config script snippet you get from setting up the web must replace the Firebase app config in 

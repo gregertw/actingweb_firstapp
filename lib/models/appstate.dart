@@ -57,6 +57,9 @@ class AppStateModel with ChangeNotifier {
     // On Web platform the iOS specific code is not ignored transparently
     // as for Android
     if (kIsWeb) {
+      // Firebase messaging does not support Flutter natively yet, so under
+      // web, the token is retrieved in a script in web/index.html
+      _fcmToken = 'only_available_in_js';
       return;
     }
     messaging.requestNotificationPermissions(const IosNotificationSettings());
