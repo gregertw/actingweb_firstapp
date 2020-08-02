@@ -15,6 +15,7 @@ production apps, I started to put together the various elements into a single ap
 
 This app has the following elements:
 
+- Support for iOS, Android, and web
 - Separation of business logic in models and providers, and UI in a separate folder structure
 - Use of provider for app state management
 - Authentication and authorization using the https://appauth.io/ OpenID Connect and OAuth2 library
@@ -61,6 +62,61 @@ i18n generation, you need (at this point) Android Studio/IntelliJ as flutter_i18
 
 Make sure you have available a device to run the app on, either a physical device or an emulator, then just
 start debugging. You should be able to log into the app with the described demo accounts or your Google account.
+
+## Support for Web (BETA)
+
+A web version of app is available at https://gregertw.github.io/actingweb_firstapp_web
+
+The web version uses the mock system also used by the tests to bypass login (appauth is still not supported for
+ Flutter web) and geo location (geolocator is not supported for Flutter web). Also, the Google maps plugin
+is not supported, so a warning message is showed instead of a proper map. All in all, the web app does not 
+show anything else the basic UI structure. Firebase Messaging is not supported for web in Flutter yet, so the code can be found in web/index.html, which makes it a bit clumsy and not really suited for a true "single code-base"
+ project as you need to make the clue code yourself.
+
+Flutter has beta support for web, https://flutter.dev/web. To enable beta, you need to do the following:
+```
+ flutter channel beta
+ flutter upgrade
+ flutter config --enable-web
+ ```
+
+ See https://flutter.dev/docs/get-started/web. If you get errors, do `flutter clean`.
+
+Also note that your Firebase project (google.com) must be configured with a web app (under General settings). 
+The config script snippet you get from setting up the web must replace the Firebase app config in 
+web/index.html and in web/firebase-messaging-sw.js:
+
+```
+  var firebaseConfig = {
+    apiKey: "AIzaSyDjVjlcUKYUBb62x4K8WUGI47mXXlfKTtI",
+    authDomain: "actingweb-firstapp.firebaseapp.com",
+    databaseURL: "https://actingweb-firstapp.firebaseio.com",
+    projectId: "actingweb-firstapp",
+    storageBucket: "actingweb-firstapp.appspot.com",
+    messagingSenderId: "748007732162",
+    appId: "1:748007732162:web:ff42373829ce3137785c5b",
+    measurementId: "G-M7F2YR6FNW"
+  };
+```
+
+You then need to generate the key pair for the Firebase web app and copy the public key to web/index.html here:
+
+```
+// This is the public key from the Firebase web app config
+  messaging.usePublicVapidKey("<your pibluc key here>");
+```
+
+You can find all the details at https://firebase.google.com/docs/cloud-messaging/js/client#configure_web_credentials_in_your_app
+
+The kIsWeb global variable is used to detect if the app is running on web and mocks are used. Please note
+that this should not be done for a production app as authentication is bypassed. The variable is also used in
+appstate.dart to do the correct Firebase Messaging initialisation.
+
+When you start up the web app, you will be requested for permissions to receive notifications. **To see the Firebase
+messaging token to use when sending a message and the incoming message when the tab is in the front, you need to look
+at the Chrome developer console, not the Flutter console.** Background messages (when the tab is in the backgroun),
+will pop up as a browser notification. There is currently no code to handle tokens and messages as this currently
+needs to be done in Javascript and not really integrated in the Flutter code base.
 
 ## Authentication and Authorization
 
@@ -113,6 +169,9 @@ await analytics.setCurrentScreen(
     );
 ```
 
+NOTE!! Also, if you deploy to web, you need to update web/index.html and web/firebase-messaging-sw.js with the
+Firebase web app config (see the web section).
+
 ## Setup of Firebase Cloud Messaging
 
 This project also has set up Firebase Cloud Messaging, allowing you to send
@@ -154,7 +213,7 @@ This is how you set swizzling off (in Info.plist):
 	<false/>
 ```
 
-## Set up Google Maps (new Dec 26, 2019)
+## Set up Google Maps
 
 A new AnchoredOverlay widget type has been added in `lib/ui/widgets/anchored_overlay.dart` to overlay a Google 
 map with current location and to add a button to toggle the overlay. 

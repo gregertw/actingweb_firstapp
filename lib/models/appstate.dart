@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,6 +54,19 @@ class AppStateModel with ChangeNotifier {
     if (messaging == null) {
       return;
     }
+    // On Web platform the iOS specific code is not ignored transparently
+    // as for Android
+    if (kIsWeb) {
+      // Firebase messaging does not support Flutter natively yet, so under
+      // web, the token is retrieved in a script in web/index.html
+      _fcmToken = 'only_available_in_js';
+      return;
+    }
+    messaging.requestNotificationPermissions(const IosNotificationSettings());
+    messaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
     messaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
@@ -65,12 +79,6 @@ class AppStateModel with ChangeNotifier {
         print("onResume: $message");
       },
     );
-
-    messaging.requestNotificationPermissions(const IosNotificationSettings());
-    messaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
-    });
     messaging.getToken().then((String token) {
       assert(token != null);
       print("Firebase messaging token: $token");

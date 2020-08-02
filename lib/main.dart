@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -12,8 +13,9 @@ import 'package:first_app/models/appstate.dart';
 import 'package:first_app/ui/pages/home/index.dart';
 import 'package:first_app/ui/pages/login/index.dart';
 import 'package:first_app/ui/theme/style.dart';
-
-final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+// Import mock packages for the web version
+import 'package:first_app/mock/mock_appauth.dart';
+import 'package:first_app/mock/mock_geolocator.dart';
 
 void main() async {
   // A breaking change in the platform messaging, as of Flutter 1.12.13+hotfix.5,
@@ -33,10 +35,18 @@ void main() async {
 
   FirebaseAnalytics analytics = FirebaseAnalytics();
 
+  FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+
   // Get an instance so that globals are initialised
   var prefs = await SharedPreferences.getInstance();
   // Let's initialise the app state with the stored preferences
   var appState = new AppStateModel(prefs, analytics, firebaseMessaging);
+
+  // Appauth does not support web yet, use the mock
+  if (kIsWeb) {
+    appState.mocks.enableMock('authClient', MockFlutterAppAuth());
+    appState.mocks.enableMock('geolocator', MockGeolocator());
+  }
 
   // Use dart zone to define Crashlytics as error handler for errors
   // that occur outside runApp
