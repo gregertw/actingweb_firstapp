@@ -1,10 +1,11 @@
 # CHANGELOG
 
-## Aug 1, 2020
+## Aug 2, 2020
 
 - Added support for web (for Flutter beta)
 - Added generated_plugin_registrant.dart and AppDelegate.swift (unused) 
   to be compatible flutter create . (which refreshed ios, android, and web folders)
+- Bump version to 1.3.2+6, no functionality change for mobile apps, but minor fixes
 
 ## Jul 26, 2020
 
