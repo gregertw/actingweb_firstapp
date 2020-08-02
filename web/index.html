@@ -25,6 +25,7 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
         navigator.serviceWorker.register('flutter_service_worker.js');
+        //navigator.serviceWorker.register("firebase-messaging-sw.js");
       });
     }
   </script>
@@ -54,25 +55,41 @@
   firebase.analytics();
   // Initialize Firebase messaging
   const messaging = firebase.messaging();
-  messaging.setBackgroundMessageHandler(function (payload) {
-      const promiseChain = clients
-          .matchAll({
-              type: "window",
-              includeUncontrolled: true
-          })
-          .then(windowClients => {
-              for (let i = 0; i < windowClients.length; i++) {
-                  const windowClient = windowClients[i];
-                  windowClient.postMessage(payload);
-              }
-          })
-          .then(() => {
-              return registration.showNotification("New Message");
-          });
-      return promiseChain;
+  // This is the public key from the Firebase web app config
+  messaging.usePublicVapidKey("BCKRpKeIZ7-0iWQGbOe6rcTGW1kvAGbyDNPH4Waw-Yzs2cRPJ5xsKUvoybBp2l7KIBx7W2SYh1T9kKh3dlG2KHw");
+
+  // Get Instance ID token. Initially this makes a network call, once retrieved
+  // subsequent calls to getToken will return from cache.
+  messaging.getToken().then((currentToken) => {
+      if (currentToken) {
+          // sendTokenToServer(currentToken);
+          //nupdateUIForPushEnabled(currentToken);
+          console.log('Messaging token: ', currentToken);
+      } else {
+          // Show permission request.
+          console.log('No Instance ID token available. Request permission to generate one.');
+          // Show permission UI.
+          // updateUIForPushPermissionRequired();
+      }
+      }).catch((err) => {
+      console.log('An error occurred while retrieving token. ', err);
   });
-  self.addEventListener('notificationclick', function (event) {
-      console.log('notification received: ', event)
+  // Callback fired if Instance ID token is updated.
+  messaging.onTokenRefresh(() => {
+      messaging.getToken().then((refreshedToken) => {
+          console.log('Token refreshed:', refreshedToken);
+          // ...
+      }).catch((err) => {
+          console.log('Unable to retrieve refreshed token ', err);
+      });
+  });
+  // Handle incoming messages. Called when:
+  // - a message is received while the app has focus
+  // - the user clicks on an app notification created by a service worker
+  //   `messaging.setBackgroundMessageHandler` handler.
+  messaging.onMessage((payload) => {
+    console.log('Message received: ', payload);
+    // ...
   });
 </script>
   <script src="main.dart.js" type="application/javascript"></script>
