@@ -19,9 +19,9 @@
 </head>
 <body>
 <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-analytics.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-messaging.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-messaging.js"></script>
 
 <script>
   // Your web app's Firebase configuration
@@ -58,7 +58,7 @@
         navigator.serviceWorker.register('./firebase-messaging-sw.js')
         .then((registration) => {
           firebase.messaging().useServiceWorker(registration);
-            // Get Instance ID token. Initially this makes a network call, once retrieved
+          // Get Instance ID token. Initially this makes a network call, once retrieved
           // subsequent calls to getToken will return from cache.
           messaging.getToken().then((currentToken) => {
               if (currentToken) {

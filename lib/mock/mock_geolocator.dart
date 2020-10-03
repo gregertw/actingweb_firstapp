@@ -24,9 +24,9 @@ class MockGeolocator extends Fake implements Geolocator {
       [LocationOptions locationOptions = const LocationOptions(),
       GeolocationPermission locationPermissionLevel =
           GeolocationPermission.location]) async* {
-    for (var i=1; i < 11; i++) {
+    for (var i = 1; i < 11; i++) {
       await Future.delayed(Duration(milliseconds: 10));
-      yield Position(latitude: 59.893777+i/100, longitude: 10.7150951);
+      yield Position(latitude: 59.893777 + i / 100, longitude: 10.7150951);
     }
   }
 }
