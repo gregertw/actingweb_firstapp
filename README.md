@@ -205,7 +205,7 @@ Here `<key>` must be replaced with the Firebase Cloud Messaging API server key (
 
 **So, in sum: Use "notification" to send a title and a message and the "data" element to send extra data. Except that all the "data" elements will appear on the root level of the message json in iOS, the behaviour will be similar for both Android and iOS.**
 
-**Note!!** Read this if you want to use another flutter fplugin for notifications (for further customisations etc). You then need to turn off so-called method swizzling for iOS on to allow other notification plugins. You then need to notify FCM about reception of the message yourself (https://firebase.google.com/docs/cloud-messaging/ios/receive) 
+**Note!!** Read this if you want to use another flutter plugin for notifications (for further customisations etc). You then need to turn off so-called method swizzling for iOS on to allow other notification plugins. You then need to notify FCM about reception of the message yourself (https://firebase.google.com/docs/cloud-messaging/ios/receive) 
 
 This is how you set swizzling off (in Info.plist):
 ```
