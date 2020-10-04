@@ -22,7 +22,7 @@ dependencies:
   meta: ^1.1.8
   provider: ^4.3.2+2
   shared_preferences: ^0.5.12
-  google_maps_flutter: ^1.0.2
+  google_maps_flutter: ^0.5.33 # Locking down to be <1.0.0 with Flutter 1.22 requirement
   geolocator: ^5.3.1  # Latest with breaking changes: ^6.0.0+4
   # geocoding: ^1.0.4+1 # Needs to be used for geolocator > 6.0.0
   firebase_analytics: ^6.0.1
