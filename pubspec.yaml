@@ -39,7 +39,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.8.1
   intl_translation: ^0.17.10+1
   convert: any
-  mockito: ^4.1.2
+  mockito: ^4.1.1 #Lock down as 4.1.2 seems to rely on a null-safe lib
 
 flutter_icons:
   android: "launcher_icon"
