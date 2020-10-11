@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Oct 2, 2020
+
+- Bump up to version 1.22 of Flutter SDK, XCode 12, and Android 4 w/ API level 30
+- Bump up a number of packages and clean up iOS and Android build configs (simplified)
+- Lock down mockito (newest version has hard dependency on null safefy in Dart)
+- Add an explicit Apache-2 license
+- Bump version to 1.3.3+7
+
 ## Aug 2, 2020
 
 - Added support for web (for Flutter beta)
@@ -25,7 +33,7 @@
 
 ## Jun 14, 2020
 
-- Remove flutter_asuth0 and thus Auth0 support and replace with flutter_appauth (https://appauth.io) and use a demo identityserver
+- Remove flutter_auth0 and thus Auth0 support and replace with flutter_appauth (https://appauth.io) and use a demo identityserver
 - Release version 1.2.0
 
 ## May 16, 2020
