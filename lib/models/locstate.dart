@@ -2,12 +2,39 @@ import 'dart:async';
 import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
+
+class Geo {
+  Future<LocationPermission> checkPermission() async {
+    return Geolocator.checkPermission();
+  }
+
+  Future<List<Placemark>> placemarkFromCoordinates(
+      double latitude, double longitude,
+      {String localeIdentifier}) {
+    return placemarkFromCoordinates(latitude, longitude);
+  }
+
+  Stream<Position> getPositionStream(
+      {LocationAccuracy desiredAccuracy = LocationAccuracy.best,
+      int distanceFilter = 0,
+      bool forceAndroidLocationManager = false,
+      Duration intervalDuration,
+      Duration timeLimit}) {
+    return Geolocator.getPositionStream(
+        desiredAccuracy: desiredAccuracy,
+        distanceFilter: distanceFilter,
+        forceAndroidLocationManager: forceAndroidLocationManager,
+        intervalDuration: intervalDuration,
+        timeLimit: timeLimit);
+  }
+}
 
 class LocStateModel with ChangeNotifier {
-  Geolocator locator;
+  Geo locator;
   // Represent latest location
   Position _lastPos = Position(longitude: 0.0, latitude: 0.0);
-  GeolocationStatus _geoAccessStatus;
+  LocationPermission _geoAccessStatus;
   StreamSubscription<Position> _positionStreamSubscription;
   final Map<Position, Placemark> _pointList = Map<Position, Placemark>();
 
@@ -26,13 +53,14 @@ class LocStateModel with ChangeNotifier {
 
   LocStateModel(this.locator) {
     if (this.locator == null) {
-      this.locator = Geolocator();
+      this.locator = Geo();
     }
   }
 
   Future<bool> available() async {
-    _geoAccessStatus = await this.locator.checkGeolocationPermissionStatus();
-    if (_geoAccessStatus == GeolocationStatus.granted) {
+    _geoAccessStatus = await locator.checkPermission();
+    if (_geoAccessStatus == LocationPermission.whileInUse ||
+        _geoAccessStatus == LocationPermission.always) {
       return true;
     }
     return false;
@@ -45,10 +73,7 @@ class LocStateModel with ChangeNotifier {
     _pointList[pos] = null;
     _lastPos = pos;
     try {
-      this
-          .locator
-          .placemarkFromCoordinates(pos.latitude, pos.longitude)
-          .then((pm) {
+      locator.placemarkFromCoordinates(pos.latitude, pos.longitude).then((pm) {
         if (pm != null) {
           _pointList[pos] = pm.first;
         }
@@ -93,10 +118,8 @@ class LocStateModel with ChangeNotifier {
 
   void toggleListening() {
     if (_positionStreamSubscription == null) {
-      const LocationOptions locationOptions =
-          LocationOptions(accuracy: LocationAccuracy.best, distanceFilter: 10);
-      final Stream<Position> positionStream =
-          this.locator.getPositionStream(locationOptions);
+      final Stream<Position> positionStream = locator.getPositionStream(
+          desiredAccuracy: LocationAccuracy.best, distanceFilter: 10);
       _positionStreamSubscription =
           positionStream.listen((Position position) => addLocation(position));
       //_positionStreamSubscription.pause();

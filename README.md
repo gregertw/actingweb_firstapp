@@ -223,13 +223,6 @@ for Google Maps (see https://cloud.google.com/maps-platform/).
 **IMPORTANT!!!! The keys being used are under a very low daily quota and has been added to git to make sure the app
 runs out of box. PLEASE change this as soon as possible and before you do your own development!**
 
-The google_maps_flutter flugin relies on a preview functionality in iOS that needs to be turned on in info.plist 
-(already added in this project) with:
-```
-  <key>io.flutter.embedded_views_preview</key>
-  <true/>
-```
-
 A new map UI page has been added to lib/ui/pages, and the OverlayMapPage() widget is loaded in 
 lib/ui/pages/index.dart:
 
