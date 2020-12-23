@@ -68,10 +68,9 @@ start debugging. You should be able to log into the app with the described demo 
 A web version of app is available at https://gregertw.github.io/actingweb_firstapp_web
 
 The web version uses the mock system also used by the tests to bypass login (appauth is still not supported for
- Flutter web) and geo location (geolocator is not supported for Flutter web). Also, the Google maps plugin
-is not supported, so a warning message is showed instead of a proper map. All in all, the web app does not 
-show anything else the basic UI structure. Firebase Messaging is not supported for web in Flutter yet, so the code can be found in web/index.html, which makes it a bit clumsy and not really suited for a true "single code-base"
- project as you need to make the clue code yourself.
+ Flutter web) and geo location (geolocator is not supported for Flutter web). Firebase Messaging is not fully supported 
+ for web in Flutter yet, so the code can be found in web/index.html, which makes it a bit clumsy and not really 
+ suited for a true "single code-base" project as you need to make the clue code yourself.
 
 Flutter has beta support for web, https://flutter.dev/web. To enable beta, you need to do the following:
 ```
