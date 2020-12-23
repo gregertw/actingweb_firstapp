@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## Dec 19, 2020
+## Dec XX, 2020
 
 - Upgrade all dependencies and use of packages to flutter 1.25.0-8.1.pre
+- Add support for Google Maps for web
 ## Oct 2, 2020
 
 - Bump up to version 1.22 of Flutter SDK, XCode 12, and Android 4 w/ API level 30
