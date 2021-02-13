@@ -1,9 +1,11 @@
 # CHANGELOG
 
-## Dec XX, 2020
+## Jan XX, 2021
 
-- Upgrade all dependencies and use of packages to flutter 1.25.0-8.1.pre
+- Upgrade all dependencies and use of packages to flutter 1.25
 - Add support for Google Maps for web
+- Remove background access to location due to stricter Android policies
+- Remove background notifications for iOS as its not used
 ## Oct 2, 2020
 
 - Bump up to version 1.22 of Flutter SDK, XCode 12, and Android 4 w/ API level 30
