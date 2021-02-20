@@ -13,7 +13,13 @@ import 'package:first_app/mock/mock_appauth.dart';
 import 'package:first_app/mock/mock_geolocator.dart';
 
 void main() async {
-  AppStateModel appState;
+  // Get an instance so that globals are initialised
+  var prefs = await SharedPreferences.getInstance();
+
+  // We don't want any state we cannot control when testing
+  prefs.clear();
+  // Let's initialise the app state with the stored preferences
+  AppStateModel appState = new AppStateModel(prefs);
 
   // ignore: missing_return
   Future<String> dataHandler(String msg) async {
@@ -47,13 +53,6 @@ void main() async {
 
   // This line enables the extension.
   enableFlutterDriverExtension(handler: dataHandler);
-
-  // Get an instance so that globals are initialised
-  var prefs = await SharedPreferences.getInstance();
-  // We don't want any state we cannot control when testing
-  prefs.clear();
-  // Let's initialise the app state with the stored preferences
-  appState = new AppStateModel(prefs);
 
   runApp(
     new MaterialApp(

@@ -5,6 +5,7 @@ import 'package:first_app/generated/l10n.dart';
 import 'package:first_app/models/locstate.dart';
 
 String latitudeLongitude(String lat, String long) => "Lat: $lat, Long: $long";
+
 class LocationStreamWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -21,17 +22,16 @@ class LocationStreamWidget extends StatelessWidget {
   Widget _buildListView(BuildContext context) {
     final List<Widget> listItems = <Widget>[
       ListTile(
-        title: RaisedButton(
+        title: ElevatedButton(
           key: Key('LocationPage_StartListeningButton'),
-          elevation: 20,
-          textTheme: ButtonTextTheme.primary,
+          style: ElevatedButton.styleFrom(
+            elevation: 20.0,
+            onPrimary: Theme.of(context).primaryColorLight,
+            padding: const EdgeInsets.all(8.0),
+          ),
           child: Text(Provider.of<LocStateModel>(context).isListening()
               ? S.of(context).stopListening
               : S.of(context).startListening),
-          color: Provider.of<LocStateModel>(context).isListening()
-              ? Theme.of(context).primaryColorDark
-              : Theme.of(context).primaryColorLight,
-          padding: const EdgeInsets.all(8.0),
           onPressed: Provider.of<LocStateModel>(context).toggleListening,
         ),
       ),
@@ -73,7 +73,9 @@ class PositionListItem extends StatelessWidget {
             contentPadding:
                 EdgeInsets.symmetric(horizontal: 15.0, vertical: 3.0),
             title: Text(
-                latitudeLongitude(_position.latitude.toString(), _position.longitude.toString(),
+              latitudeLongitude(
+                _position.latitude.toString(),
+                _position.longitude.toString(),
               ),
             ),
             subtitle: Row(

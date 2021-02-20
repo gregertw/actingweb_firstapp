@@ -69,15 +69,17 @@ class AuthPage extends StatelessWidget {
     return Container(
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 16.0),
-        child: RaisedButton(
+        child: ElevatedButton(
           key: Key('LoginPage_LoginButton'),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+            ),
+            padding: EdgeInsets.all(15),
           ),
           onPressed: () {
             auth(context);
           },
-          padding: EdgeInsets.all(12),
           child: Text(S.of(context).loginButton),
         ),
       ),
