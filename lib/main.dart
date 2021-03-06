@@ -32,7 +32,7 @@ void main() async {
 
   FirebaseAnalytics analytics = FirebaseAnalytics();
 
-  FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+  FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
   // Get an instance so that globals are initialised
   var prefs = await SharedPreferences.getInstance();

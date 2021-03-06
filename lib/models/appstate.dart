@@ -50,7 +50,7 @@ class AppStateModel with ChangeNotifier {
     _initMessaging();
   }
 
-  void _initMessaging() {
+  void _initMessaging() async {
     if (messaging == null) {
       return;
     }
@@ -62,23 +62,30 @@ class AppStateModel with ChangeNotifier {
       _fcmToken = 'only_available_in_js';
       return;
     }
-    messaging.requestNotificationPermissions(const IosNotificationSettings());
-    messaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
-    });
-    messaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-      },
-      onBackgroundMessage: null,
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-      },
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
     );
+    print('User granted permission: ${settings.authorizationStatus}');
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("onMessage: $message");
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+    });
+    Future<void> _firebaseMessagingBackgroundHandler(
+        RemoteMessage message) async {
+      print("Handling a background message: ${message.messageId}");
+    }
+
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
     messaging.getToken().then((String token) {
       assert(token != null);
       print("Firebase messaging token: $token");
