@@ -1,7 +1,7 @@
 # CHANGELOG
 
 
-## xxx, 2021
+## Mar 7, 2021
 
 - Added APN (push notifications) capability to the ios project
 - Bump to 1.4.0 as Flutter2 support by mistake was released as 1.3.4
