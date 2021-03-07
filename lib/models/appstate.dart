@@ -8,6 +8,10 @@ import 'package:first_app/providers/auth.dart';
 import 'package:first_app/mock/mockmap.dart';
 import 'package:first_app/generated/l10n.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling a background message: ${message.messageId}");
+}
+
 class AppStateModel with ChangeNotifier {
   bool _authenticated = false;
   String _userToken;
@@ -18,9 +22,9 @@ class AppStateModel with ChangeNotifier {
   String _name;
   String _locale;
   String _fcmToken;
-  final SharedPreferences prefs;
-  final FirebaseAnalytics analytics;
-  final FirebaseMessaging messaging;
+  SharedPreferences prefs;
+  FirebaseAnalytics analytics;
+  FirebaseMessaging messaging;
   // We use a mockmap to enable and disable mock functions/classes.
   // The mock should be injected as a dependency where external dependencies need
   // to be mocked as part of testing.
@@ -37,7 +41,7 @@ class AppStateModel with ChangeNotifier {
   String get locale => _locale;
   String get fcmToken => _fcmToken;
 
-  AppStateModel(this.prefs, [this.analytics, this.messaging]) {
+  AppStateModel([this.prefs, this.analytics, this.messaging]) {
     refresh();
     // this will load locale from prefs
     // Note that you need to use
@@ -79,10 +83,6 @@ class AppStateModel with ChangeNotifier {
         print('Message also contained a notification: ${message.notification}');
       }
     });
-    Future<void> _firebaseMessagingBackgroundHandler(
-        RemoteMessage message) async {
-      print("Handling a background message: ${message.messageId}");
-    }
 
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
@@ -97,6 +97,9 @@ class AppStateModel with ChangeNotifier {
   }
 
   void setLocale(String loc) {
+    if (prefs == null) {
+      return;
+    }
     if (loc == null) {
       loc = prefs.getString('locale');
       if (loc == null) {
@@ -139,13 +142,17 @@ class AppStateModel with ChangeNotifier {
   }
 
   void refresh() async {
+    if (prefs == null) {
+      return;
+    }
     // Check if the stored token has expired
     var expiresStr = prefs.getString('expires');
     if (expiresStr != null) {
       _expires = DateTime.parse(expiresStr);
       var remaining = _expires.difference(DateTime.now());
       if (remaining.inSeconds < 3600) {
-        var auth = await AuthClient(authClient: _mocks.getMock('authClient'))
+        Map<dynamic, dynamic> auth;
+        auth = await AuthClient(authClient: _mocks.getMock('authClient'))
             .refreshToken(prefs.getString('refreshToken'));
         if (auth != null && auth.containsKey('access_token')) {
           logIn(auth);
@@ -185,7 +192,7 @@ class AppStateModel with ChangeNotifier {
   }
 
   void logIn(data) {
-    if (data == null) {
+    if (data == null || prefs == null) {
       return;
     }
     if (data.containsKey('access_token')) {
