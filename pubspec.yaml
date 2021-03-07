@@ -23,15 +23,14 @@ dependencies:
   meta: ^1.1.8
   provider: ^5.0.0
   shared_preferences: ^2.0.3
-  google_maps_flutter: ^1.0.6
-  google_maps_flutter_web: ^0.1.0+8
+  google_maps_flutter: ^1.2.0
+  google_maps_flutter_web: ^0.1.1
   geolocator: ^6.1.13
   geocoding: ^1.0.5
   firebase_core: ^0.7.0
   firebase_analytics: ^7.0.1
   firebase_crashlytics: ^0.4.0+1
   firebase_messaging: ^8.0.0-dev.15
-  flushbar: ^1.10.4
 
 dev_dependencies:
   flutter_test:

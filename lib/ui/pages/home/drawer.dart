@@ -1,26 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:first_app/models/appstate.dart';
 import 'package:first_app/generated/l10n.dart';
 import 'package:first_app/providers/auth.dart';
 import 'package:first_app/ui/widgets/custom_dialog.dart';
 
 class HomePageDrawer extends StatelessWidget {
-  void _showFlushbar(BuildContext context, String title, String msg) {
-    Flushbar(
-      title: title,
-      message: msg,
-      icon: Icon(
-        Icons.info_outline,
-        size: 28,
-        color: Colors.blue.shade300,
-      ),
-      leftBarIndicatorColor: Colors.blue.shade300,
-      duration: Duration(seconds: 3),
-    )..show(context);
-  }
-
   void _userInfo(BuildContext context) {
     var appState = Provider.of<AppStateModel>(context, listen: false);
     var auth0 = AuthClient(
@@ -36,11 +21,15 @@ class HomePageDrawer extends StatelessWidget {
           'email': S.of(context).drawerEmail,
           'name': S.of(context).drawerUser
         }));
-        _showFlushbar(context, S.of(context).drawerGetUserInfoResultTitle,
-            S.of(context).drawerGetUserInfoResultMsg);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(S.of(context).drawerGetUserInfoResultMsg),
+          duration: const Duration(seconds: 3),
+        ));
       } else {
-        _showFlushbar(context, S.of(context).drawerGetUserInfoFailedTitle,
-            S.of(context).drawerGetUserInfoFailedMsg);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(S.of(context).drawerGetUserInfoFailedMsg),
+          duration: const Duration(seconds: 3),
+        ));
       }
     });
   }
@@ -57,19 +46,19 @@ class HomePageDrawer extends StatelessWidget {
             title: Text(S.of(context).drawerRefreshTokens),
             onTap: () {
               appState.refresh();
-              _showFlushbar(
-                  context,
-                  S.of(context).drawerRefreshTokensResultTitle,
-                  S.of(context).drawerRefreshTokensResultMsg);
+              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(S.of(context).drawerRefreshTokensResultMsg),
+                duration: const Duration(seconds: 3),
+              ));
             },
           ),
           ListTile(
             key: Key("DrawerMenuTile_GetUserInfo"),
             title: Text(S.of(context).drawerGetUserInfo),
             onTap: () {
+              Navigator.of(context).pop();
               _userInfo(context);
-              _showFlushbar(context, S.of(context).drawerGetUserInfoResultTitle,
-                  S.of(context).drawerGetUserInfoResultMsg);
             },
           ),
           ListTile(
@@ -81,10 +70,12 @@ class HomePageDrawer extends StatelessWidget {
               // supported locales. This is just a quick and dirty
               // switch
               appState.switchLocale();
-              _showFlushbar(
-                  context,
-                  S.of(context).drawerLocalisationResultTitle,
-                  S.of(context).drawerLocalisationResultMsg + appState.locale);
+              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(S.of(context).drawerLocalisationResultMsg +
+                    appState.locale),
+                duration: const Duration(seconds: 3),
+              ));
             },
           ),
           ListTile(

@@ -72,7 +72,7 @@ class AuthClient {
           refreshToken: refreshToken,
           discoveryUrl: _discoveryUrl,
           scopes: _scopes));
-      if (_result != null && _result.refreshToken != null) {
+      if (_result != null && _result.refreshToken == null) {
         return Map.from({});
       }
       return Map.from({
