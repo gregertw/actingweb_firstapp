@@ -54,14 +54,18 @@ class AuthPage extends StatelessWidget {
         authClient: Provider.of<AppStateModel>(context, listen: false)
             .mocks
             .getMock('authClient'));
-    auth0.authorize().then((res) {
-      if (res != null && res.containsKey('access_token')) {
-        Provider.of<AppStateModel>(context, listen: false).logIn(res);
-        // Earlier, userinfo was retrieved here, but this failed as
-        // when the future returned, the context could be null and thus
-        // state could not be updated with user data.
-      }
-    });
+    try {
+      auth0.authorize().then((res) {
+        if (res != null && res.containsKey('access_token')) {
+          Provider.of<AppStateModel>(context, listen: false).logIn(res);
+          // Earlier, userinfo was retrieved here, but this failed as
+          // when the future returned, the context could be null and thus
+          // state could not be updated with user data.
+        }
+      });
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   @override
@@ -69,15 +73,17 @@ class AuthPage extends StatelessWidget {
     return Container(
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 16.0),
-        child: RaisedButton(
+        child: ElevatedButton(
           key: Key('LoginPage_LoginButton'),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+            ),
+            padding: EdgeInsets.all(15),
           ),
           onPressed: () {
             auth(context);
           },
-          padding: EdgeInsets.all(12),
           child: Text(S.of(context).loginButton),
         ),
       ),

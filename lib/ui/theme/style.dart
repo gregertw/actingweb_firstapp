@@ -24,9 +24,10 @@ final ThemeData appTheme = ThemeData(
   buttonColor: Color(0xffe0e0e0),
   toggleableActiveColor: Color(0xff3949ab),
   secondaryHeaderColor: Color(0xffe8eaf6),
-  textSelectionColor: Color(0xff9fa8da),
-  cursorColor: Color(0xff4285f4),
-  textSelectionHandleColor: Color(0xff7986cb),
+  textSelectionTheme: TextSelectionThemeData(
+      cursorColor: Color(0xff4285f4),
+      selectionColor: Color(0xff9fa8da),
+      selectionHandleColor: Color(0xff7986cb)),
   backgroundColor: Color(0xff9fa8da),
   dialogBackgroundColor: Color(0xffffffff),
   indicatorColor: Color(0xff3f51b5),

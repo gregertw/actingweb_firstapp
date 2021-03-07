@@ -11,7 +11,7 @@ class OverlayMapPage extends StatefulWidget {
 }
 
 class _OverlayMapPageState extends State<OverlayMapPage> {
-  GoogleMapController _controller;
+  Completer<GoogleMapController> _controller = Completer();
   Set<Marker> _markers;
   // If you want to record the position when the user moves the map, see the GoogleMap widget below
   //CameraPosition _current;
@@ -64,7 +64,7 @@ class _OverlayMapPageState extends State<OverlayMapPage> {
               ),
               mapType: _mapType,
               onMapCreated: (GoogleMapController controller) {
-                _controller = controller;
+                _controller.complete(controller);
               },
               markers: _markers,
               // If we want to capture a moved position, we can use a callback
@@ -89,7 +89,8 @@ class _OverlayMapPageState extends State<OverlayMapPage> {
 
   Future<void> _updatePosition() async {
     if (_controller != null && _show) {
-      _controller
+      final GoogleMapController controller = await _controller.future;
+      controller
           .animateCamera(CameraUpdate.newLatLngZoom(LatLng(_lat, _lon), 16.0));
     }
   }

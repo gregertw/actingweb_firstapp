@@ -72,6 +72,9 @@ class AuthClient {
           refreshToken: refreshToken,
           discoveryUrl: _discoveryUrl,
           scopes: _scopes));
+      if (_result != null && _result.refreshToken == null) {
+        return Map.from({});
+      }
       return Map.from({
         'access_token': _result.accessToken,
         'expires': _result.accessTokenExpirationDateTime,
@@ -81,13 +84,13 @@ class AuthClient {
       });
     } catch (e) {
       print('Error: $e');
-      return null;
+      return Map.from({});
     }
   }
 
   Future<Map<dynamic, dynamic>> authorize() async {
+    AuthorizationTokenResponse _result;
     try {
-      AuthorizationTokenResponse _result;
       if (this.discoveryUrl == null) {
         _result = await authClient.authorizeAndExchangeCode(
           AuthorizationTokenRequest(

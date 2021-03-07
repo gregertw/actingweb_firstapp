@@ -8,6 +8,10 @@ import 'package:first_app/providers/auth.dart';
 import 'package:first_app/mock/mockmap.dart';
 import 'package:first_app/generated/l10n.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling a background message: ${message.messageId}");
+}
+
 class AppStateModel with ChangeNotifier {
   bool _authenticated = false;
   String _userToken;
@@ -18,9 +22,9 @@ class AppStateModel with ChangeNotifier {
   String _name;
   String _locale;
   String _fcmToken;
-  final SharedPreferences prefs;
-  final FirebaseAnalytics analytics;
-  final FirebaseMessaging messaging;
+  SharedPreferences prefs;
+  FirebaseAnalytics analytics;
+  FirebaseMessaging messaging;
   // We use a mockmap to enable and disable mock functions/classes.
   // The mock should be injected as a dependency where external dependencies need
   // to be mocked as part of testing.
@@ -37,7 +41,7 @@ class AppStateModel with ChangeNotifier {
   String get locale => _locale;
   String get fcmToken => _fcmToken;
 
-  AppStateModel(this.prefs, [this.analytics, this.messaging]) {
+  AppStateModel([this.prefs, this.analytics, this.messaging]) {
     refresh();
     // this will load locale from prefs
     // Note that you need to use
@@ -50,7 +54,7 @@ class AppStateModel with ChangeNotifier {
     _initMessaging();
   }
 
-  void _initMessaging() {
+  void _initMessaging() async {
     if (messaging == null) {
       return;
     }
@@ -62,23 +66,26 @@ class AppStateModel with ChangeNotifier {
       _fcmToken = 'only_available_in_js';
       return;
     }
-    messaging.requestNotificationPermissions(const IosNotificationSettings());
-    messaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
-    });
-    messaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-      },
-      onBackgroundMessage: null,
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-      },
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
     );
+    print('User granted permission: ${settings.authorizationStatus}');
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("onMessage: $message");
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+    });
+
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
     messaging.getToken().then((String token) {
       assert(token != null);
       print("Firebase messaging token: $token");
@@ -90,6 +97,9 @@ class AppStateModel with ChangeNotifier {
   }
 
   void setLocale(String loc) {
+    if (prefs == null) {
+      return;
+    }
     if (loc == null) {
       loc = prefs.getString('locale');
       if (loc == null) {
@@ -132,13 +142,17 @@ class AppStateModel with ChangeNotifier {
   }
 
   void refresh() async {
+    if (prefs == null) {
+      return;
+    }
     // Check if the stored token has expired
     var expiresStr = prefs.getString('expires');
     if (expiresStr != null) {
       _expires = DateTime.parse(expiresStr);
       var remaining = _expires.difference(DateTime.now());
       if (remaining.inSeconds < 3600) {
-        var auth = await AuthClient(authClient: _mocks.getMock('authClient'))
+        Map<dynamic, dynamic> auth;
+        auth = await AuthClient(authClient: _mocks.getMock('authClient'))
             .refreshToken(prefs.getString('refreshToken'));
         if (auth != null && auth.containsKey('access_token')) {
           logIn(auth);
@@ -178,7 +192,7 @@ class AppStateModel with ChangeNotifier {
   }
 
   void logIn(data) {
-    if (data == null) {
+    if (data == null || prefs == null) {
       return;
     }
     if (data.containsKey('access_token')) {

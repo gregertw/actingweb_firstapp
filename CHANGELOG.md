@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## Mar 7 , 2021
+
+- Upgrade all dependencies and use of packages to flutter 1.25
+- Add support for Google Maps for web
+- Remove background access to location due to stricter Android policies
+- Remove background notifications for iOS as its not used
+- Clean up based on new firebase initialisation and plugin support
+- Bump minSdkVersion to 21 due to requirements from various plugins
+- Bump gradle and google-services version to 4.1.1 and 4.3.4 respectively
+- Bump ios platform version to 10.0 in ios Podfile due to firebase requirements
+- Upgrade to newest versions of all requirements (not null-safe)
+- Refactored geolocation code to new split plugins and usage
+- Refactored to new buttons (e.g. ElevatedButton and TextButton)
+- Fix introduced issue in integration tests where flutter driver cannot start
+  after flutter bindings have been initialised
+- Refactor use of crashlytics as it does not support web
+- Get rid of discontinued flushbar (use new standard snackbar)
+
+
 ## Oct 2, 2020
 
 - Bump up to version 1.22 of Flutter SDK, XCode 12, and Android 4 w/ API level 30

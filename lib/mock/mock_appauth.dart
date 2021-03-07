@@ -22,6 +22,7 @@ class MockFlutterAppAuth extends Fake implements FlutterAppAuth {
     return Future.value(MockAuthorizationTokenResponse());
   }
 
+  @override
   Future<AuthorizationTokenResponse> token(dynamic) {
     return Future.value(MockAuthorizationTokenResponse());
   }

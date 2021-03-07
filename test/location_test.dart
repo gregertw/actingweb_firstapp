@@ -56,7 +56,7 @@ void main() async {
     // Find Start listening button
     var finder = find.descendant(
         of: find.byType(LocationStreamWidget),
-        matching: find.byType(RaisedButton));
+        matching: find.byType(ElevatedButton));
     await tester.tap(finder);
     expect(find.byType(ListView), findsOneWidget);
     // Wait for locations to appear from geolocator mock
@@ -68,7 +68,8 @@ void main() async {
             of: find.byType(LocationStreamWidget),
             matching: find.byType(PositionListItem)),
         findsNWidgets(5));
-    expect(find.descendant(
+    expect(
+        find.descendant(
             of: find.byType(LocationStreamWidget),
             matching: find.text('Lonesome town,  , , Norway')),
         findsNWidgets(5));
