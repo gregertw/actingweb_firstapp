@@ -15,6 +15,8 @@
 - Refactored to new buttons (e.g. ElevatedButton and TextButton)
 - Fix introduced issue in integration tests where flutter driver cannot start
   after flutter bindings have been initialised
+- Refactor use of crashlytics as it does not support web
+- Get rid of discontinued flushbar (use new standard snackbar)
 
 
 ## Oct 2, 2020
