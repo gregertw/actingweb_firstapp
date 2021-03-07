@@ -27,9 +27,14 @@ void main() async {
 
   await Firebase.initializeApp();
 
-  // Pass all uncaught errors from the framework to Crashlytics.
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-
+  if (kIsWeb) {
+    FlutterError.onError = (FlutterErrorDetails details) {
+      FlutterError.dumpErrorToConsole(details);
+    };
+  } else {
+    // Pass all uncaught errors from the framework to Crashlytics.
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  }
   FirebaseAnalytics analytics = FirebaseAnalytics();
 
   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
@@ -45,38 +50,43 @@ void main() async {
     appState.mocks.enableMock('geolocator', MockGeolocator());
   }
 
-  // Use dart zone to define Crashlytics as error handler for errors
-  // that occur outside runApp
-  runZonedGuarded<Future<Null>>(() async {
-    runApp(new MaterialApp(
-      debugShowCheckedModeBanner: false, // set to true to see the debug banner
-      navigatorObservers: [
-        FirebaseAnalyticsObserver(analytics: analytics),
-      ],
-      onGenerateTitle: (context) => S.of(context).appTitle,
-      localizationsDelegates: [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: S.delegate.supportedLocales,
-      home: new ChangeNotifierProvider.value(
-        value: appState,
-        child: new HomePage(),
-      ),
-      theme: appTheme,
-      routes: <String, WidgetBuilder>{
-        "/HomePage": (BuildContext context) => new ChangeNotifierProvider.value(
-              value: appState,
-              child: new HomePage(),
-            ),
-        "/LoginPage": (BuildContext context) =>
-            new ChangeNotifierProvider.value(
-              value: appState,
-              child: new LoginPage(),
-            ),
-      },
-    ));
-  }, FirebaseCrashlytics.instance.recordError);
+  var app = MaterialApp(
+    debugShowCheckedModeBanner: false, // set to true to see the debug banner
+    navigatorObservers: [
+      FirebaseAnalyticsObserver(analytics: analytics),
+    ],
+    onGenerateTitle: (context) => S.of(context).appTitle,
+    localizationsDelegates: [
+      S.delegate,
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+    ],
+    supportedLocales: S.delegate.supportedLocales,
+    home: new ChangeNotifierProvider.value(
+      value: appState,
+      child: new HomePage(),
+    ),
+    theme: appTheme,
+    routes: <String, WidgetBuilder>{
+      "/HomePage": (BuildContext context) => new ChangeNotifierProvider.value(
+            value: appState,
+            child: new HomePage(),
+          ),
+      "/LoginPage": (BuildContext context) => new ChangeNotifierProvider.value(
+            value: appState,
+            child: new LoginPage(),
+          ),
+    },
+  );
+  // If we run on web, do not use Crashlytics (not supported on web yet)
+  if (kIsWeb) {
+    runApp(app);
+  } else {
+    // Use dart zone to define Crashlytics as error handler for errors
+    // that occur outside runApp
+    runZonedGuarded<Future<Null>>(() async {
+      runApp(app);
+    }, FirebaseCrashlytics.instance.recordError);
+  }
 }
