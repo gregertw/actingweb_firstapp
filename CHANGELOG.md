@@ -1,6 +1,11 @@
 # CHANGELOG
 
 
+## Mar 11, 2021
+
+- Add proguard rule to keep androidx.lifecycle.DefaultLifecycleObserver as it is pruned
+  in release build and Maps fail
+
 ## Mar 7, 2021
 
 - Added APN (push notifications) capability to the ios project
