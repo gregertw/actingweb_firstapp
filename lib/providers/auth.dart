@@ -48,7 +48,10 @@ class AuthClient {
     String _userInfo;
     try {
       final http.Response httpResponse = await http.get(
-          'https://demo.identityserver.io/api/test',
+          Uri(
+              scheme: 'https',
+              host: 'demo.identityserver.io',
+              path: '/api/test'),
           headers: <String, String>{'Authorization': 'Bearer $accessToken'});
       _userInfo = httpResponse.statusCode == 200 ? httpResponse.body : '';
       if (_userInfo.length == 0) {

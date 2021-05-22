@@ -37,7 +37,15 @@ void main() async {
 
   var state = LocStateModel(MockGeolocator());
   // Test location Oslo, Norway
-  state.addLocation(Position(latitude: 59.893777, longitude: 10.7150951));
+  state.addLocation(Position(
+      latitude: 59.893777,
+      longitude: 10.7150951,
+      speed: 0.0,
+      accuracy: 0.0,
+      speedAccuracy: 0.0,
+      altitude: 0.0,
+      heading: 0.0,
+      timestamp: DateTime.now()));
   testWidgets('OverlayMapPage', (WidgetTester tester) async {
     await initWidget(tester, state);
     await tester.pump();

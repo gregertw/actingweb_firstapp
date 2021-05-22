@@ -33,7 +33,15 @@ class Geo {
 class LocStateModel with ChangeNotifier {
   Geo locator;
   // Represent latest location
-  Position _lastPos = Position(longitude: 0.0, latitude: 0.0);
+  Position _lastPos = Position(
+      longitude: 0.0,
+      latitude: 0.0,
+      speed: 0.0,
+      accuracy: 0.0,
+      speedAccuracy: 0.0,
+      altitude: 0.0,
+      heading: 0.0,
+      timestamp: DateTime.now());
   LocationPermission _geoAccessStatus;
   StreamSubscription<Position> _positionStreamSubscription;
   final Map<Position, Placemark> _pointList = Map<Position, Placemark>();
