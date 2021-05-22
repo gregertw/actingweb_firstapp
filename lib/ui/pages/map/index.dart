@@ -64,7 +64,9 @@ class _OverlayMapPageState extends State<OverlayMapPage> {
               ),
               mapType: _mapType,
               onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
+                if (!_controller.isCompleted) {
+                  _controller.complete(controller);
+                }
               },
               markers: _markers,
               // If we want to capture a moved position, we can use a callback

@@ -28,7 +28,15 @@ class MockGeolocator extends Fake implements Geo {
       Duration timeLimit}) async* {
     for (var i = 1; i < 11; i++) {
       await Future.delayed(Duration(milliseconds: 10));
-      yield Position(latitude: 59.893777 + i / 100, longitude: 10.7150951);
+      yield Position(
+          latitude: 59.893777 + i / 100,
+          longitude: 10.7150951,
+          speed: 0.0,
+          accuracy: 0.0,
+          speedAccuracy: 0.0,
+          altitude: 0.0,
+          heading: 0.0,
+          timestamp: DateTime.now());
     }
   }
 }
