@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## May 22, 2021
+
+- Upgraded to flutter 2.2
+- Updated all dependencies to the latest, except test (dependency on a very new library not used by others)
+- All dependencies should now be upgraded to null safety
+- Bumped version to 1.4.2+10
 
 ## Mar 11, 2021
 
