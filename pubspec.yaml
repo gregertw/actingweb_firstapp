@@ -23,14 +23,14 @@ dependencies:
   meta: ^1.1.8
   provider: ^5.0.0
   shared_preferences: ^2.0.5
-  google_maps_flutter: ^2.0.4
+  google_maps_flutter: ^2.0.5
   google_maps_flutter_web: ^0.3.0
   geolocator: ^7.0.3
   geocoding: ^2.0.0
-  firebase_core: ^1.1.1
-  firebase_analytics: ^8.0.4
-  firebase_crashlytics: ^2.0.3
-  firebase_messaging: ^9.1.4
+  firebase_core: ^1.2.0
+  firebase_analytics: ^8.1.0
+  firebase_crashlytics: ^2.0.4
+  firebase_messaging: ^10.0.0
 
 dev_dependencies:
   flutter_test:
@@ -40,7 +40,7 @@ dev_dependencies:
   test: ^1.16.8
   flutter_launcher_icons: ^0.9.0
   convert: ^3.0.0
-  mockito: ^5.0.7
+  mockito: ^5.0.8
 
 flutter_icons:
   android: "launcher_icon"
