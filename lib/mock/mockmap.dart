@@ -1,21 +1,37 @@
-class MockMap {
-  Map<String, Object> _mocks = Map();
+import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:first_app/models/locstate.dart';
 
-  Object getMock(String mock) {
-    return _mocks[mock];
+class MockMap {
+  Geo? mockGeo;
+  FlutterAppAuth? mockAppAuth;
+
+  Geo? getGeo() {
+    return mockGeo;
   }
 
-  void enableMock(String mock, Object obj) {
-    if (obj != null){
-      _mocks[mock] = obj;
-    }
+  FlutterAppAuth? getAppAuth() {
+    return mockAppAuth;
+  }
+
+  void enableGeo(Geo obj) {
+    mockGeo = obj;
+  }
+
+  void enableAppAuth(FlutterAppAuth obj) {
+    mockAppAuth = obj;
   }
 
   void disableMock(String mock) {
-    _mocks.remove(mock);
+    if (mock == 'geo') {
+      mockGeo = null;
+    }
+    if (mock == 'appauth') {
+      mockAppAuth = null;
+    }
   }
 
   void clearMocks() {
-    _mocks.clear();
+    mockGeo = null;
+    mockAppAuth = null;
   }
 }

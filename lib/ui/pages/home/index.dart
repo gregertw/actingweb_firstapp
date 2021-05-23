@@ -31,8 +31,7 @@ class HomePage extends StatelessWidget {
         ),
         backgroundColor: Theme.of(context).backgroundColor,
         body: new ChangeNotifierProvider(
-          create: (_) =>
-              new LocStateModel(appState.mocks.getMock('geolocator')),
+          create: (_) => new LocStateModel(appState.mocks.getGeo()),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

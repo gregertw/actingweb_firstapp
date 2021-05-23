@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## May 23, 2021
+
+- Verified null safety and upgraded app to sdk: '>=2.12.0 <3.0.0'
+- Bump version to 1.4.3+11
+
 ## May 22, 2021
 
 - Upgraded to flutter 2.2

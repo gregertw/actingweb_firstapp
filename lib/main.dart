@@ -46,8 +46,8 @@ void main() async {
 
   // Appauth does not support web yet, use the mock
   if (kIsWeb) {
-    appState.mocks.enableMock('authClient', MockFlutterAppAuth());
-    appState.mocks.enableMock('geolocator', MockGeolocator());
+    appState.mocks.enableAppAuth(MockFlutterAppAuth());
+    appState.mocks.enableGeo(MockGeolocator());
   }
 
   var app = MaterialApp(

@@ -53,10 +53,10 @@ class AuthPage extends StatelessWidget {
     var auth0 = AuthClient(
         authClient: Provider.of<AppStateModel>(context, listen: false)
             .mocks
-            .getMock('authClient'));
+            .getAppAuth());
     try {
       auth0.authorize().then((res) {
-        if (res != null && res.containsKey('access_token')) {
+        if (res.containsKey('access_token')) {
           Provider.of<AppStateModel>(context, listen: false).logIn(res);
           // Earlier, userinfo was retrieved here, but this failed as
           // when the future returned, the context could be null and thus

@@ -17,17 +17,17 @@ void main() async {
   AppStateModel appState = new AppStateModel();
 
   // ignore: missing_return
-  Future<String> dataHandler(String msg) async {
+  Future<String> dataHandler(String? msg) async {
     print("Got driver message: $msg");
     switch (msg) {
       case "mockLogin":
         {
-          appState.mocks.enableMock('authClient', MockFlutterAppAuth());
+          appState.mocks.enableAppAuth(MockFlutterAppAuth());
         }
         break;
       case "mockGeo":
         {
-          appState.mocks.enableMock('geolocator', MockGeolocator());
+          appState.mocks.enableGeo(MockGeolocator());
         }
         break;
       case "clearMocks":
@@ -42,8 +42,8 @@ void main() async {
         break;
       default:
         throw ("Not a valid driver message!!");
-        break;
     }
+    throw ("error");
   }
 
   // This line enables the extension.

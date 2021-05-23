@@ -15,25 +15,23 @@ void main() {
     final openDrawerMenuButton = find.byTooltip("Open navigation menu");
     final exitButtonFinder = find.byValueKey('DrawerMenuTile_LogOut');
 
-    FlutterDriver driver;
+    FlutterDriver? driver;
 
     // Connect to the Flutter driver before running any tests.
     setUpAll(() async {
       driver = await FlutterDriver.connect();
       // Clear any earlier mocks
-      driver.requestData('clearMocks');
+      driver!.requestData('clearMocks');
       // Clear any actual logged in sessions
-      driver.requestData('clearSession');
+      driver!.requestData('clearSession');
     });
     // Close the connection to the driver after the tests have completed.
     tearDownAll(() async {
-      if (driver != null) {
-        driver.close();
-      }
+      driver!.close();
     });
 
     test('check flutter driver health', () async {
-      final health = await driver.checkHealth();
+      final health = await driver!.checkHealth();
       expect(health.status, HealthStatus.ok);
     });
 
@@ -44,33 +42,33 @@ void main() {
           .tap(exitButtonFinder, timeout: Duration(milliseconds: 200))
           .catchError((e) {});*/
       // We should now have a login button
-      await driver.waitFor(loginButtonFinder);
-      driver.requestData('mockLogin');
-      driver.requestData('mockGeo');
+      await driver!.waitFor(loginButtonFinder);
+      driver!.requestData('mockLogin');
+      driver!.requestData('mockGeo');
       // Then, tap the login button.
-      await driver.tap(loginButtonFinder);
-      await driver.tap(startListeningButtonFinder);
-      await driver.waitFor(locationTileFinder);
+      await driver!.tap(loginButtonFinder);
+      await driver!.tap(startListeningButtonFinder);
+      await driver!.waitFor(locationTileFinder);
     });
 
     test('listen to location', () async {
-      await driver.tap(startListeningButtonFinder);
-      await driver.waitFor(locationTileFinder);
+      await driver!.tap(startListeningButtonFinder);
+      await driver!.waitFor(locationTileFinder);
     });
 
     test('toggle map', () async {
-      await driver.tap(mapToggleButton);
-      await driver.waitFor(mapOverlayFinder);
-      await driver.tap(mapToggleButton);
-      await driver.waitForAbsent(mapOverlayFinder);
+      await driver!.tap(mapToggleButton);
+      await driver!.waitFor(mapOverlayFinder);
+      await driver!.tap(mapToggleButton);
+      await driver!.waitForAbsent(mapOverlayFinder);
     });
     test('open drawer menu', () async {
-      await driver.tap(openDrawerMenuButton);
-      await driver.waitFor(exitButtonFinder);
+      await driver!.tap(openDrawerMenuButton);
+      await driver!.waitFor(exitButtonFinder);
     });
     test('log out', () async {
-      await driver.tap(exitButtonFinder);
-      await driver.waitFor(loginButtonFinder);
+      await driver!.tap(exitButtonFinder);
+      await driver!.waitFor(loginButtonFinder);
     });
   }); // group('first_app')
 }

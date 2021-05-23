@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // The auth_provider_test tests the authentication appstate,
 // so this is a duplication for illustration purposes.
 void main() {
-  AppStateModel state;
+  late AppStateModel state;
   // We need mock initial values for SharedPreferences
   SharedPreferences.setMockInitialValues({});
   setUp(() async {

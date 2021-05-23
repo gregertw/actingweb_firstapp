@@ -11,7 +11,7 @@ class HomePageDrawer extends StatelessWidget {
     var auth0 = AuthClient(
         authClient: Provider.of<AppStateModel>(context, listen: false)
             .mocks
-            .getMock('authClient'));
+            .getAppAuth());
     auth0.getUserInfo(appState.userToken).then((res) {
       if (res != null) {
         // The demo.identityserver.io/api/test API doesn't return anything
@@ -64,7 +64,7 @@ class HomePageDrawer extends StatelessWidget {
           ListTile(
             key: Key("DrawerMenuTile_Localisation"),
             title: Text(S.of(context).drawerLocalisation),
-            subtitle: Text(appState.locale),
+            subtitle: Text(appState.locale!),
             onTap: () {
               // Here you should have a widget to select among
               // supported locales. This is just a quick and dirty
@@ -73,7 +73,7 @@ class HomePageDrawer extends StatelessWidget {
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(S.of(context).drawerLocalisationResultMsg +
-                    appState.locale),
+                    appState.locale!),
                 duration: const Duration(seconds: 3),
               ));
             },
@@ -102,10 +102,10 @@ Widget buildDrawerHeader(BuildContext context) {
     key: Key("DrawerMenu_Header"),
     accountName: Text(appState.name == null
         ? S.of(context).drawerHeaderInitialName
-        : appState.name),
+        : appState.name!),
     accountEmail: Text(appState.email == null
         ? S.of(context).drawerHeaderInitialEmail
-        : appState.email),
+        : appState.email!),
     onDetailsPressed: () => showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -121,10 +121,10 @@ Widget buildDrawerHeader(BuildContext context) {
               ListTile(
                 title: Text(appState.name == null
                     ? S.of(context).drawerEmptyName
-                    : appState.name),
+                    : appState.name!),
                 subtitle: Text(appState.email == null
                     ? S.of(context).drawerEmptyEmail
-                    : appState.email),
+                    : appState.email!),
               ),
               ListTile(
                 title: Text(S.of(context).drawerButtomSheetFCMToken),
@@ -172,7 +172,7 @@ Widget buildDrawerHeader(BuildContext context) {
                 title: Text(S.of(context).drawerButtomSheetExpires),
                 subtitle: Text(appState.expires == null
                     ? ''
-                    : appState.expires.toIso8601String()),
+                    : appState.expires!.toIso8601String()),
               ),
             ],
           ),
