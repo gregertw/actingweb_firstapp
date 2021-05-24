@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Flutter start test observatory",
+            "label": "Flutter integration tests",
             "type": "shell",
-            "command": "flutter run --host-vmservice-port 8888 --disable-service-auth-codes test_driver/app.dart",
+            "command": "flutter drive --driver test_driver/driver.dart --target integration_test/app_test.dart",
             "group": {
                 "kind": "test",
                 "isDefault": true
@@ -17,9 +17,9 @@
             }
         },
         {
-            "label": "Flutter integration tests",
+            "label": "Flutter integration tests - web",
             "type": "shell",
-            "command": "export VM_SERVICE_URL=http://127.0.0.1:8888/;dart test_driver/app_test.dart",
+            "command": "chromedriver --port=4444 &; flutter drive --driver test_driver/driver.dart --target integration_test/app_test.dart -d web-server",
             "group": {
                 "kind": "test",
                 "isDefault": true
