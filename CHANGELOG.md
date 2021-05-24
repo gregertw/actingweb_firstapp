@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## May 23, 2021
+## May 24, 2021
 
 - Verified null safety and upgraded app to sdk: '>=2.12.0 <3.0.0'
+- Updated integration tests to Flutter 2 SDK supported integration_tests
 - Bump version to 1.4.3+11
 
 ## May 22, 2021
