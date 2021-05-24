@@ -55,14 +55,14 @@ T44MUkYLl7/T51eqO6Cu1B3U4GO97E73sOauWKwDW7ynvHMinbO8qwKWdOeEWyRH
 """);
 
 void main() {
-  HttpServer server;
+  HttpServer? server;
   setUp(() async {
     SecurityContext context = new SecurityContext();
     context.useCertificateChainBytes(cert);
     context.usePrivateKeyBytes(key);
     server = await HttpServer.bindSecure('localhost', 0, context);
     // var url = "${server.address.host}:${server.port}";
-    server.listen((HttpRequest request) {
+    server!.listen((HttpRequest request) {
       request.response.write('Hello, world!');
     });
   });
@@ -71,7 +71,7 @@ void main() {
   // var appState = new AppStateModel(prefs);
 
   tearDown(() async {
-    await server.close(force: true);
+    await server!.close(force: true);
     server = null;
   });
 

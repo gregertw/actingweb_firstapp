@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 // Starting point for CustomDialog code taken from https://fluttertutorial.in/dialog-in-flutter/
 class CustomDialog extends StatelessWidget {
-  final String title, description, buttonText;
-  final Image image;
+  final String? title, description, buttonText;
+  final Image? image;
   CustomDialog({
-    @required this.title,
-    @required this.description,
-    @required this.buttonText,
+    required this.title,
+    required this.description,
+    required this.buttonText,
     this.image,
   });
   @override
@@ -49,14 +49,14 @@ class CustomDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min, // To make the card compact
             children: <Widget>[
               Text(
-                this.title,
+                this.title!,
                 style: TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               SizedBox(height: 16.0),
-              SelectableText(description,
+              SelectableText(description!,
                   enableInteractiveSelection: true,
                   maxLines: 15,
                   textAlign: TextAlign.left,
@@ -70,7 +70,7 @@ class CustomDialog extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop(); // To close the dialog
                     },
-                    child: Text(buttonText),
+                    child: Text(buttonText!),
                   ))
             ],
           ),

@@ -4,10 +4,10 @@ import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:http/http.dart' as http;
 
 class AuthClient {
-  final String clientId, redirectUrl, authzEndpoint, tokenEndpoint;
+  final String? clientId, redirectUrl, authzEndpoint, tokenEndpoint;
   final List<String> scopes;
-  String discoveryUrl;
-  FlutterAppAuth authClient;
+  String? discoveryUrl;
+  FlutterAppAuth? authClient;
 
   // Default configs for using the demo.identityserver.io ConnectId service
   // Either use the discoveryUrl or the authzEndpoint and tokenEndpoint (to skip discovery)
@@ -65,12 +65,12 @@ class AuthClient {
     }
   }
 
-  Future<Map<dynamic, dynamic>> refreshToken(refreshToken) async {
+  Future<Map<dynamic, dynamic>?> refreshToken(refreshToken) async {
     if (refreshToken == null) {
       return null;
     }
     try {
-      final TokenResponse _result = await authClient.token(TokenRequest(
+      final TokenResponse? _result = await authClient!.token(TokenRequest(
           _clientId, _redirectUrl,
           refreshToken: refreshToken,
           discoveryUrl: _discoveryUrl,
@@ -79,7 +79,7 @@ class AuthClient {
         return Map.from({});
       }
       return Map.from({
-        'access_token': _result.accessToken,
+        'access_token': _result!.accessToken,
         'expires': _result.accessTokenExpirationDateTime,
         'id_token': _result.idToken,
         'refresh_token': _result.refreshToken,
@@ -92,23 +92,23 @@ class AuthClient {
   }
 
   Future<Map<dynamic, dynamic>> authorize() async {
-    AuthorizationTokenResponse _result;
+    AuthorizationTokenResponse? _result;
     try {
       if (this.discoveryUrl == null) {
-        _result = await authClient.authorizeAndExchangeCode(
+        _result = await authClient!.authorizeAndExchangeCode(
           AuthorizationTokenRequest(
-            clientId,
-            redirectUrl,
+            clientId!,
+            redirectUrl!,
             serviceConfiguration:
-                AuthorizationServiceConfiguration(authzEndpoint, tokenEndpoint),
+                AuthorizationServiceConfiguration(authzEndpoint!, tokenEndpoint!),
             scopes: this.scopes,
           ),
         );
       } else {
-        _result = await authClient.authorizeAndExchangeCode(
+        _result = await authClient!.authorizeAndExchangeCode(
           AuthorizationTokenRequest(
-            clientId,
-            redirectUrl,
+            clientId!,
+            redirectUrl!,
             discoveryUrl: discoveryUrl,
             scopes: this.scopes,
           ),

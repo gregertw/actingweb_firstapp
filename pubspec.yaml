@@ -7,10 +7,10 @@ description: An application that manages and receives alerts from ActingWeb acto
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 1.4.2+10
+version: 1.4.3+11
 
 environment:
-  sdk: ">2.1.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
@@ -33,6 +33,8 @@ dependencies:
   firebase_messaging: ^10.0.0
 
 dev_dependencies:
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
   flutter_driver:

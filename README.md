@@ -9,7 +9,7 @@ Listed on:
 
 **Latest build and artifacts**: [![Codemagic build status](https://api.codemagic.io/apps/5e23f3b4c5faa6a356815277/5e23f3b4c5faa6a356815276/status_badge.svg)](https://codemagic.io/apps/5e23f3b4c5faa6a356815277/5e23f3b4c5faa6a356815276/latest_build)
 
-** Latest update: Support for Flutter 2 **
+** Latest update: Support for Flutter 2.2 and migrated to null safety **
 
 There are lots of simple Flutter app examples out there, but very few show how to tie together the elements
 you need to put an app into production. In my process of evaluating Flutter maturity and readiness for
@@ -18,7 +18,7 @@ a starter app (and template on Github) that has been updated and following best 
 practices.
 
 The focus of this starter app is thus not on the UI or functionality, but rather to show how a set of typical
-app functionalities can be developed and supported in a sound code structure. The app hstructure as also been 
+app functionalities can be developed and supported in a sound code structure. The app structure has also been 
 designed to support a development team through separation of concerns and sound abstractions, as well as support
 for all layers of testing (unit, widget, and integration).
 
@@ -32,6 +32,7 @@ This app has the following elements:
 - Simple widget framework for handling logged-in, expired, and logged-out states
 - Basic UI with sliding drawer menu and menu options
 - Testing using unit test framework and mocking
+- Integration tests
 - Localization using i18n and the Android Studio/IntelliJ flutter i18n plugin to generate boilerplate
 - Use of a global UI theme
 - Custom icons for both iOS and Android
@@ -40,17 +41,12 @@ This app has the following elements:
 - Use of Firebase Cloud Messaging for push notifications
 - Use of a OS native capability (location tracking) using a published plugin (geolocator)
 - Use of Google Maps to present a map of the current location
-- Use of an independently defined new widget type called
-  AnchoredOverlay to overlay a map widget
+- Use of an independently defined new widget type called AnchoredOverlay to overlay a map widget
 
 See my blog post for a more detailed introduction to the various features: https://stuff.greger.io/2019/07/production-quality-flutter-starter-app.html, also this update post explains the latest changes: https://stuff.greger.io/2020/01/production-quality-flutter-starter-app-take-two.html
 
 ## Known issues
 
-- google_maps_flutter_web throws exceptions on updateTileOverlays() not implemented 
-  (https://github.com/flutter/flutter/issues/76361). This has been fixed in a more recent
-  version, but there is a dependency on a higher version of google_maps_flutter that breaks dependency requirements
-  for firebase
 - firebase_crashlytics does not support web
 ## Suggested improvements
 
@@ -255,7 +251,26 @@ widget testing (same folder) with mocks using mockito, and integration testing (
 
 To run the unit and widget tests, run `flutter test`. 
 
-### Integration Tests
+### Integration Tests - As of Flutter 2
+
+As part of Flutter 2 releases, the integration testing support moved into the SDK. The approach to testing also
+changed. Previously, there were two separate processes (see below) where you had to communicate between the process
+running the tests outside and the actual app running on a device (emulated or physical). There is now more fully
+integrated support. See https://flutter.dev/docs/testing/integration-tests for more details.
+
+To run the integration tests, start the emulator or connect a device and run:
+`flutter drive --driver test_driver/driver.dart --target integration_test/app_test.dart`
+
+You can also install chromedriver and run the tests in the browser. Make sure chromedriver is in your path and run:
+`chromedriver --port=4444 &; flutter drive --driver test_driver/driver.dart --target integration_test/app_test.dart -d web-server`
+
+Currently, there is limited support for splitting up integration tests into separate files, so all tests should be
+in the same file. However, you can use several testWidgets() calls. For demonstration purposes and due to the need
+to log in, the current integration tests are all within the same testWidgets().
+
+### Integration Tests - The pre-flutter.2 way
+
+**NOTE!!! See above for the new way of doing integration tests!**
 
 The integration tests run a real application on a device/simulator. This is done by having two processes: one 
 instrumented application and one test process. You will find the instrumented app in `flutter_driver/app.dart` 

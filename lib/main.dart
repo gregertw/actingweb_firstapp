@@ -19,6 +19,21 @@ import 'package:first_app/mock/mock_appauth.dart';
 import 'package:first_app/mock/mock_geolocator.dart';
 
 void main() async {
+  var app = await getApp();
+
+  // If we run on web, do not use Crashlytics (not supported on web yet)
+  if (kIsWeb) {
+    runApp(app);
+  } else {
+    // Use dart zone to define Crashlytics as error handler for errors
+    // that occur outside runApp
+    runZonedGuarded<Future<Null>>(() async {
+      runApp(app);
+    }, FirebaseCrashlytics.instance.recordError);
+  }
+}
+
+Future<MaterialApp> getApp({bool mock: false}) async {
   // A breaking change in the platform messaging, as of Flutter 1.12.13+hotfix.5,
   // we need to explicitly initialise bindings to get access to the BinaryMessenger
   // This is needed by Crashlytics.
@@ -27,7 +42,7 @@ void main() async {
 
   await Firebase.initializeApp();
 
-  if (kIsWeb) {
+  if (kIsWeb || mock) {
     FlutterError.onError = (FlutterErrorDetails details) {
       FlutterError.dumpErrorToConsole(details);
     };
@@ -45,12 +60,12 @@ void main() async {
   var appState = new AppStateModel(prefs, analytics, firebaseMessaging);
 
   // Appauth does not support web yet, use the mock
-  if (kIsWeb) {
-    appState.mocks.enableMock('authClient', MockFlutterAppAuth());
-    appState.mocks.enableMock('geolocator', MockGeolocator());
+  if (kIsWeb || mock) {
+    appState.mocks.enableAppAuth(MockFlutterAppAuth());
+    appState.mocks.enableGeo(MockGeolocator());
   }
 
-  var app = MaterialApp(
+  return MaterialApp(
     debugShowCheckedModeBanner: false, // set to true to see the debug banner
     navigatorObservers: [
       FirebaseAnalyticsObserver(analytics: analytics),
@@ -79,14 +94,4 @@ void main() async {
           ),
     },
   );
-  // If we run on web, do not use Crashlytics (not supported on web yet)
-  if (kIsWeb) {
-    runApp(app);
-  } else {
-    // Use dart zone to define Crashlytics as error handler for errors
-    // that occur outside runApp
-    runZonedGuarded<Future<Null>>(() async {
-      runApp(app);
-    }, FirebaseCrashlytics.instance.recordError);
-  }
 }

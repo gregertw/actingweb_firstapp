@@ -13,7 +13,7 @@ class MockGeolocator extends Fake implements Geo {
   @override
   Future<List<Placemark>> placemarkFromCoordinates(
       double latitude, double longitude,
-      {String localeIdentifier}) async {
+      {String? localeIdentifier}) async {
     final List<Placemark> l = [];
     l.add(Placemark(name: 'Lonesome town', country: 'Norway'));
     return l;
@@ -24,8 +24,8 @@ class MockGeolocator extends Fake implements Geo {
       {LocationAccuracy desiredAccuracy = LocationAccuracy.best,
       int distanceFilter = 0,
       bool forceAndroidLocationManager = false,
-      Duration intervalDuration,
-      Duration timeLimit}) async* {
+      Duration? intervalDuration,
+      Duration? timeLimit}) async* {
     for (var i = 1; i < 11; i++) {
       await Future.delayed(Duration(milliseconds: 10));
       yield Position(
