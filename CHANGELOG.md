@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Jul 12, 2021
+
+- Prepare for flutter 2.3.0
+- Simplify theme
+- Bump version to 1.4.4+12
+
 ## May 24, 2021
 
 - Verified null safety and upgraded app to sdk: '>=2.12.0 <3.0.0'
