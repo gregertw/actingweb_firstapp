@@ -6,7 +6,7 @@
 - Add exclude arm64 from simulator architecture to handle Xcode command line build failure
 - Upgrade all packages
 - Simplify theme
-- Bump version to 1.4.4+12
+- Bump version to 1.4.4+13
 
 ## May 24, 2021
 
