@@ -1,8 +1,8 @@
 # CHANGELOG
 
-## Aug 22, 2021
+## Sep 10, 2021
 
-- Prepare for flutter 2.3.0 with some deprecations
+- Support for flutter 2.5.0
 - Add exclude arm64 from simulator architecture to handle Xcode command line build failure
 - Upgrade all packages
 - Simplify theme
