@@ -19,7 +19,7 @@
         {
             "label": "Flutter integration tests - web",
             "type": "shell",
-            "command": "chromedriver --port=4444 &; flutter drive --driver test_driver/driver.dart --target integration_test/app_test.dart -d web-server",
+            "command": "chromedriver --port=4444 &; flutter drive --driver test_driver/driver.dart --target integration_test/app_test.dart --browser-name=chrome -d web-server",
             "group": {
                 "kind": "test",
                 "isDefault": true

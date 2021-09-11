@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Sep 10, 2021
+
+- Support for flutter 2.5.0
+- Add exclude arm64 from simulator architecture to handle Xcode command line build failure
+- Upgrade all packages
+- Simplify theme
+- Bump version to 1.4.4+13
+
 ## May 24, 2021
 
 - Verified null safety and upgraded app to sdk: '>=2.12.0 <3.0.0'

@@ -325,7 +325,9 @@ package (like MobX), but rather use simple classes with the ChangeNotifier mixin
 provider to pick up notifyListeners() calls. In a real application, you probably want to choose a state management 
 packaged like MobX to better handle more complex states.
 
-The developer of provider has later developer https://pub.dev/packages/flutter_riverpod, which is a total rewrite
+The developer of provider has later developeed https://pub.dev/packages/flutter_riverpod, which is a total rewrite
 of state management (not using InheritedWidget). It is positioned as a "better" provider, however, I have chosen
 not to rewrite the starter app with riverpod as provider is powerful enough for many real-life scenarios and the
-current introduction to riverpod is harder to understand until you are deeper into Flutter.
+current introduction to riverpod is harder to understand until you are deeper into Flutter. Also, there have been
+introduced more state management packages and frameworks and choosing one that fits your project must be
+evaluated on a case by case basis.

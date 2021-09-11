@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -12,39 +13,40 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <link rel="shortcut icon" type="image/png" href="favicon.png" />
 
   <title>actingweb_firstapp</title>
   <link rel="manifest" href="manifest.json">
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7fSvAPIz-31x_pMPJ3hR3xMcP8WjJxJ0"></script>
 </head>
-<body>
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-analytics.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-messaging.js"></script>
 
-<script>
-  // Your web app's Firebase configuration
-  // NOTE!! Also change in firebase-messaging-sw.js
-  var firebaseConfig = {
-    apiKey: "AIzaSyDjVjlcUKYUBb62x4K8WUGI47mXXlfKTtI",
-    authDomain: "actingweb-firstapp.firebaseapp.com",
-    databaseURL: "https://actingweb-firstapp.firebaseio.com",
-    projectId: "actingweb-firstapp",
-    storageBucket: "actingweb-firstapp.appspot.com",
-    messagingSenderId: "748007732162",
-    appId: "1:748007732162:web:ff42373829ce3137785c5b",
-    measurementId: "G-M7F2YR6FNW"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  // Initialize Firebase analytics
-  firebase.analytics();
-  // Initialize Firebase messaging
-  const messaging = firebase.messaging();
-  // This is the public key from the Firebase web app config
-  messaging.usePublicVapidKey("BCKRpKeIZ7-0iWQGbOe6rcTGW1kvAGbyDNPH4Waw-Yzs2cRPJ5xsKUvoybBp2l7KIBx7W2SYh1T9kKh3dlG2KHw");
+<body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-messaging.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    // NOTE!! Also change in firebase-messaging-sw.js
+    var firebaseConfig = {
+      apiKey: "AIzaSyDjVjlcUKYUBb62x4K8WUGI47mXXlfKTtI",
+      authDomain: "actingweb-firstapp.firebaseapp.com",
+      databaseURL: "https://actingweb-firstapp.firebaseio.com",
+      projectId: "actingweb-firstapp",
+      storageBucket: "actingweb-firstapp.appspot.com",
+      messagingSenderId: "748007732162",
+      appId: "1:748007732162:web:ff42373829ce3137785c5b",
+      measurementId: "G-M7F2YR6FNW"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    // Initialize Firebase analytics
+    firebase.analytics();
+    // Initialize Firebase messaging
+    const messaging = firebase.messaging();
+    // This is the public key from the Firebase web app config
+    messaging.usePublicVapidKey("BCKRpKeIZ7-0iWQGbOe6rcTGW1kvAGbyDNPH4Waw-Yzs2cRPJ5xsKUvoybBp2l7KIBx7W2SYh1T9kKh3dlG2KHw");
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
@@ -57,46 +59,47 @@
         // default the firebase-messagaging-sw.js is expected on the root of the domain
         // and not in the same folder as index.html
         navigator.serviceWorker.register('./firebase-messaging-sw.js')
-        .then((registration) => {
-          firebase.messaging().useServiceWorker(registration);
-          // Get Instance ID token. Initially this makes a network call, once retrieved
-          // subsequent calls to getToken will return from cache.
-          messaging.getToken().then((currentToken) => {
+          .then((registration) => {
+            firebase.messaging().useServiceWorker(registration);
+            // Get Instance ID token. Initially this makes a network call, once retrieved
+            // subsequent calls to getToken will return from cache.
+            messaging.getToken().then((currentToken) => {
               if (currentToken) {
-                  // sendTokenToServer(currentToken);
-                  //nupdateUIForPushEnabled(currentToken);
-                  console.log('Messaging token (only in Chrome debugger): ', currentToken);
+                // sendTokenToServer(currentToken);
+                //nupdateUIForPushEnabled(currentToken);
+                console.log('Messaging token (only in Chrome debugger): ', currentToken);
               } else {
-                  // Show permission request.
-                  console.log('No Instance ID token available. Request permission to generate one.');
-                  // Show permission UI.
-                  // updateUIForPushPermissionRequired();
+                // Show permission request.
+                console.log('No Instance ID token available. Request permission to generate one.');
+                // Show permission UI.
+                // updateUIForPushPermissionRequired();
               }
-              }).catch((err) => {
+            }).catch((err) => {
               console.log('An error occurred while retrieving token. ', err);
-          });
-          // Callback fired if Instance ID token is updated.
-          messaging.onTokenRefresh(() => {
+            });
+            // Callback fired if Instance ID token is updated.
+            messaging.onTokenRefresh(() => {
               messaging.getToken().then((refreshedToken) => {
-                  console.log('Token refreshed:', refreshedToken);
-                  // ...
+                console.log('Token refreshed:', refreshedToken);
+                // ...
               }).catch((err) => {
-                  console.log('Unable to retrieve refreshed token ', err);
+                console.log('Unable to retrieve refreshed token ', err);
               });
+            });
+            // Handle incoming messages. Called when:
+            // - a message is received while the app has focus
+            // - the user clicks on an app notification created by a service worker
+            //   `messaging.setBackgroundMessageHandler` handler.
+            messaging.onMessage((payload) => {
+              console.log('Message received: ', payload);
+              // ...
+            });
           });
-          // Handle incoming messages. Called when:
-          // - a message is received while the app has focus
-          // - the user clicks on an app notification created by a service worker
-          //   `messaging.setBackgroundMessageHandler` handler.
-          messaging.onMessage((payload) => {
-            console.log('Message received: ', payload);
-            // ...
-          });
-        });
       });
     }
 
-</script>
+  </script>
   <script src="main.dart.js" type="application/javascript"></script>
 </body>
+
 </html>
