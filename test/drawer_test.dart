@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:first_app/models/appstate.dart';
-import 'package:first_app/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:first_app/ui/theme/style.dart';
 import 'package:first_app/ui/pages/home/drawer.dart';
 
@@ -12,13 +12,13 @@ import 'package:first_app/ui/pages/home/drawer.dart';
 dynamic initWidget(WidgetTester tester, AppStateModel state) {
   return tester.pumpWidget(
     new MaterialApp(
-      onGenerateTitle: (context) => S.of(context).appTitle,
+      onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
       localizationsDelegates: [
-        S.delegate,
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: S.delegate.supportedLocales,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: appTheme,
       home: new ChangeNotifierProvider.value(
         value: state,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:first_app/models/appstate.dart';
 import 'package:provider/provider.dart';
 import 'package:first_app/providers/auth.dart';
-import 'package:first_app/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -12,9 +12,9 @@ class LoginPage extends StatelessWidget {
       padding: EdgeInsets.all(40.0),
       child: Image.asset('assets/actingweb-header-small.png'),
     );
-    var welcomeText = S.of(context).loginWelcomeText;
+    var welcomeText = AppLocalizations.of(context)!.loginWelcomeText;
     if (appState.authenticated) {
-      welcomeText = S.of(context).loginLoadEvents;
+      welcomeText = AppLocalizations.of(context)!.loginLoadEvents;
     }
     final welcome = Padding(
       padding: EdgeInsets.all(8.0),
@@ -84,7 +84,7 @@ class AuthPage extends StatelessWidget {
           onPressed: () {
             auth(context);
           },
-          child: Text(S.of(context).loginButton),
+          child: Text(AppLocalizations.of(context)!.loginButton),
         ),
       ),
     );

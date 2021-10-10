@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:first_app/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:first_app/models/locstate.dart';
 
 String latitudeLongitude(String lat, String long) => "Lat: $lat, Long: $long";
@@ -30,8 +30,8 @@ class LocationStreamWidget extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
           ),
           child: Text(Provider.of<LocStateModel>(context).isListening()
-              ? S.of(context).stopListening
-              : S.of(context).startListening),
+              ? AppLocalizations.of(context)!.stopListening
+              : AppLocalizations.of(context)!.startListening),
           onPressed: Provider.of<LocStateModel>(context).toggleListening,
         ),
       ),

@@ -43,7 +43,7 @@ class AuthClient {
 
   Future<dynamic> getUserInfo(accessToken) async {
     if (accessToken == null) {
-      return null;
+      return <String, dynamic>{};
     }
     String _userInfo;
     try {
@@ -55,13 +55,12 @@ class AuthClient {
           headers: <String, String>{'Authorization': 'Bearer $accessToken'});
       _userInfo = httpResponse.statusCode == 200 ? httpResponse.body : '';
       if (_userInfo.length == 0) {
-        return null;
+        return <String, dynamic>{};
       }
 
       return json.decode(_userInfo);
     } catch (e) {
-      print('Error: $e');
-      return null;
+      throw ArgumentError("Unable to parse results from getUserInfo() ");
     }
   }
 
@@ -99,8 +98,8 @@ class AuthClient {
           AuthorizationTokenRequest(
             clientId!,
             redirectUrl!,
-            serviceConfiguration:
-                AuthorizationServiceConfiguration(authzEndpoint!, tokenEndpoint!),
+            serviceConfiguration: AuthorizationServiceConfiguration(
+                authzEndpoint!, tokenEndpoint!),
             scopes: this.scopes,
           ),
         );

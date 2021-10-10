@@ -2,20 +2,20 @@ import 'package:first_app/ui/widgets/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:first_app/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:first_app/ui/theme/style.dart';
 
 // Helper function to encapsulate code needed to instantiate the widget
 dynamic initWidget(WidgetTester tester) {
   return tester.pumpWidget(
     new MaterialApp(
-      onGenerateTitle: (context) => S.of(context).appTitle,
+      onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
       localizationsDelegates: [
-        S.delegate,
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: S.delegate.supportedLocales,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: appTheme,
       home: new CustomDialog(
           title: 'Title', description: 'Description', buttonText: 'buttonText'),

@@ -6,7 +6,10 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:first_app/providers/auth.dart';
 import 'package:first_app/mock/mockmap.dart';
-import 'package:first_app/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// Import mock packages for the web version
+import 'package:first_app/mock/mock_appauth.dart';
+import 'package:first_app/mock/mock_geolocator.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
@@ -21,7 +24,9 @@ class AppStateModel with ChangeNotifier {
   String? _email;
   String? _name;
   String? _locale;
+  late Locale _currentLocale;
   String? _fcmToken;
+  bool mock;
   SharedPreferences? prefs;
   FirebaseAnalytics? analytics;
   FirebaseMessaging? messaging;
@@ -38,20 +43,26 @@ class AppStateModel with ChangeNotifier {
   String? get email => _email;
   String? get name => _name;
   MockMap get mocks => _mocks;
-  String? get locale => _locale;
+  String? get localeAbbrev => _locale;
+  Locale get locale => _currentLocale;
   String? get fcmToken => _fcmToken;
 
-  AppStateModel([this.prefs, this.analytics, this.messaging]) {
+  AppStateModel(
+      [this.prefs, this.analytics, this.messaging, this.mock = false]) {
     refresh();
     // this will load locale from prefs
     // Note that you need to use
-    // Intl.defaultLocale = appState.locale;
+    // Intl.defaultLocale = appState.localeAbbrev;
     // in your main page(s) builders to apply a loaded locale from prefs
     // as the widget tree will not automatically refresh until build time
     // See lib/ui/pages/home/index.dart for an example.
     setLocale(null);
     // Initialise Firebase messaging
     _initMessaging();
+    if (mock) {
+      mocks.enableAppAuth(MockFlutterAppAuth());
+      mocks.enableGeo(MockGeolocator());
+    }
   }
 
   void _initMessaging() async {
@@ -107,13 +118,13 @@ class AppStateModel with ChangeNotifier {
       }
     }
     _locale = loc;
-    S.load(Locale(_locale!));
-    prefs!.setString('locale', _locale!);
+    prefs!.setString('locale', loc);
+    _currentLocale = Locale(loc);
     notifyListeners();
   }
 
   void switchLocale() {
-    final _locales = S.delegate.supportedLocales;
+    final _locales = AppLocalizations.supportedLocales;
     if (_locales.length == 1) {
       return;
     }
