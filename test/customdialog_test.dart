@@ -8,16 +8,16 @@ import 'package:first_app/ui/theme/style.dart';
 // Helper function to encapsulate code needed to instantiate the widget
 dynamic initWidget(WidgetTester tester) {
   return tester.pumpWidget(
-    new MaterialApp(
+    MaterialApp(
       onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       theme: appTheme,
-      home: new CustomDialog(
+      home: const CustomDialog(
           title: 'Title', description: 'Description', buttonText: 'buttonText'),
     ),
   );

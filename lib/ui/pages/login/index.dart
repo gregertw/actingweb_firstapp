@@ -5,11 +5,13 @@ import 'package:first_app/providers/auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginPage extends StatelessWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var appState = Provider.of<AppStateModel>(context, listen: false);
     final logo = Padding(
-      padding: EdgeInsets.all(40.0),
+      padding: const EdgeInsets.all(40.0),
       child: Image.asset('assets/actingweb-header-small.png'),
     );
     var welcomeText = AppLocalizations.of(context)!.loginWelcomeText;
@@ -17,12 +19,12 @@ class LoginPage extends StatelessWidget {
       welcomeText = AppLocalizations.of(context)!.loginLoadEvents;
     }
     final welcome = Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Text(
         welcomeText,
       ),
     );
-    var body;
+    Column body;
     if (appState.authenticated) {
       body = Column(
         children: [logo, welcome],
@@ -30,14 +32,14 @@ class LoginPage extends StatelessWidget {
       );
     } else {
       body = Column(
-        children: [logo, welcome, AuthPage()],
+        children: [logo, welcome, const AuthPage()],
         mainAxisAlignment: MainAxisAlignment.center,
       );
     }
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.all(28.0),
+        padding: const EdgeInsets.all(28.0),
         decoration: BoxDecoration(
           gradient: LinearGradient(
               colors: [Colors.grey, Theme.of(context).primaryColor]),
@@ -49,6 +51,8 @@ class LoginPage extends StatelessWidget {
 }
 
 class AuthPage extends StatelessWidget {
+  const AuthPage({Key? key}) : super(key: key);
+
   void auth(BuildContext context) {
     var auth0 = AuthClient(
         authClient: Provider.of<AppStateModel>(context, listen: false)
@@ -64,28 +68,27 @@ class AuthPage extends StatelessWidget {
         }
       });
     } catch (e) {
+      // ignore: avoid_print
       print('Error: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.0),
-        child: ElevatedButton(
-          key: Key('LoginPage_LoginButton'),
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
-            ),
-            padding: EdgeInsets.all(15),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: ElevatedButton(
+        key: const Key('LoginPage_LoginButton'),
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
           ),
-          onPressed: () {
-            auth(context);
-          },
-          child: Text(AppLocalizations.of(context)!.loginButton),
+          padding: const EdgeInsets.all(15),
         ),
+        onPressed: () {
+          auth(context);
+        },
+        child: Text(AppLocalizations.of(context)!.loginButton),
       ),
     );
   }

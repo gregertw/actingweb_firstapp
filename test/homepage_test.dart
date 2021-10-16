@@ -15,18 +15,18 @@ import 'package:first_app/ui/pages/login/index.dart';
 // Helper function to encapsulate code needed to instantiate the HomePage() widget
 dynamic initWidget(WidgetTester tester, AppStateModel state) {
   return tester.pumpWidget(
-    new MaterialApp(
+    MaterialApp(
       onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       theme: appTheme,
-      home: new ChangeNotifierProvider.value(
+      home: ChangeNotifierProvider.value(
         value: state,
-        child: new HomePage(),
+        child: const HomePage(),
       ),
     ),
   );
@@ -59,7 +59,7 @@ void main() async {
   testWidgets('logged-in homepage widget', (WidgetTester tester) async {
     await initWidget(tester, loginState);
     await tester.pump();
-    expect(find.byKey(Key("HomePage_Scaffold")), findsOneWidget);
+    expect(find.byKey(const Key("HomePage_Scaffold")), findsOneWidget);
     expect(find.byType(AppBar), findsOneWidget);
     // We should find the map toggle button
     expect(find.byType(FloatingActionButton), findsOneWidget);
@@ -72,7 +72,7 @@ void main() async {
     await tester.pump();
     // Find the menu button
     final finder = find.descendant(
-        of: find.byKey(Key("HomePage_Scaffold")),
+        of: find.byKey(const Key("HomePage_Scaffold")),
         matching: find.byTooltip("Open navigation menu"));
     // and tap it to open
     await tester.tap(finder);

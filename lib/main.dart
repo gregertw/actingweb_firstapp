@@ -28,7 +28,7 @@ void main() async {
   } else {
     // Use dart zone to define Crashlytics as error handler for errors
     // that occur outside runApp
-    runZonedGuarded<Future<Null>>(() async {
+    runZonedGuarded<Future<void>>(() async {
       runApp(await getApp());
     }, FirebaseCrashlytics.instance.recordError);
   }

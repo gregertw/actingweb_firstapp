@@ -12,7 +12,7 @@ import 'package:first_app/ui/pages/login/index.dart';
 import 'package:first_app/ui/theme/style.dart';
 
 // Using async functions must be done from an async function
-Future<Widget> getApp({bool mock: false}) async {
+Future<Widget> getApp({bool mock = false}) async {
   var analytics = FirebaseAnalytics();
   // Wrap a StatelessWidget (ProviderApp) in a ChangeNotifierProvider to trigger rebuild of the
   // entire MaterialApp when app state, like locale, changes
@@ -28,9 +28,10 @@ Future<Widget> getApp({bool mock: false}) async {
 class ProviderApp extends StatelessWidget {
   final FirebaseAnalytics analytics;
 
-  ProviderApp({
+  const ProviderApp({
+    Key? key,
     required this.analytics,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +49,11 @@ class ProviderApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: context.watch<AppStateModel>().locale,
-      home: HomePage(),
+      home: const HomePage(),
       theme: appTheme,
       routes: <String, WidgetBuilder>{
-        "/HomePage": (BuildContext context) => HomePage(),
-        "/LoginPage": (BuildContext context) => LoginPage(),
+        "/HomePage": (BuildContext context) => const HomePage(),
+        "/LoginPage": (BuildContext context) => const LoginPage(),
       },
     );
   }

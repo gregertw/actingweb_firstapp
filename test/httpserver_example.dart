@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_new
+
 import 'package:test/test.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -76,5 +78,4 @@ void main() {
   });
 
   // ...
-
 }

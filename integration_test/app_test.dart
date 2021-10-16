@@ -17,14 +17,15 @@ void main() {
     // First, define the Finders and use them to locate widgets from the
     // test suite. Note: the Strings provided to the `byValueKey` method must
     // be the same as the Strings we used for the Keys.
-    final loginButtonFinder = find.byKey(Key('LoginPage_LoginButton'));
+    final loginButtonFinder = find.byKey(const Key('LoginPage_LoginButton'));
     final startListeningButtonFinder =
-        find.byKey(Key('LocationPage_StartListeningButton'));
-    final locationTileFinder = find.byKey(Key('LocationPage_LocationTile'));
-    final mapToggleButton = find.byKey(Key('OverlayMap_ToggleButton'));
+        find.byKey(const Key('LocationPage_StartListeningButton'));
+    final locationTileFinder =
+        find.byKey(const Key('LocationPage_LocationTile'));
+    final mapToggleButton = find.byKey(const Key('OverlayMap_ToggleButton'));
     final mapOverlayFinder = find.byType(GoogleMap);
     final openDrawerMenuButton = find.byTooltip("Open navigation menu");
-    final exitButtonFinder = find.byKey(Key('DrawerMenuTile_LogOut'));
+    final exitButtonFinder = find.byKey(const Key('DrawerMenuTile_LogOut'));
 
     testWidgets('app test', (tester) async {
       var app = await getApp(mock: true);

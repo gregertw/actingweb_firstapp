@@ -11,18 +11,18 @@ import 'package:first_app/ui/pages/home/drawer.dart';
 // Helper function to encapsulate code needed to instantiate the HomePage() widget
 dynamic initWidget(WidgetTester tester, AppStateModel state) {
   return tester.pumpWidget(
-    new MaterialApp(
+    MaterialApp(
       onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       theme: appTheme,
-      home: new ChangeNotifierProvider.value(
+      home: ChangeNotifierProvider.value(
         value: state,
-        child: new HomePageDrawer(),
+        child: const HomePageDrawer(),
       ),
     ),
   );
@@ -47,10 +47,12 @@ void main() async {
     expect(loginState.authenticated, true);
     // We should have opened the drawer
     expect(find.byType(HomePageDrawer), findsOneWidget);
-    expect(find.byKey(Key("DrawerMenu_Header")), findsOneWidget);
-    expect(find.byKey(Key("DrawerMenuTile_RefreshTokens")), findsOneWidget);
-    expect(find.byKey(Key("DrawerMenuTile_GetUserInfo")), findsOneWidget);
-    expect(find.byKey(Key("DrawerMenuTile_Localisation")), findsOneWidget);
+    expect(find.byKey(const Key("DrawerMenu_Header")), findsOneWidget);
+    expect(
+        find.byKey(const Key("DrawerMenuTile_RefreshTokens")), findsOneWidget);
+    expect(find.byKey(const Key("DrawerMenuTile_GetUserInfo")), findsOneWidget);
+    expect(
+        find.byKey(const Key("DrawerMenuTile_Localisation")), findsOneWidget);
   });
 
   testWidgets('log out from drawer', (WidgetTester tester) async {
@@ -59,7 +61,7 @@ void main() async {
 
     final buttonFinder = find.descendant(
         of: find.byType(HomePageDrawer),
-        matching: find.byKey(Key("DrawerMenuTile_LogOut")));
+        matching: find.byKey(const Key("DrawerMenuTile_LogOut")));
     await tester.tap(buttonFinder);
     await tester.pump();
     // Authenticated state should be false

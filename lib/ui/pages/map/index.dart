@@ -6,12 +6,14 @@ import 'package:first_app/ui/widgets/anchored_overlay.dart';
 import 'package:first_app/models/locstate.dart';
 
 class OverlayMapPage extends StatefulWidget {
+  const OverlayMapPage({Key? key}) : super(key: key);
+
   @override
   _OverlayMapPageState createState() => _OverlayMapPageState();
 }
 
 class _OverlayMapPageState extends State<OverlayMapPage> {
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
   Set<Marker>? _markers;
   // If you want to record the position when the user moves the map, see the GoogleMap widget below
   //CameraPosition _current;
@@ -35,15 +37,15 @@ class _OverlayMapPageState extends State<OverlayMapPage> {
     if (_lat != lat || _lon != lon) {
       _lat = lat;
       _lon = lon;
-      _markers = Set.from([
+      _markers = {
         Marker(
-            markerId: MarkerId("Current"),
-            infoWindow: InfoWindow(
+            markerId: const MarkerId("Current"),
+            infoWindow: const InfoWindow(
                 title: "Current position",
                 snippet: "The most recent position received."),
             position: LatLng(_lat, _lon),
             icon: BitmapDescriptor.defaultMarkerWithHue(2.0))
-      ]);
+      };
       _updatePosition();
     }
 
@@ -55,8 +57,9 @@ class _OverlayMapPageState extends State<OverlayMapPage> {
           child: Container(
             width: 300.0,
             height: 200.0,
-            constraints: BoxConstraints(maxHeight: 300.0, maxWidth: 400.0),
-            decoration: BoxDecoration(),
+            constraints:
+                const BoxConstraints(maxHeight: 300.0, maxWidth: 400.0),
+            decoration: const BoxDecoration(),
             child: GoogleMap(
               initialCameraPosition: CameraPosition(
                 target: LatLng(_lat, _lon),
@@ -78,13 +81,13 @@ class _OverlayMapPageState extends State<OverlayMapPage> {
         );
       },
       child: FloatingActionButton(
-        key: Key('OverlayMap_ToggleButton'),
+        key: const Key('OverlayMap_ToggleButton'),
         onPressed: () {
           setState(() {
             _show = !_show!;
           });
         },
-        child: Icon(Icons.map),
+        child: const Icon(Icons.map),
       ),
     );
   }

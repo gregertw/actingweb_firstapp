@@ -6,6 +6,8 @@ import 'package:first_app/providers/auth.dart';
 import 'package:first_app/ui/widgets/custom_dialog.dart';
 
 class HomePageDrawer extends StatelessWidget {
+  const HomePageDrawer({Key? key}) : super(key: key);
+
   void _userInfo(BuildContext context) {
     var appState = Provider.of<AppStateModel>(context, listen: false);
     var auth0 = AuthClient(
@@ -43,7 +45,7 @@ class HomePageDrawer extends StatelessWidget {
         children: <Widget>[
           buildDrawerHeader(context),
           ListTile(
-            key: Key("DrawerMenuTile_RefreshTokens"),
+            key: const Key("DrawerMenuTile_RefreshTokens"),
             title: Text(AppLocalizations.of(context)!.drawerRefreshTokens),
             onTap: () {
               appState.refresh();
@@ -56,7 +58,7 @@ class HomePageDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            key: Key("DrawerMenuTile_GetUserInfo"),
+            key: const Key("DrawerMenuTile_GetUserInfo"),
             title: Text(AppLocalizations.of(context)!.drawerGetUserInfo),
             onTap: () {
               _userInfo(context);
@@ -64,7 +66,7 @@ class HomePageDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            key: Key("DrawerMenuTile_Localisation"),
+            key: const Key("DrawerMenuTile_Localisation"),
             title: Text(AppLocalizations.of(context)!.drawerLocalisation),
             subtitle: Text(appState.localeAbbrev!),
             onTap: () {
@@ -82,8 +84,8 @@ class HomePageDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            key: Key('DrawerMenuTile_LogOut'),
-            leading: new Icon(
+            key: const Key('DrawerMenuTile_LogOut'),
+            leading: const Icon(
               Icons.exit_to_app,
               color: Color(0xe81751ff),
             ),
@@ -102,7 +104,7 @@ class HomePageDrawer extends StatelessWidget {
 Widget buildDrawerHeader(BuildContext context) {
   var appState = Provider.of<AppStateModel>(context);
   return UserAccountsDrawerHeader(
-    key: Key("DrawerMenu_Header"),
+    key: const Key("DrawerMenu_Header"),
     accountName: Text(appState.name == null
         ? AppLocalizations.of(context)!.drawerHeaderInitialName
         : appState.name!),
@@ -113,7 +115,7 @@ Widget buildDrawerHeader(BuildContext context) {
       context: context,
       builder: (BuildContext context) {
         var container = Container(
-          key: Key("DrawerMenu_BottomSheet"),
+          key: const Key("DrawerMenu_BottomSheet"),
           alignment: Alignment.center,
           height: 200,
           decoration: BoxDecoration(

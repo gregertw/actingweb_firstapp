@@ -12,6 +12,7 @@ import 'package:first_app/mock/mock_appauth.dart';
 import 'package:first_app/mock/mock_geolocator.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // ignore: avoid_print
   print("Handling a background message: ${message.messageId}");
 }
 
@@ -33,7 +34,7 @@ class AppStateModel with ChangeNotifier {
   // We use a mockmap to enable and disable mock functions/classes.
   // The mock should be injected as a dependency where external dependencies need
   // to be mocked as part of testing.
-  MockMap _mocks = MockMap();
+  final MockMap _mocks = MockMap();
 
   bool get authenticated => _authenticated;
   String? get userToken => _userToken;
@@ -86,11 +87,14 @@ class AppStateModel with ChangeNotifier {
       provisional: false,
       sound: true,
     );
+    // ignore: avoid_print
     print('User granted permission: ${settings.authorizationStatus}');
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      // ignore: avoid_print
       print("onMessage: $message");
       if (message.notification != null) {
+        // ignore: avoid_print
         print('Message also contained a notification: ${message.notification}');
       }
     });
@@ -99,6 +103,7 @@ class AppStateModel with ChangeNotifier {
 
     messaging!.getToken().then((String? token) {
       assert(token != null);
+      // ignore: avoid_print
       print("Firebase messaging token: $token");
       _fcmToken = token;
     });
@@ -113,9 +118,7 @@ class AppStateModel with ChangeNotifier {
     }
     if (loc == null) {
       loc = prefs!.getString('locale');
-      if (loc == null) {
-        loc = Intl.getCurrentLocale().substring(0, 2);
-      }
+      loc ??= Intl.getCurrentLocale().substring(0, 2);
     }
     _locale = loc;
     prefs!.setString('locale', loc);
@@ -142,13 +145,14 @@ class AppStateModel with ChangeNotifier {
 
   Future<void> sendAnalyticsEvent(
       String name, Map<String, dynamic>? params) async {
-    if (this.analytics == null) {
+    if (analytics == null) {
       return;
     }
-    await this.analytics!.logEvent(
-          name: name,
-          parameters: params,
-        );
+    await analytics!.logEvent(
+      name: name,
+      parameters: params,
+    );
+    // ignore: avoid_print
     print('Sent analytics events: $name');
   }
 
