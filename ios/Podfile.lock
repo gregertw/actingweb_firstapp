@@ -24,7 +24,7 @@ PODS:
   - firebase_core (1.7.0):
     - Firebase/CoreOnly (= 8.7.0)
     - Flutter
-  - firebase_crashlytics (2.2.2):
+  - firebase_crashlytics (2.2.3):
     - Firebase/Crashlytics (= 8.7.0)
     - firebase_core
     - Flutter
@@ -202,7 +202,7 @@ SPEC CHECKSUMS:
   Firebase: bc9325d5ee2041524bac78a5213d0e530c651309
   firebase_analytics: 72e3c5d712e43eeb0cb6f194f7cc10bc81e7d3fe
   firebase_core: f5ac1f2726a2bd0468cea0161eddeea3d83d7e3e
-  firebase_crashlytics: 7d9a2a04c1c756f62137ca97f8972790e7be8678
+  firebase_crashlytics: 16f2d46200fab0b7085912fd473f77c06b3c69f7
   firebase_messaging: cfee8830477d2f1875e027a65cce7f6239ebf583
   FirebaseAnalytics: 52768800c2add1d84b751420cb4caaf8195f2c41
   FirebaseCore: f4804c1d3f4bbbefc88904d15653038f2c99ddf7
