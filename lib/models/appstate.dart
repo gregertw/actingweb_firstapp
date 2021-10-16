@@ -127,7 +127,7 @@ class AppStateModel with ChangeNotifier {
   }
 
   void switchLocale() {
-    final _locales = AppLocalizations.supportedLocales;
+    const _locales = AppLocalizations.supportedLocales;
     if (_locales.length == 1) {
       return;
     }
