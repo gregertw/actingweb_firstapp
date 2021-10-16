@@ -48,7 +48,7 @@ class AppStateModel with ChangeNotifier {
   String? get fcmToken => _fcmToken;
 
   AppStateModel(
-      [this.prefs, this.analytics, this.messaging, this.mock = false]) {
+      {this.prefs, this.analytics, this.messaging, this.mock = false}) {
     refresh();
     // this will load locale from prefs
     // Note that you need to use
