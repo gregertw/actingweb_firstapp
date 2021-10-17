@@ -7,7 +7,7 @@ description: An application that manages and receives alerts from ActingWeb acto
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 1.4.4+13
+version: 1.5.0+14
 
 # Prevent accidental publishing to pub.dev.
 publish_to: 'none'
@@ -67,5 +67,5 @@ flutter:
       fonts:
         - asset: assets/Nunito.ttf
 
-  # Enable generation of localized Strings from arb fileAppLocalizations.
+  # Enable generation of localized Strings from arb file AppLocalizations.
   generate: true
