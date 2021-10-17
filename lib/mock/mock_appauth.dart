@@ -3,13 +3,19 @@ import 'package:flutter_appauth/flutter_appauth.dart';
 
 class MockAuthorizationTokenResponse extends Fake
     implements AuthorizationTokenResponse {
+  @override
   final accessToken = 'an_access_token';
-  final accessTokenExpirationDateTime = new DateTime.now();
+  @override
+  final accessTokenExpirationDateTime = DateTime.now();
+  @override
   final idToken = 'id_token';
+  @override
   final refreshToken = 'a_refresh_token';
+  @override
   final authorizationAdditionalParameters = Map.from({
     'param': 1,
   });
+  @override
   final tokenAdditionalParameters = Map.from({
     'param': 1,
   });

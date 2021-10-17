@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:first_app/models/appstate.dart';
-import 'package:first_app/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:first_app/ui/theme/style.dart';
 import 'package:first_app/ui/pages/home/index.dart';
 import 'package:first_app/ui/pages/home/drawer.dart';
@@ -15,18 +15,18 @@ import 'package:first_app/ui/pages/login/index.dart';
 // Helper function to encapsulate code needed to instantiate the HomePage() widget
 dynamic initWidget(WidgetTester tester, AppStateModel state) {
   return tester.pumpWidget(
-    new MaterialApp(
-      onGenerateTitle: (context) => S.of(context).appTitle,
-      localizationsDelegates: [
-        S.delegate,
+    MaterialApp(
+      onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: S.delegate.supportedLocales,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: appTheme,
-      home: new ChangeNotifierProvider.value(
+      home: ChangeNotifierProvider.value(
         value: state,
-        child: new HomePage(),
+        child: const HomePage(),
       ),
     ),
   );
@@ -38,8 +38,8 @@ void main() async {
   SharedPreferences.setMockInitialValues({});
   var prefs = await SharedPreferences.getInstance();
   // We have one logged in state and one logged out, to be used with various tests
-  loginState = AppStateModel(prefs);
-  logoutState = AppStateModel(prefs);
+  loginState = AppStateModel(prefs: prefs);
+  logoutState = AppStateModel(prefs: prefs);
 
   // Ensure we have a logged in state before testing HomePage as LoginPage() is rendered if
   // we are not authenticated
@@ -59,7 +59,7 @@ void main() async {
   testWidgets('logged-in homepage widget', (WidgetTester tester) async {
     await initWidget(tester, loginState);
     await tester.pump();
-    expect(find.byKey(Key("HomePage_Scaffold")), findsOneWidget);
+    expect(find.byKey(const Key("HomePage_Scaffold")), findsOneWidget);
     expect(find.byType(AppBar), findsOneWidget);
     // We should find the map toggle button
     expect(find.byType(FloatingActionButton), findsOneWidget);
@@ -72,7 +72,7 @@ void main() async {
     await tester.pump();
     // Find the menu button
     final finder = find.descendant(
-        of: find.byKey(Key("HomePage_Scaffold")),
+        of: find.byKey(const Key("HomePage_Scaffold")),
         matching: find.byTooltip("Open navigation menu"));
     // and tap it to open
     await tester.tap(finder);

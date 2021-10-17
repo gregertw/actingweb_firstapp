@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 class CustomDialog extends StatelessWidget {
   final String? title, description, buttonText;
   final Image? image;
-  CustomDialog({
+  const CustomDialog({
+    Key? key,
     required this.title,
     required this.description,
     required this.buttonText,
     this.image,
-  });
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -27,21 +28,21 @@ class CustomDialog extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: padding,
             left: padding,
             right: padding,
           ),
-          margin: EdgeInsets.only(),
-          decoration: new BoxDecoration(
+          margin: const EdgeInsets.only(),
+          decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(padding),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 blurRadius: 10.0,
-                offset: const Offset(0.0, 10.0),
+                offset: Offset(0.0, 10.0),
               )
             ],
           ),
@@ -49,21 +50,21 @@ class CustomDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min, // To make the card compact
             children: <Widget>[
               Text(
-                this.title!,
-                style: TextStyle(
+                title!,
+                style: const TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               SelectableText(description!,
                   enableInteractiveSelection: true,
                   maxLines: 15,
                   textAlign: TextAlign.left,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12.0,
                   )),
-              SizedBox(height: 24.0),
+              const SizedBox(height: 24.0),
               Align(
                   alignment: Alignment.bottomRight,
                   child: TextButton(

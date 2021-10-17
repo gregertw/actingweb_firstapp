@@ -6,25 +6,25 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:first_app/ui/pages/map/index.dart';
 import 'package:first_app/models/locstate.dart';
-import 'package:first_app/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:first_app/ui/theme/style.dart';
 import 'package:first_app/mock/mock_geolocator.dart';
 
 // Helper function to encapsulate code needed to instantiate the HomePage() widget
 dynamic initWidget(WidgetTester tester, LocStateModel state) {
   return tester.pumpWidget(
-    new MaterialApp(
-      onGenerateTitle: (context) => S.of(context).appTitle,
-      localizationsDelegates: [
-        S.delegate,
+    MaterialApp(
+      onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: S.delegate.supportedLocales,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: appTheme,
-      home: new ChangeNotifierProvider.value(
+      home: ChangeNotifierProvider.value(
         value: state,
-        child: new OverlayMapPage(),
+        child: const OverlayMapPage(),
       ),
     ),
   );

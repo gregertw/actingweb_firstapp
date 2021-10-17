@@ -26,24 +26,22 @@ class AuthClient {
 
   AuthClient(
       {this.authClient,
-      this.clientId: _clientId,
-      this.redirectUrl: _redirectUrl,
+      this.clientId = _clientId,
+      this.redirectUrl = _redirectUrl,
       this.discoveryUrl,
       this.authzEndpoint,
       this.tokenEndpoint,
-      this.scopes: _scopes}) {
-    if (authClient == null) {
-      authClient = FlutterAppAuth();
-    }
+      this.scopes = _scopes}) {
+    authClient ??= FlutterAppAuth();
     // If no server URLs are supplied, use the demo service
-    if (discoveryUrl == null && this.authzEndpoint == null) {
+    if (discoveryUrl == null && authzEndpoint == null) {
       discoveryUrl = _discoveryUrl;
     }
   }
 
   Future<dynamic> getUserInfo(accessToken) async {
     if (accessToken == null) {
-      return null;
+      return <String, dynamic>{};
     }
     String _userInfo;
     try {
@@ -54,14 +52,13 @@ class AuthClient {
               path: '/api/test'),
           headers: <String, String>{'Authorization': 'Bearer $accessToken'});
       _userInfo = httpResponse.statusCode == 200 ? httpResponse.body : '';
-      if (_userInfo.length == 0) {
-        return null;
+      if (_userInfo.isEmpty) {
+        return <String, dynamic>{};
       }
 
       return json.decode(_userInfo);
     } catch (e) {
-      print('Error: $e');
-      return null;
+      throw ArgumentError("Unable to parse results from getUserInfo() ");
     }
   }
 
@@ -86,7 +83,6 @@ class AuthClient {
         'additional_params': _result.tokenAdditionalParameters,
       });
     } catch (e) {
-      print('Error: $e');
       return Map.from({});
     }
   }
@@ -94,14 +90,14 @@ class AuthClient {
   Future<Map<dynamic, dynamic>> authorize() async {
     AuthorizationTokenResponse? _result;
     try {
-      if (this.discoveryUrl == null) {
+      if (discoveryUrl == null) {
         _result = await authClient!.authorizeAndExchangeCode(
           AuthorizationTokenRequest(
             clientId!,
             redirectUrl!,
-            serviceConfiguration:
-                AuthorizationServiceConfiguration(authzEndpoint!, tokenEndpoint!),
-            scopes: this.scopes,
+            serviceConfiguration: AuthorizationServiceConfiguration(
+                authzEndpoint!, tokenEndpoint!),
+            scopes: scopes,
           ),
         );
       } else {
@@ -110,7 +106,7 @@ class AuthClient {
             clientId!,
             redirectUrl!,
             discoveryUrl: discoveryUrl,
-            scopes: this.scopes,
+            scopes: scopes,
           ),
         );
       }
@@ -124,6 +120,7 @@ class AuthClient {
         });
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error: $e');
     }
     return Map.from({});

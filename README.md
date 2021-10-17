@@ -9,7 +9,7 @@ Listed on:
 
 **Latest build and artifacts**: [![Codemagic build status](https://api.codemagic.io/apps/5e23f3b4c5faa6a356815277/5e23f3b4c5faa6a356815276/status_badge.svg)](https://codemagic.io/apps/5e23f3b4c5faa6a356815277/5e23f3b4c5faa6a356815276/latest_build)
 
-** Latest update: Support for Flutter 2.2 and migrated to null safety **
+** Latest update: Support for Flutter 2.5.3 and aligned with the skeleton template**
 
 There are lots of simple Flutter app examples out there, but very few show how to tie together the elements
 you need to put an app into production. In my process of evaluating Flutter maturity and readiness for

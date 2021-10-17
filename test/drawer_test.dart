@@ -4,25 +4,25 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:first_app/models/appstate.dart';
-import 'package:first_app/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:first_app/ui/theme/style.dart';
 import 'package:first_app/ui/pages/home/drawer.dart';
 
 // Helper function to encapsulate code needed to instantiate the HomePage() widget
 dynamic initWidget(WidgetTester tester, AppStateModel state) {
   return tester.pumpWidget(
-    new MaterialApp(
-      onGenerateTitle: (context) => S.of(context).appTitle,
-      localizationsDelegates: [
-        S.delegate,
+    MaterialApp(
+      onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: S.delegate.supportedLocales,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: appTheme,
-      home: new ChangeNotifierProvider.value(
+      home: ChangeNotifierProvider.value(
         value: state,
-        child: new HomePageDrawer(),
+        child: const HomePageDrawer(),
       ),
     ),
   );
@@ -33,7 +33,7 @@ void main() async {
   // We need mock initial values for SharedPreferences
   SharedPreferences.setMockInitialValues({});
   var prefs = await SharedPreferences.getInstance();
-  loginState = AppStateModel(prefs);
+  loginState = AppStateModel(prefs: prefs);
 
   // Ensure we have a logged in state before testing HomePage as LoginPage() is rendered if
   // we are not authenticated
@@ -47,10 +47,12 @@ void main() async {
     expect(loginState.authenticated, true);
     // We should have opened the drawer
     expect(find.byType(HomePageDrawer), findsOneWidget);
-    expect(find.byKey(Key("DrawerMenu_Header")), findsOneWidget);
-    expect(find.byKey(Key("DrawerMenuTile_RefreshTokens")), findsOneWidget);
-    expect(find.byKey(Key("DrawerMenuTile_GetUserInfo")), findsOneWidget);
-    expect(find.byKey(Key("DrawerMenuTile_Localisation")), findsOneWidget);
+    expect(find.byKey(const Key("DrawerMenu_Header")), findsOneWidget);
+    expect(
+        find.byKey(const Key("DrawerMenuTile_RefreshTokens")), findsOneWidget);
+    expect(find.byKey(const Key("DrawerMenuTile_GetUserInfo")), findsOneWidget);
+    expect(
+        find.byKey(const Key("DrawerMenuTile_Localisation")), findsOneWidget);
   });
 
   testWidgets('log out from drawer', (WidgetTester tester) async {
@@ -59,7 +61,7 @@ void main() async {
 
     final buttonFinder = find.descendant(
         of: find.byType(HomePageDrawer),
-        matching: find.byKey(Key("DrawerMenuTile_LogOut")));
+        matching: find.byKey(const Key("DrawerMenuTile_LogOut")));
     await tester.tap(buttonFinder);
     await tester.pump();
     // Authenticated state should be false

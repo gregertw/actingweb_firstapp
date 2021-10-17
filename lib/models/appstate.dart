@@ -6,9 +6,13 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:first_app/providers/auth.dart';
 import 'package:first_app/mock/mockmap.dart';
-import 'package:first_app/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// Import mock packages for the web version
+import 'package:first_app/mock/mock_appauth.dart';
+import 'package:first_app/mock/mock_geolocator.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // ignore: avoid_print
   print("Handling a background message: ${message.messageId}");
 }
 
@@ -21,14 +25,16 @@ class AppStateModel with ChangeNotifier {
   String? _email;
   String? _name;
   String? _locale;
+  late Locale _currentLocale;
   String? _fcmToken;
+  bool mock;
   SharedPreferences? prefs;
   FirebaseAnalytics? analytics;
   FirebaseMessaging? messaging;
   // We use a mockmap to enable and disable mock functions/classes.
   // The mock should be injected as a dependency where external dependencies need
   // to be mocked as part of testing.
-  MockMap _mocks = MockMap();
+  final MockMap _mocks = MockMap();
 
   bool get authenticated => _authenticated;
   String? get userToken => _userToken;
@@ -38,20 +44,26 @@ class AppStateModel with ChangeNotifier {
   String? get email => _email;
   String? get name => _name;
   MockMap get mocks => _mocks;
-  String? get locale => _locale;
+  String? get localeAbbrev => _locale;
+  Locale get locale => _currentLocale;
   String? get fcmToken => _fcmToken;
 
-  AppStateModel([this.prefs, this.analytics, this.messaging]) {
+  AppStateModel(
+      {this.prefs, this.analytics, this.messaging, this.mock = false}) {
     refresh();
     // this will load locale from prefs
     // Note that you need to use
-    // Intl.defaultLocale = appState.locale;
+    // Intl.defaultLocale = appState.localeAbbrev;
     // in your main page(s) builders to apply a loaded locale from prefs
     // as the widget tree will not automatically refresh until build time
     // See lib/ui/pages/home/index.dart for an example.
     setLocale(null);
     // Initialise Firebase messaging
     _initMessaging();
+    if (mock) {
+      mocks.enableAppAuth(MockFlutterAppAuth());
+      mocks.enableGeo(MockGeolocator());
+    }
   }
 
   void _initMessaging() async {
@@ -75,11 +87,14 @@ class AppStateModel with ChangeNotifier {
       provisional: false,
       sound: true,
     );
+    // ignore: avoid_print
     print('User granted permission: ${settings.authorizationStatus}');
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      // ignore: avoid_print
       print("onMessage: $message");
       if (message.notification != null) {
+        // ignore: avoid_print
         print('Message also contained a notification: ${message.notification}');
       }
     });
@@ -88,6 +103,7 @@ class AppStateModel with ChangeNotifier {
 
     messaging!.getToken().then((String? token) {
       assert(token != null);
+      // ignore: avoid_print
       print("Firebase messaging token: $token");
       _fcmToken = token;
     });
@@ -102,18 +118,16 @@ class AppStateModel with ChangeNotifier {
     }
     if (loc == null) {
       loc = prefs!.getString('locale');
-      if (loc == null) {
-        loc = Intl.getCurrentLocale().substring(0, 2);
-      }
+      loc ??= Intl.getCurrentLocale().substring(0, 2);
     }
     _locale = loc;
-    S.load(Locale(_locale!));
-    prefs!.setString('locale', _locale!);
+    prefs!.setString('locale', loc);
+    _currentLocale = Locale(loc);
     notifyListeners();
   }
 
   void switchLocale() {
-    final _locales = S.delegate.supportedLocales;
+    const _locales = AppLocalizations.supportedLocales;
     if (_locales.length == 1) {
       return;
     }
@@ -131,13 +145,14 @@ class AppStateModel with ChangeNotifier {
 
   Future<void> sendAnalyticsEvent(
       String name, Map<String, dynamic>? params) async {
-    if (this.analytics == null) {
+    if (analytics == null) {
       return;
     }
-    await this.analytics!.logEvent(
-          name: name,
-          parameters: params,
-        );
+    await analytics!.logEvent(
+      name: name,
+      parameters: params,
+    );
+    // ignore: avoid_print
     print('Sent analytics events: $name');
   }
 

@@ -45,7 +45,7 @@ class LocStateModel with ChangeNotifier {
   LocationPermission? _geoAccessStatus;
   // ignore: cancel_subscriptions
   StreamSubscription<Position>? _positionStreamSubscription;
-  final Map<Position, Placemark?> _pointList = Map<Position, Placemark?>();
+  final Map<Position, Placemark?> _pointList = <Position, Placemark?>{};
 
   double get latitude => _lastPos.latitude;
   double get longitude => _lastPos.longitude;
@@ -62,9 +62,7 @@ class LocStateModel with ChangeNotifier {
       _pointList as LinkedHashMap<Position, Placemark?>;
 
   LocStateModel(this.locator) {
-    if (this.locator == null) {
-      this.locator = Geo();
-    }
+    locator ??= Geo();
   }
 
   Future<bool> available() async {

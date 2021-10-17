@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## Oct 17, 2021
+
+- Support latest flutter 2.5.3
+- Minor upgrades of package dependencies
+- Restructured MaterialApp and ChangeNotifierProvider to simplify appState as global state
+- Refactored localizations (S.) to  use the new built-in generation
+- Align with the flutter skeleton template
+- Bump version to 1.5.0+14
+
 ## Sep 10, 2021
 
 - Support for flutter 2.5.0

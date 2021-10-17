@@ -7,29 +7,28 @@ class AnchoredOverlay extends StatelessWidget {
   final Widget Function(BuildContext, Offset anchor)? overlayBuilder;
   final Widget? child;
 
-  AnchoredOverlay({
+  const AnchoredOverlay({
+    Key? key,
     this.showOverlay,
     this.overlayBuilder,
     this.child,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      child: new LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-        return new OverlayBuilder(
-          showOverlay: showOverlay,
-          overlayBuilder: (BuildContext overlayContext) {
-            RenderBox box = context.findRenderObject() as RenderBox;
-            final center =
-                box.size.center(box.localToGlobal(const Offset(0.0, 0.0)));
-            return overlayBuilder!(overlayContext, center);
-          },
-          child: child,
-        );
-      }),
-    );
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      return OverlayBuilder(
+        showOverlay: showOverlay,
+        overlayBuilder: (BuildContext overlayContext) {
+          RenderBox box = context.findRenderObject() as RenderBox;
+          final center =
+              box.size.center(box.localToGlobal(const Offset(0.0, 0.0)));
+          return overlayBuilder!(overlayContext, center);
+        },
+        child: child,
+      );
+    });
   }
 }
 
@@ -38,14 +37,15 @@ class OverlayBuilder extends StatefulWidget {
   final Function(BuildContext)? overlayBuilder;
   final Widget? child;
 
-  OverlayBuilder({
+  const OverlayBuilder({
+    Key? key,
     this.showOverlay = false,
     this.overlayBuilder,
     this.child,
-  });
+  }) : super(key: key);
 
   @override
-  _OverlayBuilderState createState() => new _OverlayBuilderState();
+  _OverlayBuilderState createState() => _OverlayBuilderState();
 }
 
 class _OverlayBuilderState extends State<OverlayBuilder> {
@@ -63,13 +63,15 @@ class _OverlayBuilderState extends State<OverlayBuilder> {
   @override
   void didUpdateWidget(OverlayBuilder oldWidget) {
     super.didUpdateWidget(oldWidget);
-    WidgetsBinding.instance!.addPostFrameCallback((_) => syncWidgetAndOverlay());
+    WidgetsBinding.instance!
+        .addPostFrameCallback((_) => syncWidgetAndOverlay());
   }
 
   @override
   void reassemble() {
     super.reassemble();
-    WidgetsBinding.instance!.addPostFrameCallback((_) => syncWidgetAndOverlay());
+    WidgetsBinding.instance!
+        .addPostFrameCallback((_) => syncWidgetAndOverlay());
   }
 
   @override
@@ -84,7 +86,7 @@ class _OverlayBuilderState extends State<OverlayBuilder> {
   bool isShowingOverlay() => overlayEntry != null;
 
   void showOverlay() {
-    overlayEntry = new OverlayEntry(
+    overlayEntry = OverlayEntry(
       builder: widget.overlayBuilder as Widget Function(BuildContext),
     );
     addToOverlay(overlayEntry!);
@@ -117,17 +119,18 @@ class CenterAbout extends StatelessWidget {
   final Offset? position;
   final Widget? child;
 
-  CenterAbout({
+  const CenterAbout({
+    Key? key,
     this.position,
     this.child,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return new Positioned(
+    return Positioned(
       top: position!.dy,
       left: position!.dx,
-      child: new FractionalTranslation(
+      child: FractionalTranslation(
         translation: const Offset(-0.5, -0.5),
         child: child,
       ),

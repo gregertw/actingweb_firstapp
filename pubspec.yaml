@@ -7,38 +7,42 @@ description: An application that manages and receives alerts from ActingWeb acto
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 1.4.4+13
+version: 1.5.0+14
+
+# Prevent accidental publishing to pub.dev.
+publish_to: 'none'
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  intl: ^0.17.0
+  intl: any
   flutter_appauth: ^1.1.0
   cupertino_icons: ^1.0.3
   meta: ^1.4.0
   provider: ^6.0.0
-  shared_preferences: ^2.0.6
-  google_maps_flutter: ^2.0.8
+  shared_preferences: ^2.0.8
+  google_maps_flutter: ^2.0.11
   google_maps_flutter_web: ^0.3.0+3
   geocoding: ^2.0.0
   firebase_core: ^1.4.0
   firebase_analytics: ^8.3.2
   firebase_crashlytics: ^2.1.1
   firebase_messaging: ^10.0.7
-  geolocator: ^7.4.0
+  geolocator: ^7.7.0
 
 dev_dependencies:
-  integration_test:
-    sdk: flutter
   flutter_test:
+    sdk: flutter
+  integration_test:
     sdk: flutter
   flutter_driver:
     sdk: flutter
+  flutter_lints: ^1.0.4
   test: ^1.17.9
   flutter_launcher_icons: ^0.9.0
   convert: ^3.0.1
@@ -62,5 +66,6 @@ flutter:
     - family: Nunito
       fonts:
         - asset: assets/Nunito.ttf
-flutter_intl:
-  enabled: true
+
+  # Enable generation of localized Strings from arb file AppLocalizations.
+  generate: true
