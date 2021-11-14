@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Nov 14, 2021
+
+- Fix null bug in _markers in map overlay widget
+- Support Xcode 13.2beta
+- Switch over to using flutter test instead of flutter drive (.vscode/tasks.json)
+
 ## Oct 17, 2021
 
 - Support latest flutter 2.5.3
