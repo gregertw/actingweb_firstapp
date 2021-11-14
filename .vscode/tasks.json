@@ -6,7 +6,7 @@
         {
             "label": "Flutter integration tests",
             "type": "shell",
-            "command": "flutter drive --driver test_driver/driver.dart --target integration_test/app_test.dart",
+            "command": "flutter test integration_test/",
             "group": {
                 "kind": "test",
                 "isDefault": true
@@ -17,9 +17,9 @@
             }
         },
         {
-            "label": "Flutter integration tests - web",
+            "label": "Flutter integration tests - web (not supported yet)",
             "type": "shell",
-            "command": "chromedriver --port=4444 &; flutter drive --driver test_driver/driver.dart --target integration_test/app_test.dart --browser-name=chrome -d web-server",
+            "command": "chromedriver --port=4444 &; flutter test integration_test/ -d web-server",
             "group": {
                 "kind": "test",
                 "isDefault": true
