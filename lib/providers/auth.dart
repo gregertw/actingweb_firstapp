@@ -96,7 +96,8 @@ class AuthClient {
             clientId!,
             redirectUrl!,
             serviceConfiguration: AuthorizationServiceConfiguration(
-                authzEndpoint!, tokenEndpoint!),
+                authorizationEndpoint: authzEndpoint!,
+                tokenEndpoint: tokenEndpoint!),
             scopes: scopes,
           ),
         );
