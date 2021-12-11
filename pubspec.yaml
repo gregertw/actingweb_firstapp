@@ -25,15 +25,10 @@ dependencies:
   cupertino_icons: ^1.0.3
   meta: ^1.7.0
   provider: ^6.0.1
-  shared_preferences: ^2.0.8
-  google_maps_flutter: ^2.1.0
+  google_maps_flutter: ^2.1.1
   google_maps_flutter_web: ^0.3.2
   geocoding: ^2.0.1
-  firebase_core: ^1.10.0
-  firebase_analytics: ^8.3.4
-  firebase_crashlytics: ^2.3.0
-  firebase_messaging: ^11.1.0
-  geolocator: ^7.7.1
+  geolocator: ^8.0.0  
 
 dev_dependencies:
   flutter_test:
