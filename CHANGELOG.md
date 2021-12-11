@@ -1,10 +1,23 @@
 # CHANGELOG
 
+Dec 10, 2021
+
+- Full refactoring of auth, remove flutter_appauth and switch to oauth2_client
+- Upgrade all packages
+- Support flutter 2.8.0 release
+- Change firebase intialisation to pure dart with firebase_options.dart file 
+  (delete google-services.json and GoogleService-Info.plist)
+- Remove Android and iOS specific Firebase init (don't report on native crashes anymore)
+  see https://firebase.flutter.dev/docs/crashlytics/overview/
+- Bump version to 1.6.0+15
+- Fix bug in permission handling for iOS
+
 ## Nov 14, 2021
 
 - Fix null bug in _markers in map overlay widget
 - Support Xcode 13.2beta
 - Switch over to using flutter test instead of flutter drive (.vscode/tasks.json)
+- Bump targetSdkVersion to 31
 
 ## Oct 17, 2021
 
