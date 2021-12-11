@@ -98,6 +98,15 @@
       });
     }
 
+    // Code for redirect after login with oauth2_client
+    window.onload = function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      if (code) {
+        // TODO: replace the localhost URL with the actual URL of the web app
+        window.opener.postMessage(window.location.href, 'http://localhost:xxxx');
+      }
+    }
   </script>
   <script src="main.dart.js" type="application/javascript"></script>
 </body>

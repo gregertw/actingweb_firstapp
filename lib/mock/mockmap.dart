@@ -1,15 +1,15 @@
-import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:oauth2_client/oauth2_client.dart';
 import 'package:first_app/models/locstate.dart';
 
 class MockMap {
   Geo? mockGeo;
-  FlutterAppAuth? mockAppAuth;
+  OAuth2Client? mockAppAuth;
 
   Geo? getGeo() {
     return mockGeo;
   }
 
-  FlutterAppAuth? getAppAuth() {
+  OAuth2Client? getAppAuth() {
     return mockAppAuth;
   }
 
@@ -17,7 +17,7 @@ class MockMap {
     mockGeo = obj;
   }
 
-  void enableAppAuth(FlutterAppAuth obj) {
+  void enableAppAuth(OAuth2Client obj) {
     mockAppAuth = obj;
   }
 

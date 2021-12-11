@@ -2,38 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:first_app/models/appstate.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:first_app/providers/auth.dart';
 import 'package:first_app/ui/widgets/custom_dialog.dart';
 
 class HomePageDrawer extends StatelessWidget {
   const HomePageDrawer({Key? key}) : super(key: key);
 
-  void _userInfo(BuildContext context) {
+  Future<bool> _userInfo(BuildContext context) async {
     var appState = Provider.of<AppStateModel>(context, listen: false);
-    var auth0 = AuthClient(
-        authClient: Provider.of<AppStateModel>(context, listen: false)
-            .mocks
-            .getAppAuth());
     try {
-      var res = auth0.getUserInfo(appState.userToken);
-      if (res is List || res is Map) {
-        // Do something
-      }
-      // The demo.identityserver.io/api/test API doesn't return anything
-      // interesting, so we fake the setting of user info
-      Provider.of<AppStateModel>(context, listen: false).setUserInfo(Map.from({
-        'email': AppLocalizations.of(context)!.drawerEmail,
-        'name': AppLocalizations.of(context)!.drawerUser
-      }));
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context)!.drawerGetUserInfoResultMsg),
-        duration: const Duration(seconds: 3),
-      ));
+      appState.setUserInfo();
+      return true;
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context)!.drawerGetUserInfoFailedMsg),
-        duration: const Duration(seconds: 3),
-      ));
+      return false;
     }
   }
 
@@ -48,7 +28,7 @@ class HomePageDrawer extends StatelessWidget {
             key: const Key("DrawerMenuTile_RefreshTokens"),
             title: Text(AppLocalizations.of(context)!.drawerRefreshTokens),
             onTap: () {
-              appState.refresh();
+              appState.authorize();
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(
                     AppLocalizations.of(context)!.drawerRefreshTokensResultMsg),
@@ -61,7 +41,27 @@ class HomePageDrawer extends StatelessWidget {
             key: const Key("DrawerMenuTile_GetUserInfo"),
             title: Text(AppLocalizations.of(context)!.drawerGetUserInfo),
             onTap: () {
-              _userInfo(context);
+              var msger = ScaffoldMessenger.of(context);
+              var drawerGetUserInfoResultMsg = Text(
+                  AppLocalizations.of(context)!.drawerGetUserInfoResultMsg);
+              var drawerGetUserInfoFailedMsg = Text(
+                  AppLocalizations.of(context)!.drawerGetUserInfoFailedMsg);
+              _userInfo(context).then((value) => {
+                    if (value)
+                      {
+                        msger.showSnackBar(SnackBar(
+                          content: drawerGetUserInfoResultMsg,
+                          duration: const Duration(seconds: 3),
+                        ))
+                      }
+                    else
+                      {
+                        msger.showSnackBar(SnackBar(
+                          content: drawerGetUserInfoFailedMsg,
+                          duration: const Duration(seconds: 3),
+                        ))
+                      }
+                  });
               Navigator.of(context).pop();
             },
           ),
@@ -105,12 +105,12 @@ Widget buildDrawerHeader(BuildContext context) {
   var appState = Provider.of<AppStateModel>(context);
   return UserAccountsDrawerHeader(
     key: const Key("DrawerMenu_Header"),
-    accountName: Text(appState.name == null
+    accountName: Text(appState.name == ''
         ? AppLocalizations.of(context)!.drawerHeaderInitialName
-        : appState.name!),
-    accountEmail: Text(appState.email == null
+        : appState.name),
+    accountEmail: Text(appState.email == ''
         ? AppLocalizations.of(context)!.drawerHeaderInitialEmail
-        : appState.email!),
+        : appState.email),
     onDetailsPressed: () => showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -124,12 +124,12 @@ Widget buildDrawerHeader(BuildContext context) {
           child: ListView(
             children: <Widget>[
               ListTile(
-                title: Text(appState.name == null
+                title: Text(appState.name == ''
                     ? AppLocalizations.of(context)!.drawerEmptyName
-                    : appState.name!),
-                subtitle: Text(appState.email == null
+                    : appState.name),
+                subtitle: Text(appState.email == ''
                     ? AppLocalizations.of(context)!.drawerEmptyEmail
-                    : appState.email!),
+                    : appState.email),
               ),
               ListTile(
                 title: Text(
@@ -141,7 +141,7 @@ Widget buildDrawerHeader(BuildContext context) {
                     builder: (BuildContext context) => CustomDialog(
                       title: AppLocalizations.of(context)!
                           .drawerButtomSheetFCMToken,
-                      description: appState.fcmToken,
+                      description: appState.fcmToken ?? 'N/A',
                       buttonText: AppLocalizations.of(context)!.okButton,
                     ),
                   );

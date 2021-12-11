@@ -52,12 +52,6 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        // This is for appauth
-        // This needs to match the domain of the redirectUrl used for AuthClient
-        // See https://github.com/openid/AppAuth-Android/tree/master/app
-        manifestPlaceholders = [
-                'appAuthRedirectScheme': 'io.actingweb.firstapp'
-        ]
     }
 
    signingConfigs {

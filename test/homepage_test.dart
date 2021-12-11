@@ -38,15 +38,11 @@ void main() async {
   SharedPreferences.setMockInitialValues({});
   var prefs = await SharedPreferences.getInstance();
   // We have one logged in state and one logged out, to be used with various tests
-  loginState = AppStateModel(prefs: prefs);
-  logoutState = AppStateModel(prefs: prefs);
+  loginState = AppStateModel(prefs: prefs, mock: true);
+  logoutState = AppStateModel(prefs: prefs, mock: true);
 
-  // Ensure we have a logged in state before testing HomePage as LoginPage() is rendered if
-  // we are not authenticated
-  // The state logic is based on receiving the access token, but does not validate the format
-  loginState.logIn({'access_token': '123'});
-
-  test('logged in state', () {
+  test('logged in state', () async {
+    await loginState.authorize();
     expect(loginState.authenticated, true);
   });
 

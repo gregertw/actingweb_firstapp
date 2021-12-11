@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,7 +7,6 @@ import 'package:first_app/providers/auth.dart';
 import 'package:first_app/mock/mockmap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // Import mock packages for the web version
-import 'package:first_app/mock/mock_appauth.dart';
 import 'package:first_app/mock/mock_geolocator.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -18,39 +16,51 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 class AppStateModel with ChangeNotifier {
   bool _authenticated = false;
-  String? _userToken;
-  String? _idToken;
-  String? _refreshToken;
-  DateTime? _expires;
-  String? _email;
-  String? _name;
+  AuthUserInfo _userInfo = AuthUserInfo();
   String? _locale;
   late Locale _currentLocale;
   String? _fcmToken;
   bool mock;
+  bool web;
   SharedPreferences? prefs;
   FirebaseAnalytics? analytics;
   FirebaseMessaging? messaging;
+  AuthClient? _authClient;
   // We use a mockmap to enable and disable mock functions/classes.
   // The mock should be injected as a dependency where external dependencies need
   // to be mocked as part of testing.
   final MockMap _mocks = MockMap();
 
   bool get authenticated => _authenticated;
-  String? get userToken => _userToken;
-  String? get idToken => _idToken;
-  String? get refreshToken => _refreshToken;
-  DateTime? get expires => _expires;
-  String? get email => _email;
-  String? get name => _name;
+  String? get userToken => _authClient!.accessToken;
+  String? get idToken => _authClient!.idToken;
+  String? get refreshToken => _authClient!.refreshToken;
+  DateTime? get expires => _authClient!.expires;
+  String get email => _userInfo.email ?? '';
+  String get name => _userInfo.name ?? '';
   MockMap get mocks => _mocks;
   String? get localeAbbrev => _locale;
   Locale get locale => _currentLocale;
   String? get fcmToken => _fcmToken;
+  AuthClient? get auth => _authClient;
 
   AppStateModel(
-      {this.prefs, this.analytics, this.messaging, this.mock = false}) {
-    refresh();
+      {this.prefs,
+      this.analytics,
+      this.messaging,
+      this.mock = false,
+      this.web = false}) {
+    if (mock) {
+      mocks.enableAppAuth(
+          MockOAuth2Client(redirectUri: '', customUriScheme: ''));
+      mocks.enableGeo(MockGeolocator());
+      _authClient = AuthClient(
+          authProvider: _mocks.getAppAuth(), clientSecret: '', web: web);
+    } else {
+      _authClient = AuthClient(
+          clientSecret: 'ea270406aa82e2bf741ed25c60d3c25841d7c3b7', web: web);
+    }
+    refreshSession();
     // this will load locale from prefs
     // Note that you need to use
     // Intl.defaultLocale = appState.localeAbbrev;
@@ -60,10 +70,6 @@ class AppStateModel with ChangeNotifier {
     setLocale(null);
     // Initialise Firebase messaging
     _initMessaging();
-    if (mock) {
-      mocks.enableAppAuth(MockFlutterAppAuth());
-      mocks.enableGeo(MockGeolocator());
-    }
   }
 
   void _initMessaging() async {
@@ -72,7 +78,7 @@ class AppStateModel with ChangeNotifier {
     }
     // On Web platform the iOS specific code is not ignored transparently
     // as for Android
-    if (kIsWeb) {
+    if (web) {
       // Firebase messaging does not support Flutter natively yet, so under
       // web, the token is retrieved in a script in web/index.html
       _fcmToken = 'only_available_in_js';
@@ -156,93 +162,45 @@ class AppStateModel with ChangeNotifier {
     print('Sent analytics events: $name');
   }
 
-  void refresh() async {
-    if (prefs == null) {
-      return;
+  Future<bool> refreshSession() async {
+    if (prefs == null || _authClient == null) {
+      return false;
     }
-    // Check if the stored token has expired
-    var expiresStr = prefs!.getString('expires');
-    if (expiresStr != null) {
-      _expires = DateTime.parse(expiresStr);
-      var remaining = _expires!.difference(DateTime.now());
-      if (remaining.inSeconds < 3600) {
-        Map<dynamic, dynamic>? auth;
-        auth = await AuthClient(authClient: _mocks.getAppAuth())
-            .refreshToken(prefs!.getString('refreshToken'));
-        if (auth != null && auth.containsKey('access_token')) {
-          logIn(auth);
-        } else {
-          prefs!.remove('userToken');
-          prefs!.remove('expires');
-          _authenticated = false;
-          _userToken = null;
-          _expires = null;
-        }
-        notifyListeners();
-        return;
-      }
-    }
-    _userToken = prefs!.getString('userToken');
-    if (_userToken != null) {
+    _userInfo.email = prefs!.getString('email');
+    _userInfo.name = prefs!.getString('name');
+    _authClient!.fromString(prefs!.getString('session') ?? '');
+    if (_authClient!.isValid && !_authClient!.isExpired) {
       _authenticated = true;
+      notifyListeners();
+      return true;
     }
-    _idToken = prefs!.getString('idToken');
-    _refreshToken = prefs!.getString('refreshToken');
+    logOut();
+    return false;
+  }
+
+  void setUserInfo() async {
+    _userInfo = await _authClient!.getUserInfo();
+    prefs!.setString('email', email);
+    prefs!.setString('name', name);
     notifyListeners();
   }
 
-  void setUserInfo(data) {
-    if (data == null) {
-      return;
-    }
-    if (data.containsKey('email')) {
-      prefs!.setString('email', data['email']);
-      _email = data['email'];
-    }
-    if (data.containsKey('name')) {
-      prefs!.setString('name', data['name']);
-      _name = data['name'];
-    }
-    notifyListeners();
-  }
-
-  void logIn(data) {
-    if (data == null || prefs == null) {
-      return;
-    }
-    if (data.containsKey('access_token')) {
-      prefs!.setString('userToken', data['access_token']);
-      _userToken = data['access_token'];
+  Future<bool> authorize() async {
+    var res = await _authClient?.authorizeOrRefresh();
+    if (res ?? false) {
+      prefs!.setString('session', _authClient.toString());
       _authenticated = true;
+      notifyListeners();
+      return true;
     }
-    if (data.containsKey('refresh_token')) {
-      prefs!.setString('refreshToken', data['refresh_token']);
-      _refreshToken = data['refresh_token'];
-    }
-    if (data.containsKey('id_token')) {
-      prefs!.setString('idToken', data['id_token']);
-      _idToken = data['id_token'];
-    }
-    if (data.containsKey('expires')) {
-      _expires = data['expires'];
-      prefs!.setString('expires', _expires!.toIso8601String());
-    }
-    sendAnalyticsEvent('login', null);
     notifyListeners();
+    return false;
   }
 
   void logOut() {
-    /* Here you can also close the sessions with the AuthClient
-       (if supported). closeSessions() is not implemented here as it
-       involves clearing cookies in the webview (for demo.identityprovider.io).
-    */
-    //AuthClient(authClient:_mocks.getAppAuth().closeSessions();
+    _authClient?.closeSessions();
     _authenticated = false;
-    _userToken = null;
-    _idToken = null;
-    _refreshToken = null;
-    _expires = null;
-    prefs!.clear();
+    prefs!.remove('session');
     notifyListeners();
   }
 }

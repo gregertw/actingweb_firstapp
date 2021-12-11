@@ -24,7 +24,7 @@ void main() async {
 
   // If we run on web, do not use Crashlytics (not supported on web yet)
   if (kIsWeb) {
-    runApp(await getApp(mock: true));
+    runApp(await getApp(web: true));
   } else {
     // Use dart zone to define Crashlytics as error handler for errors
     // that occur outside runApp

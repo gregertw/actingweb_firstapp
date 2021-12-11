@@ -21,7 +21,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
-  flutter_appauth: ^2.0.0
+  oauth2_client: ^2.3.0
   cupertino_icons: ^1.0.3
   meta: ^1.7.0
   provider: ^6.0.1

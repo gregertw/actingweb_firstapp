@@ -12,7 +12,7 @@ import 'package:first_app/ui/pages/login/index.dart';
 import 'package:first_app/ui/theme/style.dart';
 
 // Using async functions must be done from an async function
-Future<Widget> getApp({bool mock = false}) async {
+Future<Widget> getApp({bool mock = false, bool web = false}) async {
   var analytics = FirebaseAnalytics();
   // Wrap a StatelessWidget (ProviderApp) in a ChangeNotifierProvider to trigger rebuild of the
   // entire MaterialApp when app state, like locale, changes
@@ -21,7 +21,8 @@ Future<Widget> getApp({bool mock = false}) async {
           prefs: await SharedPreferences.getInstance(),
           analytics: analytics,
           messaging: FirebaseMessaging.instance,
-          mock: mock),
+          mock: mock,
+          web: web),
       child: ProviderApp(analytics: analytics));
 }
 
