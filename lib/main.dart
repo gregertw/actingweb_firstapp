@@ -14,23 +14,22 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // If we run on web, do not use Crashlytics (not supported on web yet)
   if (kIsWeb) {
     FlutterError.onError = (FlutterErrorDetails details) {
       FlutterError.dumpErrorToConsole(details);
     };
-  } else {
-    // Pass all uncaught errors from the framework to Crashlytics.
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-  }
-
-  // If we run on web, do not use Crashlytics (not supported on web yet)
-  if (kIsWeb) {
     runApp(await getApp(web: true));
   } else {
     // Use dart zone to define Crashlytics as error handler for errors
     // that occur outside runApp
     runZonedGuarded<Future<void>>(() async {
+      // Pass all uncaught errors from the framework to Crashlytics.
+      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
       runApp(await getApp());
-    }, FirebaseCrashlytics.instance.recordError);
+    },
+        (error, stack) =>
+            FirebaseCrashlytics.instance.recordError(error, stack));
   }
 }
