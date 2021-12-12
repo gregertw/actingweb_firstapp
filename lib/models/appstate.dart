@@ -6,14 +6,19 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:first_app/providers/auth.dart';
 import 'package:first_app/mock/mockmap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:first_app/environment.dart';
 // Import mock packages for the web version
 import 'package:first_app/mock/mock_geolocator.dart';
 
+/// Kicks in when we receive a firebase message in the background.
+///
+/// Could be used to trigger actions.
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // ignore: avoid_print
   print("Handling a background message: ${message.messageId}");
 }
 
+/// Main state class for top-level login state
 class AppStateModel with ChangeNotifier {
   bool _authenticated = false;
   AuthUserInfo _userInfo = AuthUserInfo();
@@ -51,14 +56,14 @@ class AppStateModel with ChangeNotifier {
       this.mock = false,
       this.web = false}) {
     if (mock) {
-      mocks.enableAppAuth(
-          MockOAuth2Client(redirectUri: '', customUriScheme: ''));
       mocks.enableGeo(MockGeolocator());
       _authClient = AuthClient(
-          authProvider: _mocks.getAppAuth(), clientSecret: '', web: web);
+          provider: 'mock', clientId: '', clientSecret: '', web: web);
     } else {
       _authClient = AuthClient(
-          clientSecret: 'ea270406aa82e2bf741ed25c60d3c25841d7c3b7', web: web);
+          clientId: Environment.clientIdGithubApp,
+          clientSecret: Environment.secretGithubApp,
+          web: web);
     }
     refreshSession();
     // this will load locale from prefs
@@ -118,6 +123,7 @@ class AppStateModel with ChangeNotifier {
     });
   }
 
+  /// Use to set locale explicitly.
   void setLocale(String? loc) {
     if (prefs == null) {
       return;
@@ -132,6 +138,7 @@ class AppStateModel with ChangeNotifier {
     notifyListeners();
   }
 
+  /// Rotates through the supported locales.
   void switchLocale() {
     const _locales = AppLocalizations.supportedLocales;
     if (_locales.length == 1) {
@@ -149,6 +156,7 @@ class AppStateModel with ChangeNotifier {
     setLocale(_locales[ind].languageCode);
   }
 
+  /// Sends off a Firebase Analytics event.
   Future<void> sendAnalyticsEvent(
       String name, Map<String, dynamic>? params) async {
     if (analytics == null) {
@@ -162,6 +170,7 @@ class AppStateModel with ChangeNotifier {
     print('Sent analytics events: $name');
   }
 
+  /// Refreshes a session from sharedpreferences.
   Future<bool> refreshSession() async {
     if (prefs == null || _authClient == null) {
       return false;
@@ -178,6 +187,7 @@ class AppStateModel with ChangeNotifier {
     return false;
   }
 
+  /// Trigger retrieving more user info from the identity provider.
   void setUserInfo() async {
     _userInfo = await _authClient!.getUserInfo();
     prefs!.setString('email', email);
@@ -185,8 +195,9 @@ class AppStateModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> authorize() async {
-    var res = await _authClient?.authorizeOrRefresh();
+  /// Triggers  a popup for login to the Identity Provider
+  Future<bool> authorize([String? provider]) async {
+    var res = await _authClient?.authorizeOrRefresh(provider);
     if (res ?? false) {
       prefs!.setString('session', _authClient.toString());
       _authenticated = true;
@@ -197,6 +208,7 @@ class AppStateModel with ChangeNotifier {
     return false;
   }
 
+  // Clears out and deletes the token as well as in sharedpreferences.
   void logOut() {
     _authClient?.closeSessions();
     _authenticated = false;

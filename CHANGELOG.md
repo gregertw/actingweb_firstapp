@@ -1,5 +1,14 @@
 # CHANGELOG
 
+Dec 12, 2021
+
+- Reinstated Android and iOS manual config to make Crashlytics work
+- Factored out OAuth2 clientId and secret to use environment variables
+- Added Google auth as an alternative
+- Refactored auth provider to more easily support multiple identity providers
+- Removed the mocking through mockmap.dart to only use provider = 'mock' in AuthClient
+- Introduced environment.dart with class Environment to support secrets in env vars in CI/CD
+
 Dec 10, 2021
 
 - Full refactoring of auth, remove flutter_appauth and switch to oauth2_client

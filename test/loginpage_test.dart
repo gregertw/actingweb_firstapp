@@ -40,9 +40,9 @@ void main() async {
 
     await tester.pump();
     expect(find.byType(Image), findsOneWidget);
-    expect(find.byType(Text), findsNWidgets(2));
+    expect(find.byType(Text), findsNWidgets(3));
     expect(find.byType(AuthPage), findsOneWidget);
-    expect(find.byType(ElevatedButton), findsOneWidget);
+    expect(find.byType(ElevatedButton), findsNWidgets(2));
     // Here we could tap the button, but it only triggers
     // a webpage with login from auth0, so we cannot test that in a widget test
   });

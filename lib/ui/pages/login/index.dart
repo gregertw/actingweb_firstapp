@@ -54,20 +54,42 @@ class AuthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: ElevatedButton(
-        key: const Key('LoginPage_LoginButton'),
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
+    return Container(
+      height: 200.0,
+      width: 150.0,
+      constraints: const BoxConstraints(maxHeight: 200.0, maxWidth: 150.0),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: ListView(children: <Widget>[
+          ElevatedButton(
+            key: const Key('LoginPage_LoginButton_Github'),
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+              padding: const EdgeInsets.all(15),
+            ),
+            onPressed: () {
+              Provider.of<AppStateModel>(context, listen: false)
+                  .authorize('github');
+            },
+            child: Text(AppLocalizations.of(context)!.loginButton_Github),
           ),
-          padding: const EdgeInsets.all(15),
-        ),
-        onPressed: () {
-          Provider.of<AppStateModel>(context, listen: false).authorize();
-        },
-        child: Text(AppLocalizations.of(context)!.loginButton),
+          ElevatedButton(
+            key: const Key('LoginPage_LoginButton_Google'),
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+              padding: const EdgeInsets.all(15),
+            ),
+            onPressed: () {
+              Provider.of<AppStateModel>(context, listen: false)
+                  .authorize('google');
+            },
+            child: Text(AppLocalizations.of(context)!.loginButton_Google),
+          ),
+        ]),
       ),
     );
   }

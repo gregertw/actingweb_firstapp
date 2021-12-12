@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:first_app/environment.dart';
 import 'package:oauth2_client/google_oauth2_client.dart';
 import 'package:oauth2_client/oauth2_client.dart';
 import 'package:oauth2_client/github_oauth2_client.dart';
@@ -36,6 +37,13 @@ class AuthUserInfo {
     name ??= info['name'];
     username ??= info['login'];
     avatarUrl ??= info['avatar_url'];
+  }
+
+  void fromGoogle(Map<String, dynamic> info) {
+    email = info['email'] ?? info['login'];
+    name ??= info['name'];
+    username ??= info['login'];
+    avatarUrl ??= info['picture'];
   }
 }
 
@@ -79,37 +87,30 @@ class AuthClient {
   /// The provider to choose among the preconfigured. Overridden by [authProvider] if set.
   /// The clientId, redirctUrl, and scopes can either be configured below or supplied
   /// when instansiating the class.
-  String provider;
+  String? provider;
   // For Android and iOS, this must match the URI in the [_redirectUrls].
   // Must be the same as the Android applicationId and iOS bundle scheme.
   static const String _customUriScheme = 'io.actingweb.firstapp';
-  static const Map<String, String> _clientIds = {
-    'github': 'b304cfeaaf2710cf250a',
-    'google': ''
-  };
-  static const Map<String, String> _clientIdsWeb = {
-    'github': 'b304cfeaaf2710cf250a',
-    'google': ''
-  };
   static const Map<String, String> _redirectUrls = {
+    'mock': 'localhost',
     'github': 'io.actingweb.firstapp://oauthredirect',
-    'google': 'io.actingweb.firstapp:/oauthredirect'
-  };
-  static const Map<String, String> _redirectUrlsWeb = {
-    'github': 'https://localhost/oauthredirect',
-    'google': 'https://localhost/oauthredirect'
+    'github_web':
+        'https://gregertw.github.io/actingweb_firstapp_web/oauthredirect',
+    'google': 'io.actingweb.firstapp:/oauthredirect',
+    'google_web':
+        'https://gregertw.github.io/actingweb_firstapp_web/oauthredirect'
   };
   static const Map<String, List<String>> _scopes = {
     'github': <String>[],
-    'google': <String>[]
-  };
-  static const Map<String, List<String>> _scopesWeb = {
-    'github': <String>[],
-    'google': <String>[]
+    'github_web': <String>[],
+    'google': <String>['email', 'profile'],
+    'google_web': <String>['email', 'profile']
   };
   static const Map<String, Map<String, String>> _userInfoUrls = {
     'github': {'host': 'api.github.com', 'path': '/user'},
-    'google': {'host': 'api.google.com', 'path': ''}
+    'github_web': {'host': 'api.github.com', 'path': '/user'},
+    'google': {'host': 'www.googleapis.com', 'path': '/oauth2/v1/userinfo'},
+    'google_web': {'host': 'www.googleapis.com', 'path': '/oauth2/v1/userinfo'}
   };
 
   // End default configs
@@ -148,42 +149,66 @@ class AuthClient {
   bool get shouldRefresh => _refreshToken != null && !isValid;
 
   AuthClient(
-      {this.authProvider,
-      this.provider = 'github',
+      {required this.clientId,
+      this.clientSecret,
       this.web = false,
-      this.clientId,
-      required this.clientSecret,
+      this.authProvider,
+      this.provider,
       this.redirectUrl,
       this.scopes,
       this.customUriScheme
+      // For future OIDC support
       //this.discoveryUrl,
       //this.authzEndpoint,
       //this.tokenEndpoint
       }) {
-    if (web) {
-      clientId ??= _clientIdsWeb[provider];
-      redirectUrl ??= _redirectUrlsWeb[provider];
-      scopes ??= _scopesWeb[provider];
-    } else {
-      clientId ??= _clientIds[provider];
-      redirectUrl ??= _redirectUrls[provider];
-      scopes ??= _scopes[provider];
-    }
     // customUriScheme is only relevant for Android and iOS.
     customUriScheme ??= _customUriScheme;
-    if (authProvider == null) {
-      switch (provider) {
-        case 'github':
-          authProvider = GitHubOAuth2Client(
-              redirectUri: redirectUrl!, customUriScheme: customUriScheme!);
-          break;
-        case 'google':
-          authProvider = GoogleOAuth2Client(
-              redirectUri: redirectUrl!, customUriScheme: customUriScheme!);
-          break;
-        default:
-          throw 'No provider set and authProvider not supplied.';
-      }
+    if (authProvider == null && provider != null) {
+      setPresetIdentityProvider(provider!);
+    }
+  }
+
+  /// Configure/override the identity provider settings.
+  void setPresetIdentityProvider(String provider) {
+    if (web && !provider.contains('_web')) {
+      provider = provider + '_web';
+    }
+    if (!_redirectUrls.containsKey(provider)) {
+      throw 'No provider set and authProvider not supplied.';
+    }
+    this.provider = provider;
+    redirectUrl = _redirectUrls[provider] ?? '';
+    scopes = _scopes[provider] ?? <String>[];
+    switch (provider) {
+      case 'mock':
+        authProvider = MockOAuth2Client(redirectUri: '', customUriScheme: '');
+        clientId = '';
+        clientSecret = '';
+        break;
+      case 'github':
+        authProvider = GitHubOAuth2Client(
+            redirectUri: redirectUrl!, customUriScheme: customUriScheme!);
+        clientId = Environment.clientIdGithubApp;
+        clientSecret = Environment.secretGithubApp;
+        break;
+      case 'github_web':
+        authProvider = GitHubOAuth2Client(
+            redirectUri: redirectUrl!, customUriScheme: customUriScheme!);
+        clientId = Environment.clientIdGithubWeb;
+        clientSecret = Environment.secretGithubWeb;
+        break;
+      case 'google':
+      case 'google_web':
+        authProvider = GoogleOAuth2Client(
+            redirectUri: redirectUrl!, customUriScheme: customUriScheme!);
+        clientId = Environment.clientIdGoogleApp;
+        // For authorization code/PKCE exchanges, set explicit to null to avoid
+        // that a secret is attempted used in the token exchange.
+        clientSecret = null;
+        break;
+      default:
+        throw 'No provider set and authProvider not supplied.';
     }
   }
 
@@ -201,7 +226,12 @@ class AuthClient {
         if (res.isNotEmpty) {
           switch (provider) {
             case 'github':
+            case 'github_web':
               info.fromGitHub(jsonDecode(res));
+              break;
+            case 'google':
+            case 'google_web':
+              info.fromGoogle(jsonDecode(res));
               break;
             default:
               throw "Don't know how to parse userInfo from $provider";
@@ -241,6 +271,7 @@ class AuthClient {
     _refreshToken = json['refreshToken'] == '' ? null : json['refreshToken'];
     _idToken = json['idToken'] == '' ? null : json['idToken'];
     _expiresToken = DateTime.parse(json['expires']);
+    provider = json['provider'];
   }
 
   /// Creates a json map of the session.
@@ -248,7 +279,8 @@ class AuthClient {
         'accessToken': _accessToken ?? '',
         'refreshToken': _refreshToken ?? '',
         'idToken': _idToken ?? '',
-        'expires': _expiresToken.toIso8601String()
+        'expires': _expiresToken.toIso8601String(),
+        'provider': provider
       };
 
   /// Creates a string of the session for storing to SharedPreferences et al.
@@ -268,10 +300,13 @@ class AuthClient {
   }
 
   /// May present a UI dialog to the user.
-  Future<bool> authorizeOrRefresh() async {
+  Future<bool> authorizeOrRefresh([String? provider]) async {
     if (authProvider is MockOAuth2Client) {
       return _parseAuthResult(
           await (authProvider as MockOAuth2Client).getMockedResponse());
+    }
+    if (provider != this.provider && provider != null) {
+      setPresetIdentityProvider(provider);
     }
     if (_accessToken != null) {
       if (isExpired) {

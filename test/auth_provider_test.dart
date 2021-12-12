@@ -2,12 +2,10 @@ import 'package:test/test.dart';
 import 'package:first_app/providers/auth.dart';
 
 void main() async {
-  // We need a mock client to return the values that Auth0 would return
-  var mockClient = MockOAuth2Client(redirectUri: '', customUriScheme: '');
   late AuthClient c;
 
   setUp(() async {
-    c = AuthClient(clientSecret: '', authProvider: mockClient);
+    c = AuthClient(clientId: '', clientSecret: '', provider: 'mock');
   });
 
   test('initially not logged in', () async {
@@ -69,7 +67,7 @@ void main() async {
       'expires': exp
     };
     c.fromJson(m);
-    var c2 = AuthClient(clientSecret: '', authProvider: mockClient);
+    var c2 = AuthClient(clientId: '', clientSecret: '', provider: 'mock');
     c2.fromString(c.toString());
     expect(c2.accessToken, 'an_access_token');
     expect(c2.refreshToken, 'a_refresh_token');
