@@ -1,0 +1,47 @@
+{
+    "project_info": {
+        "project_number": "748007732162",
+        "firebase_url": "https://actingweb-firstapp.firebaseio.com",
+        "project_id": "actingweb-firstapp",
+        "storage_bucket": "actingweb-firstapp.appspot.com"
+    },
+    "client": [
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:748007732162:android:4684d6853ad93a3e",
+                "android_client_info": {
+                    "package_name": "io.actingweb.firstapp"
+                }
+            },
+            "oauth_client": [
+                {
+                    "client_id": "748007732162-qltuqb4v2eqfgvafp290mqtpntk9joea.apps.googleusercontent.com",
+                    "client_type": 3
+                }
+            ],
+            "api_key": [
+                {
+                    "current_key": "AIzaSyD7fSvAPIz-31x_pMPJ3hR3xMcP8WjJxJ0"
+                }
+            ],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": [
+                        {
+                            "client_id": "748007732162-qltuqb4v2eqfgvafp290mqtpntk9joea.apps.googleusercontent.com",
+                            "client_type": 3
+                        },
+                        {
+                            "client_id": "748007732162-20hnc1u6qmn35avunaidj44p43o6g4s7.apps.googleusercontent.com",
+                            "client_type": 2,
+                            "ios_info": {
+                                "bundle_id": "io.actingweb.firstapp"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "configuration_version": "1"
+}
