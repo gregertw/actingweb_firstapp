@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -27,11 +28,15 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png" />
 
   <title>actingweb_firstapp</title>
   <link rel="manifest" href="manifest.json">
+  <script src="./oauth.js" defer></script>
+  <!-- Load the maps script with our key -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7fSvAPIz-31x_pMPJ3hR3xMcP8WjJxJ0" defer></script>
 </head>
+
 <body>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
@@ -53,10 +58,12 @@
     if ('serviceWorker' in navigator) {
       // Service workers are supported. Use them.
       window.addEventListener('load', function () {
+        //register firebase-messaging service worker
+        navigator.serviceWorker.register("./firebase-messaging-sw.js");
         // Wait for registration to finish before dropping the <script> tag.
         // Otherwise, the browser will load the script multiple times,
         // potentially different versions.
-        var serviceWorkerUrl = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
+        var serviceWorkerUrl = './flutter_service_worker.js?v=' + serviceWorkerVersion;
         navigator.serviceWorker.register(serviceWorkerUrl)
           .then((reg) => {
             function waitForActivation(serviceWorker) {
@@ -101,4 +108,5 @@
     }
   </script>
 </body>
+
 </html>
