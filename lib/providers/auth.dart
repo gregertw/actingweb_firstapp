@@ -94,11 +94,9 @@ class AuthClient {
   static const Map<String, String> _redirectUrls = {
     'mock': 'localhost',
     'github': 'io.actingweb.firstapp://oauthredirect',
-    'github_web':
-        'https://gregertw.github.io/actingweb_firstapp_web/oauthredirect',
+    'github_web': 'https://gregertw.github.io/actingweb_firstapp_web/',
     'google': 'io.actingweb.firstapp:/oauthredirect',
-    'google_web':
-        'https://gregertw.github.io/actingweb_firstapp_web/oauthredirect'
+    'google_web': 'https://gregertw.github.io/actingweb_firstapp_web/'
   };
   static const Map<String, List<String>> _scopes = {
     'github': <String>[],
