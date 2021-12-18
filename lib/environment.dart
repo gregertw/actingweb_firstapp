@@ -18,4 +18,11 @@ class Environment {
       "CLIENTID_GOOGLE_APP",
       defaultValue:
           "748007732162-nnqg752ptfoejjmfg8bfo244j1bs2v71.apps.googleusercontent.com");
+
+  static const String clientIdGoogleWeb = String.fromEnvironment(
+      "CLIENTID_GOOGLE_WEB",
+      defaultValue:
+          "748007732162-5h639jbt5m5tnjf675c7b0h13r8ajomg.apps.googleusercontent.com");
+  static const String secretGoogleWeb =
+      String.fromEnvironment("SECRET_GOOGLE_WEB", defaultValue: "");
 }

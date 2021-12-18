@@ -197,13 +197,20 @@ class AuthClient {
         clientSecret = Environment.secretGithubWeb;
         break;
       case 'google':
-      case 'google_web':
         authProvider = GoogleOAuth2Client(
             redirectUri: redirectUrl!, customUriScheme: customUriScheme!);
         clientId = Environment.clientIdGoogleApp;
         // For authorization code/PKCE exchanges, set explicit to null to avoid
         // that a secret is attempted used in the token exchange.
         clientSecret = null;
+        break;
+      case 'google_web':
+        authProvider = GoogleOAuth2Client(
+            redirectUri: redirectUrl!, customUriScheme: customUriScheme!);
+        clientId = Environment.clientIdGoogleWeb;
+        // For authorization code/PKCE exchanges, set explicit to null to avoid
+        // that a secret is attempted used in the token exchange.
+        clientSecret = Environment.secretGoogleWeb;
         break;
       default:
         throw 'No provider set and authProvider not supplied.';
