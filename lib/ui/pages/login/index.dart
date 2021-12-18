@@ -61,20 +61,31 @@ class AuthPage extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: ListView(children: <Widget>[
-          ElevatedButton(
-            key: const Key('LoginPage_LoginButton_Github'),
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
-              ),
-              padding: const EdgeInsets.all(15),
-            ),
-            onPressed: () {
-              Provider.of<AppStateModel>(context, listen: false)
-                  .authorize('github');
-            },
-            child: Text(AppLocalizations.of(context)!.loginButton_Github),
-          ),
+          !Provider.of<AppStateModel>(context, listen: false).isWeb
+              ? ElevatedButton(
+                  key: const Key('LoginPage_LoginButton_Github'),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    padding: const EdgeInsets.all(15),
+                  ),
+                  onPressed: () {
+                    Provider.of<AppStateModel>(context, listen: false)
+                        .authorize('github');
+                  },
+                  child: Text(AppLocalizations.of(context)!.loginButton_Github),
+                )
+              : ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    padding: const EdgeInsets.all(15),
+                  ),
+                  onPressed: () {},
+                  child: const Text('Github N/A'),
+                ),
           ElevatedButton(
             key: const Key('LoginPage_LoginButton_Google'),
             style: ElevatedButton.styleFrom(

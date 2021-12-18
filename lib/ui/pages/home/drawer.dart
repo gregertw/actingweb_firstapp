@@ -117,7 +117,7 @@ Widget buildDrawerHeader(BuildContext context) {
         var container = Container(
           key: const Key("DrawerMenu_BottomSheet"),
           alignment: Alignment.center,
-          height: 200,
+          height: 350,
           decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor,
           ),

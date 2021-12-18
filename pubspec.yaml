@@ -21,19 +21,19 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
-  oauth2_client: ^2.3.0
+  oauth2_client: ^2.3.1
   cupertino_icons: ^1.0.3
   meta: ^1.7.0
   provider: ^6.0.1
-  shared_preferences: ^2.0.10
+  shared_preferences: ^2.0.11
   google_maps_flutter: ^2.1.1
   google_maps_flutter_web: ^0.3.2
   geocoding: ^2.0.1
-  firebase_core: ^1.10.5
-  firebase_analytics: ^9.0.3
-  firebase_crashlytics: ^2.4.3
-  firebase_messaging: ^11.2.3
-  geolocator: ^8.0.0  
+  firebase_core: ^1.10.6
+  firebase_analytics: ^9.0.4
+  firebase_crashlytics: ^2.4.4
+  firebase_messaging: ^11.2.4
+  geolocator: ^8.0.1
 
 dev_dependencies:
   flutter_test:

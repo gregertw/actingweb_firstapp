@@ -37,6 +37,7 @@ class AppStateModel with ChangeNotifier {
   final MockMap _mocks = MockMap();
 
   bool get authenticated => _authenticated;
+  bool get isWeb => web;
   String? get userToken => _authClient!.accessToken;
   String? get idToken => _authClient!.idToken;
   String? get refreshToken => _authClient!.refreshToken;
