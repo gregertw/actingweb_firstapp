@@ -1,4 +1,4 @@
-package io.actingweb.actingweb_firstapp
+package io.actingweb.firstapp
 
 import io.flutter.embedding.android.FlutterActivity
 
