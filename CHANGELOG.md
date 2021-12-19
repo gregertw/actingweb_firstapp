@@ -1,5 +1,9 @@
 # CHANGELOG
 
+Dec 19, 2021
+
+- Add drawer menu with display of latest Firebase FCM notification
+
 Dec 12, 2021
 
 - Reinstated Android and iOS manual config to make Crashlytics work

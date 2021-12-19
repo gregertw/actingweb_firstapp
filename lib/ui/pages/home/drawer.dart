@@ -25,6 +25,20 @@ class HomePageDrawer extends StatelessWidget {
         children: <Widget>[
           buildDrawerHeader(context),
           ListTile(
+            key: const Key("DrawerMenuTile_LastNotification"),
+            title:
+                Text(AppLocalizations.of(context)!.drawerGetLastNotification),
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text((appState.lastNotificationTitle ?? 'N/A') +
+                    ': ' +
+                    (appState.lastNotificationBody ?? 'N/A')),
+                duration: const Duration(seconds: 5),
+              ));
+              Navigator.of(context).pop();
+            },
+          ),
+          ListTile(
             key: const Key("DrawerMenuTile_RefreshTokens"),
             title: Text(AppLocalizations.of(context)!.drawerRefreshTokens),
             onTap: () {

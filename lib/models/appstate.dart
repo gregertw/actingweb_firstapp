@@ -25,6 +25,8 @@ class AppStateModel with ChangeNotifier {
   String? _locale;
   late Locale _currentLocale;
   String? _fcmToken;
+  String? lastNotificationTitle;
+  String? lastNotificationBody;
   bool mock;
   bool web;
   SharedPreferences? prefs;
@@ -82,14 +84,6 @@ class AppStateModel with ChangeNotifier {
     if (messaging == null) {
       return;
     }
-    // On Web platform the iOS specific code is not ignored transparently
-    // as for Android
-    if (web) {
-      // Firebase messaging does not support Flutter natively yet, so under
-      // web, the token is retrieved in a script in web/index.html
-      _fcmToken = 'only_available_in_js';
-      return;
-    }
     NotificationSettings settings = await messaging!.requestPermission(
       alert: true,
       announcement: false,
@@ -106,14 +100,25 @@ class AppStateModel with ChangeNotifier {
       // ignore: avoid_print
       print("onMessage: $message");
       if (message.notification != null) {
+        String? str;
         // ignore: avoid_print
         print('Message also contained a notification: ${message.notification}');
+        str = message.notification!.title! + ' ' + message.notification!.body!;
+        lastNotificationTitle =
+            message.notification!.title ?? 'No title in notication';
+        lastNotificationBody =
+            message.notification!.body ?? 'No body in notication';
+        notifyListeners();
+        // ignore: avoid_print
+        print("onMessage: $str");
       }
     });
 
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-    messaging!.getToken().then((String? token) {
+    messaging!
+        .getToken(vapidKey: Environment.firebaseVapidKey)
+        .then((String? token) {
       assert(token != null);
       // ignore: avoid_print
       print("Firebase messaging token: $token");

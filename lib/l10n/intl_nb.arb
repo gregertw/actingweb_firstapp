@@ -31,5 +31,6 @@
   "drawerButtomSheetUserToken": "Bruker token",
   "drawerButtomSheetIdToken": "Id token",
   "drawerButtomSheetExpires": "Utløper",
-  "drawerButtomSheetFCMToken": "Firebase meldingstoken"
+  "drawerButtomSheetFCMToken": "Firebase meldingstoken",
+  "drawerGetLastNotification": "Se siste melding"
 }
