@@ -32,18 +32,28 @@ class AuthUserInfo {
   String? lastname;
   String? avatarUrl;
 
-  void fromGitHub(Map<String, dynamic> info) {
-    email = info['email'] ?? info['login'];
-    name ??= info['name'];
-    username ??= info['login'];
-    avatarUrl ??= info['avatar_url'];
-  }
+  AuthUserInfo();
 
-  void fromGoogle(Map<String, dynamic> info) {
-    email = info['email'] ?? info['login'];
-    name ??= info['name'];
-    username ??= info['login'];
-    avatarUrl ??= info['picture'];
+  /// Instantiate from a json based on provider id
+  AuthUserInfo.from(provider, Map<String, dynamic> info) {
+    switch (provider) {
+      case 'github':
+      case 'github_web':
+        email = info['email'] ?? info['login'];
+        name ??= info['name'];
+        username ??= info['login'];
+        avatarUrl ??= info['avatar_url'];
+        break;
+      case 'google':
+      case 'google_web':
+        email = info['email'] ?? info['login'];
+        name ??= info['name'];
+        username ??= info['login'];
+        avatarUrl ??= info['picture'];
+        break;
+      default:
+        throw 'Does not know how to parse AuthUserInfo from ' + provider;
+    }
   }
 }
 
@@ -96,6 +106,8 @@ class AuthClient {
     'github': 'io.actingweb.firstapp://oauthredirect',
     'github_web': 'https://gregertw.github.io/actingweb_firstapp_web/',
     'google': 'io.actingweb.firstapp:/oauthredirect',
+    // Edit the port number below to debug locally, also oauth.js needs to be edited
+    //'google_web': 'http://localhost:56906/'
     'google_web': 'https://gregertw.github.io/actingweb_firstapp_web/'
   };
   static const Map<String, List<String>> _scopes = {
@@ -191,10 +203,11 @@ class AuthClient {
         clientSecret = Environment.secretGithubApp;
         break;
       case 'github_web':
+        // Github web is not supported
         authProvider = GitHubOAuth2Client(
             redirectUri: redirectUrl!, customUriScheme: customUriScheme!);
-        clientId = Environment.clientIdGithubWeb;
-        clientSecret = Environment.secretGithubWeb;
+        clientId = '';
+        clientSecret = '';
         break;
       case 'google':
         authProvider = GoogleOAuth2Client(
@@ -218,7 +231,6 @@ class AuthClient {
   }
 
   Future<AuthUserInfo> getUserInfo() async {
-    AuthUserInfo info = AuthUserInfo();
     if (isValid) {
       try {
         final http.Response httpResponse = await http.get(
@@ -229,24 +241,13 @@ class AuthClient {
             headers: authHeader);
         var res = httpResponse.statusCode == 200 ? httpResponse.body : '';
         if (res.isNotEmpty) {
-          switch (provider) {
-            case 'github':
-            case 'github_web':
-              info.fromGitHub(jsonDecode(res));
-              break;
-            case 'google':
-            case 'google_web':
-              info.fromGoogle(jsonDecode(res));
-              break;
-            default:
-              throw "Don't know how to parse userInfo from $provider";
-          }
+          return AuthUserInfo.from(provider, jsonDecode(res));
         }
       } catch (e) {
-        return info;
+        return AuthUserInfo();
       }
     }
-    return info;
+    return AuthUserInfo();
   }
 
   bool _parseAuthResult(AccessTokenResponse res) {

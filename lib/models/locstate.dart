@@ -48,9 +48,11 @@ class LocStateModel with ChangeNotifier {
   // ignore: cancel_subscriptions
   StreamSubscription<Position>? _positionStreamSubscription;
   final Map<Position, Placemark?> _pointList = <Position, Placemark?>{};
+  late bool _available;
 
   double get latitude => _lastPos.latitude;
   double get longitude => _lastPos.longitude;
+  bool get isAvailable => _available;
   bool isPaused() {
     if (_positionStreamSubscription == null) {
       return true;
@@ -64,6 +66,7 @@ class LocStateModel with ChangeNotifier {
       _pointList as LinkedHashMap<Position, Placemark?>;
 
   LocStateModel(this.locator) {
+    _available = false;
     locator ??= Geo();
   }
 
@@ -71,8 +74,10 @@ class LocStateModel with ChangeNotifier {
     _geoAccessStatus = await locator!.checkPermission();
     if (_geoAccessStatus == LocationPermission.whileInUse ||
         _geoAccessStatus == LocationPermission.always) {
+      _available = true;
       return true;
     }
+    _available = false;
     return false;
   }
 

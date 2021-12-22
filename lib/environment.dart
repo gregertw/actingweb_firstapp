@@ -12,12 +12,6 @@ class Environment {
   static const String secretGithubApp =
       String.fromEnvironment("SECRET_GITHUB_APP", defaultValue: "");
 
-  static const String clientIdGithubWeb = String.fromEnvironment(
-      "CLIENTID_GITHUB_WEB",
-      defaultValue: "d143d790c7324c1c74ef");
-  static const String secretGithubWeb =
-      String.fromEnvironment("SECRET_GITHUB_WEB", defaultValue: "");
-
   static const String clientIdGoogleApp = String.fromEnvironment(
       "CLIENTID_GOOGLE_APP",
       defaultValue:

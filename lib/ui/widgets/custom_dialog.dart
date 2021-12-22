@@ -59,12 +59,11 @@ class CustomDialog extends StatelessWidget {
               const SizedBox(height: 16.0),
               SelectableText(description!,
                   enableInteractiveSelection: true,
-                  maxLines: 15,
                   textAlign: TextAlign.left,
                   style: const TextStyle(
                     fontSize: 12.0,
                   )),
-              const SizedBox(height: 24.0),
+              const SizedBox(height: 16.0),
               Align(
                   alignment: Alignment.bottomRight,
                   child: TextButton(

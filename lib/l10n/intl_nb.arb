@@ -32,5 +32,7 @@
   "drawerButtomSheetIdToken": "Id token",
   "drawerButtomSheetExpires": "Utløper",
   "drawerButtomSheetFCMToken": "Firebase meldingstoken",
-  "drawerGetLastNotification": "Se siste melding"
+  "drawerGetLastNotification": "Se siste melding",
+  "locationNotAvailableHeader": "Lokasjonsposisjon ikke tillatt!",
+  "locationNotAvailable": "Applikasjonen får ikke tilgang til lokasjonsdata fra mobilen din. Gå til innstillinger for applikasjoner for å tillate lokasjon."
 }

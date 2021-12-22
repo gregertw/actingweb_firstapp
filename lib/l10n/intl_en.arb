@@ -32,5 +32,7 @@
   "drawerButtomSheetIdToken": "Id token",
   "drawerButtomSheetFCMToken": "Firebase messaging token",
   "drawerButtomSheetExpires": "Expires",
-  "drawerGetLastNotification": "See last notification"
+  "drawerGetLastNotification": "See last notification",
+  "locationNotAvailableHeader": "No access to location!",
+  "locationNotAvailable": "Your application is not allowed to get location data from your device. Please go to app configurations and allow location information."
 }
