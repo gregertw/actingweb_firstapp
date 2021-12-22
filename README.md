@@ -9,7 +9,7 @@ Listed on:
 
 **Latest build and artifacts**: [![Codemagic build status](https://api.codemagic.io/apps/5e23f3b4c5faa6a356815277/5e23f3b4c5faa6a356815276/status_badge.svg)](https://codemagic.io/apps/5e23f3b4c5faa6a356815277/5e23f3b4c5faa6a356815276/latest_build)
 
-** Latest update: Support for Flutter 2.5.3 and aligned with the skeleton template**
+** Latest update: Support for Flutter 2.8.1**
 
 There are lots of simple Flutter app examples out there, but very few show how to tie together the elements
 you need to put an app into production. In my process of evaluating Flutter maturity and readiness for
@@ -27,13 +27,13 @@ This app has the following elements:
 - Support for iOS, Android, and web
 - Separation of business logic in models and providers, and UI in a separate folder structure
 - Use of provider for app state management
-- Authentication and authorization using the https://appauth.io/ OpenID Connect and OAuth2 library
+- Authentication and authorization using OAuth2
 - State management of login and login token including permanent storage for restarts
 - Simple widget framework for handling logged-in, expired, and logged-out states
 - Basic UI with sliding drawer menu and menu options
 - Testing using unit test framework and mocking
 - Integration tests
-- Localization using i18n and the Android Studio/IntelliJ flutter i18n plugin to generate boilerplate
+- Localization using i18n and the built-in Flutter support for generating boilerplate
 - Use of a global UI theme
 - Custom icons for both iOS and Android
 - Use of Firebase Analytics for usage tracking
@@ -43,19 +43,23 @@ This app has the following elements:
 - Use of Google Maps to present a map of the current location
 - Use of an independently defined new widget type called AnchoredOverlay to overlay a map widget
 
-See my blog post for a more detailed introduction to the various features: https://stuff.greger.io/2019/07/production-quality-flutter-starter-app.html, also this update post explains the latest changes: https://stuff.greger.io/2020/01/production-quality-flutter-starter-app-take-two.html
+Here is a blog post about the value of using a starter app: https://stuff.greger.io/2021/08/why-and-how-you-should-use-a-flutter-starter-app.html
+
+Also, see my blog post for a more detailed introduction to the various features: https://stuff.greger.io/2019/07/production-quality-flutter-starter-app.html.
 
 ## Known issues
 
 - firebase_crashlytics does not support web
+
 ## Suggested improvements
 
 I'm happy to accept pull requests for any improvements that will make this starter app even more complete from
 a production app point of view. Here are some possible improvements:
 
-- How to use Oauth2 to grant access to a service like Firebase database
+- How to use Oauth2 to grant access to a service like Firebase database (very close now with Google login)
 - How to do A/B testing
 - How to use deep links
+- ...
 
 ## CHANGELOG
 
@@ -63,34 +67,79 @@ See CHANGELOG.md
 
 ## How to get started
 
-The app uses a Google Firebase project. The currently configured test 
-project is available for your testing, but obviously you will not be able to log into these projects, so
-the value of that is just that you can test the app without doing any code changes. To start tinkering, you
+The app uses a Google Firebase project (though this  is not a requirement if you drop analytics, messaging, and crashlytics).
+The currently configured test project is available for your testing, but obviously you will not be able to log into these 
+projects, so the value of that is just that you can test the app without doing any code changes. To start tinkering, you
 will want to create your own Firebase project.
 
-But, first of all, check out the actingweb_firstapp code base. You can use any editor, but if you want to use the 
-i18n generation, you need (at this point) Android Studio/IntelliJ as flutter_i18n is a plugin for this editor 
-or for Visual Studio Code.
+But, first of all, check out the actingweb_firstapp code base (it's a template!). You can use any editor.
 
 Make sure you have available a device to run the app on, either a physical device or an emulator, then just
-start debugging. You should be able to log into the app with the described demo accounts or your Google account.
+run it on an emulator. You should be able to log into the app with your Google account (only on emulator, not web, 
+see later). Github is not supported for web, and requires a secret that Google does not require, so it will not work
+until you register your own Github OAuth2 client. 
+
+lib/environment.dart contains the client values for Github and Google, here you can add your own client id and secrets
+when you register your app for authentication with each of these.
+
+See further below for introductions on specific areas of the app's functionality.
+
+## Steps to make this your own app
+
+Even if this app comes out of the box functionally working, you need to make it your own to build on it.
+As a minimum, you need to do the following:
+
+* Replace io.actingweb.firstapp with your own URI scheme/bundle id in android/, ios/, and lib/
+* Replace firebase_options.dart with configurations for your own Firebase project, see 
+  https://firebase.flutter.dev/docs/overview/
+* Edit lib/environment.dart with your own Google and Github client ids (or supply them in env variables)
+* Supply environment variables for the secrets in environment.dart. In Visual Studio Code, you can edit your launch.json
+  and add the "env": {} section
+* You need to edit `android/app/src/main/AndroidManifest.xml` and `ios/Runner/AppDelegate.swift` to update your API 
+  key for Google Maps (see https://cloud.google.com/maps-platform/)
+
+That's all you need! The below sections give you more details on how each of the services have been integrated in the
+code base.
+
+## Integration pattern with various services
+
+There are two integration needs in a Flutter app: integrate towards the underlying platform and integrating towards 
+the various external services you may want to use. Examples of the first is location, mobile messaging services (which
+has support built into the iOS and Android platforms), persistence of data (i.e. shared_preferences), and registration
+of  URI schemes for your application, so that your application can receive the authentication code necessary as part
+of authentication.
+The second category is how to use Google Firebase services (analytics,  messaging, and crash reports), authentication using
+OAuth2 towards e.g. Github and Google, or Google Maps to show the map of where you are.
+
+The most difficult is typically the integration towards the underlying platforms, but as Flutter has evolved with support
+for web and matured on iOS and Android, more and more of integration necessary can be done in the Dart code and the platform
+specific configuration has been reduced.
+
+But still, you will need API keys or client ids or URLs for where to connect, and this must be configured somewhere. In
+/lib/environment.dart you will find a class that pickes configuration variables from the environment (which can be set
+in your CI/CD pipeline) and where you can set defaults. However, these can only be used in the Dart code, so where there
+are needs for underlying platform integration (in ios, android, and web directories), you will have to go in and
+edit the code and configs there directly. How is documented in the sections below.
 
 ## Support for Web
 
-As of Flutter 2, web is supported on stable release, https://flutter.dev/web.
+**This is only for the web version of the app**
 
-A web version of app is available at https://gregertw.github.io/actingweb_firstapp_web
-
-The web version uses the mock system also used by the tests to bypass login (appauth is still not supported for
- Flutter web) and geo location (geolocator is not supported for Flutter web). Firebase Messaging is not fully supported 
- for web in Flutter yet, so the code can be found in web/index.html, which makes it a bit clumsy and not really 
- suited for a true "single code-base" project as you need to make the glue code yourself.
+As of Flutter 2, web is supported on stable release, https://flutter.dev/web and a web version of app is available 
+at https://gregertw.github.io/actingweb_firstapp_web. The support for packagaes has increased, and most of the
+functionality is now supported in the web version.
 
  See https://flutter.dev/docs/get-started/web. If you get errors, do `flutter clean`.
 
-Also note that your Firebase project (google.com) must be configured with a web app (under General settings). 
-The config script snippet you get from setting up the web must replace the Firebase app config in 
-web/index.html and in web/firebase-messaging-sw.js:
+Firebase has now better web support as well, but there are two areas where you need to configure in the web/ 
+folder: for Firebase messaging to work and for Google Maps.
+
+For Google Maps, see https://pub.dev/packages/google_maps_flutter_web. You need an API key and add a script to 
+index.html.
+
+Your Firebase project (google.com) must be configured with a web app (under General settings). 
+The config script snippet you get from setting up the web must replace the Firebase app config 
+in web/firebase-messaging-sw.js:
 
 ```
   var firebaseConfig = {
@@ -105,63 +154,79 @@ web/index.html and in web/firebase-messaging-sw.js:
   };
 ```
 
-You then need to generate the key pair for the Firebase web app and copy the public key to web/index.html here:
+If you have used the Firebase CLI tool to create a firebase_options.dart, you will find your Firebase web API key in
+apiKey attribute. Add it also in lib/environment.dart (you don't need manual configuration in index.html anymore). This
+is according to the documentation as it should be used in the getToken() method. 
 
-```
-// This is the public key from the Firebase web app config
-  messaging.usePublicVapidKey("<your pibluc key here>");
-```
+You can find all the details at https://firebase.flutter.dev/docs/messaging/overview, and you can find more details
+on Firebase and messaging below.
 
-You can find all the details at https://firebase.google.com/docs/cloud-messaging/js/client#configure_web_credentials_in_your_app
+The kIsWeb global variable is used to detect if the app is running on web and made available in appstate.dart
+as a isWeb bool that can be used across the app. The variable is also used in appstate.dart to do the correct 
+Firebase Messaging initialisation.
 
-The kIsWeb global variable is used to detect if the app is running on web and mocks are used. Please note
-that this should not be done for a production app as authentication is bypassed. The variable is also used in
-appstate.dart to do the correct Firebase Messaging initialisation.
+If you are doing debugging of the app on web, use Google login, you need to edit environment.dart with the client id 
+and secret, and then (for local debugging) edit auth.dart and oauth.js with the localhost redirect URL with port number.
+In addition, Google web app (credentials) also need the http://localhost:<portnumber>/ configured as a legal redirect URL.
 
-When you start up the web app, you will be requested for permissions to receive notifications. **To see the Firebase
-messaging token to use when sending a message and the incoming message when the tab is in the front, you need to look
-at the Chrome developer console, not the Flutter console.** Background messages (when the tab is in the backgroun),
-will pop up as a browser notification. There is currently no code to handle tokens and messages as this currently
-needs to be done in Javascript and not really integrated in the Flutter code base.
+**Note on Github!** Github only supports clientid and secret, and does explicitly not support retrieving an access token
+from a web applications (it is blocked with no CORS headers). This is because it is not considered safe. This means that
+Github auth is disabled on web.
 
 ## Authentication and Authorization
 
+### Evolution of auth in first_app
+
+The authentication in first_app has been refactored three times. This last time, a package called oauth2_client has been
+used as it has support for iOS, Android, and web. Previously, flutter_appauth was used, but the maintainer chose to stick
+to the platforms where appauth.io library was supported, so it was not useful as a generic purpose auth library to demonstrate
+support for auth also in browsers. Oauth2_client is missing Open ID Connect, a protocol based on OAuth2 that allows you to 
+uniquely identify a user logging in. With OAuth2, you need to call a non-standard user profile endpoint to retrieve profile
+information. This is shown through how differently Github and Google support the user profile.
+
 ### About Authentication and Authorization
 
-This app uses a demo Identiy Provider (IdP) server for authentication. The library appauth (https://appauth.io) and its Flutter plugin flutter_appauth adds OpenID Connect support to the app and can easily be adapted to your needs or replaced
-by another library/authentication method. 
+This app uses Github and Google as two alternative login flows. Once logged in, you can go to the drawer menu to retrieve user
+information, as well as refresh the token and look at the details of the token and expiry.
 
-The demo.identityserver.io IdP service is used as the authorization server and as a test example as an API gateway. 
-See https://medium.com/@darutk/diagrams-of-all-the-openid-connect-flows-6968e3990660  
-(example #1 with response_type=code and openid included in the scope) for a visual overview of the flow used. 
+Github supports only a variant of client credentials flow with 
+a clientid and a secret, which means that Github does not allow web-based login (as the secret will then be exposed in the 
+code loaded into the browser). However, Google supports both app authorization code exchange flow (use iOS for both iOS and
+ Android), as well as a (non-standard) web flow with both clientid and secret, but where both the origin of the requests and 
+ the redirect URLs must be registered with the credentials.
 
-The OAuth2 authorization flow is used, and the appauth library function authorizeAndExchangeCode() is used to do both the login at demo.identiyserver.io to get the code, and then exchange the code for both an id token and an access token from the token endpoint on the demo.identiyserver.io server. Finally, the getUserInfo() function in auth.dart (lib/providers/) uses a test API endpoint with the access token to retrieve information about the logged in user.
+To register new iOS and web app credentials for Google, go to https://console.cloud.google.com/apis/credentials.
 
-If your app is just using Google APIs and only accepts Google logins, you could replace the IdP with Google directly and end up with an access token to access Google APIs on behalf of the user's account. See how at https://github.com/openid/AppAuth-Android/blob/master/app/README-Google.md
+To register an iOS/Android app for Github, go to https://github.com/settings/developers.
 
-To learn more about how the appauth library, this is a good reference: https://github.com/openid/AppAuth-Android/tree/master/app
+The auth.dart provider users oauth2_client to set up support for any number of identity providers. You should easily be
+able to extend with Facebook and others. The AuthClient class can be extended to parse results after authentication and
+retrieval of user profile. For how to use oauth2_client with other identity providers, see 
+https://pub.dev/packages/oauth2_client.
 
-### Setup of Appauth
+### Setup of auth
 
-The appauth plugin is documented at https://pub.dev/packages/flutter_appauth. The Android and iOS setups are fairly simple. In build.gradle (android/) and Info.plist (ios/Runner/), you need to register the custom URL for your app (here: io.actingweb.firstapp). You should then use the same custom URL scheme in the redirectURL used in the AuthClient (see lib/provisers/auth.dart). (A custom URL is a URL that you register on the mobile device as a URL that will open up your app.)
+The oauth2_client package relies on flutter_web_auth to get a code that can be used to retrieve a token. This flow requires
+that the mobile OS knows which application should pick up a return message, which is specified with the URI scheme aka your
+app's bundle id. For first_app, this is io.actingweb.firstapp and callback must be registered in 
+android/app/src/main/AndroidManifest.xml. iOS does not additional config for handling the callback as long as the URI scheme
+is the same as the bundle id.
 
-The custom URL scheme is used in the request to the IdP server as the redirect URL after successful authentication (and since there are more scopes specified as default, successful authorization to those scopes). The login happens in the mobile's browser and the IdP will redirect the browser to this custom scheme, which again will open up the Flutter app. This allows the app the process the redirect, which includes a code (and more). Finally, these details are used to connect to the token endpoint to get the access token and id token.
-
-### A Comment on Auth0 (old authn/authz)
-
-This project previously used Auth0. Early on, an unpublished flutter_auth0 library was the only way to get proper social login support and was also a good example of including unpublished library code. The flutter_auth0 plugin was eventually published, but the Auth0 company did not show any interest in enabling the Flutter community. Although the flutter_auth0 plugin worked well, a single developer supported library is always risky and given that the intention of this starter app is to show choices that a professional developer team would make, flutter_auth0 was never really the right choice. After tinkering with adding device messaging using Firebase, I discovered a conflict between flutter_auth0 and Firebase Messaging pretty deep in native Android. I thus decided to replace Auth0 with something that could show a more robust implementation pattern and better support a professional development team.
+To extend with new identity providers in AuthClient class, each OAuth2 client needs redirect URIs using the custom URI 
+scheme for mobile or the URI deployment location of the flutter app if on the web. Also, you need to configure scopes and 
+the user profile URL. 
+Also, each of the methods with logic based on the identity provider needs to be extended.
 
 ## Setup of Firebase Analytics
 
-Go to https://firebase.google.com/docs/flutter/setup to set up Firebase for Flutter for your own app. The procedure in its
-simplest form is to register the app identifier for iOS and Android (may be same or different, but is the 
-same in this app) with Firebase using Add App. You will then drop into this project your own GoogleService-Info.plist 
-and google-services.json files.
+Go to https://console.firebase.google.com to add a project and set up Firebase for Flutter for your own app. The procedure 
+in its simplest form is to register the app identifier for iOS and Android (may be same or different, but it is recommended to
+use the same as in this app). In the project, use Add App (+) and choose platform.
 
-**Note!!** If you make a new project and don't just modify this project, make sure you add GoogleService-Info.plist 
-in Xcode (to Runner) as just dropping the file in will not work for iOS!
+At https://firebase.flutter.dev the CLI tool is described. This is the simplest way to generatethe firebase_options.dart file, 
+or you can pull out the details for each app.
 
-MaterialApp() has this extra code to record navigation from screen to screen:
+For Analytics, MaterialApp() in app.dart has this extra code to record navigation from screen to screen:
 ```
       navigatorObservers: [
         FirebaseAnalyticsObserver(analytics: analytics),
@@ -184,24 +249,40 @@ Firebase web app config (see the web section).
 This project also has set up Firebase Cloud Messaging, allowing you to send
 push notifications to the app. You need to turn on Cloud Messaging in the Firebase Console.
 
-For iOS, you also need to generate a key and upload that to Firebase, see https://pub.dev/packages/firebase_messaging.
+For iOS, you also need to generate a key and upload that to Firebase, see https://firebase.flutter.dev/docs/messaging/overview/.
 
-**Note!!** This app can receive notifications while in the background or terminated through the onResume() and onLaunch() events. You should only use so-called "notification" messages and not "data" messages for this (though you can have extra key/value pairs in the "data" section). For both Android and iOS, the notification will appear in the system tray and the app is launched and onResume() or onLaunch() triggered. It is also possible to make app react directly from the background to notifications. However, this requires custom logic for Android and iOS and is not straightforward, so be warned. There was also a bug related to background handling: https://github.com/FirebaseExtended/flutterfire/issues/1763 This is now
+**Note!!** This app can receive notifications while in the background or terminated through the onMessage() and 
+onBackgroundMessage() events (in appstate.date). You should only use so-called "notification" messages and not "data" messages 
+for this (though you can have extra key/value pairs in the "data" section). For both Android and iOS, the notification will appear in the system tray and the app is launched. 
+
+**Note2!!** It is also possible to make the app react directly from the background to
+ notifications. However, this requires custom logic for Android and iOS and is not straightforward, so be warned. There was also
+  a bug related to background handling: https://github.com/FirebaseExtended/flutterfire/issues/1763 This is now
 fixed, but I have not prioritised trying to make it work.
 
-**Note2!!** The iOS simulator does not support background notifications, only onResume() will be triggered.
+**Note3!!** The iOS simulator does not support background notifications, a real device is needed.
 
-The app will write the FCM token to console, but you can also go into the drawer menu and click on the menu header area displaying name and email to view all details, including the Firebase messaging token. 
-In order to send a notification, you need to construct a payload like this (this is for shell and you need to replace the `<token>` with the app's token):
+The app will write the FCM token to console, but you can also go into the drawer menu and click on the menu header area 
+displaying name and email to view all details, including the Firebase messaging token. 
+
+The notification console to send a notification (once configured) is a bit tricky to find, but has this URL:
+ https://console.firebase.google.com/u/0/project/<your_project>/notification/compose. In the drawer menu, there is a menu
+ option to show the last notification received. Only the title and body is shown.
+
+Or you can use the command line. In order to send a notification, you need to construct a payload like this (this is for 
+shell and you need to replace the `<token>` with the app's token):
 ```
 export DATA='{"notification": {"body": "this is a body","title": "this is a title"}, "priority": "high", "data": {"click_action": "FLUTTER_NOTIFICATION_CLICK", "id": "1", "status": "done"}, "to": "<token>"}'
 ```
 
-The "notification" part will be delivered either to system tray (background or not running) or directly if the app is open. The click_action is required for Android only and for onResume() and onLaunch() to work (i.e. will not have an impact when the Android app is in the foreground). For iOS, the extra click_action will be included, but does no harm.
+The "notification" part will be delivered either to system tray (background or not running) or directly if the app is open. 
+The click_action is required for Android only and for background notifications to work (i.e. it will not have an impact when 
+the Android app is in the foreground). For iOS, the extra click_action will be included, but does no harm.
 
-The "id" and "status" elements in "data" are just example data payload that can be used by the app. Here you can send a URL or any other data. 
+The "id" and "status" elements in "data" are just example data payload that can be used by the app. Here you can send a URL 
+or any other data. 
 
-**Note** that on iOS, these keys will appear on the root level of the message json and not within the "data" element. 
+**Note** On iOS, these keys will appear on the root level of the message json and not within the "data" element. 
 
 To send the above payload, you can use curl:
 
@@ -209,11 +290,14 @@ To send the above payload, you can use curl:
 curl https://fcm.googleapis.com/fcm/send -H "Content-Type:application/json" -X POST -d "$DATA" -H "Authorization: key=<key>"
 ```
 
-Here `<key>` must be replaced with the Firebase Cloud Messaging API server key (found in the Settings of the Firebase app under Cloud Messaging).
+Here `<key>` must be replaced with the Firebase Cloud Messaging API server key (found in the Settings of the Firebase app 
+under Cloud Messaging).
 
 **So, in sum: Use "notification" to send a title and a message and the "data" element to send extra data. Except that all the "data" elements will appear on the root level of the message json in iOS, the behaviour will be similar for both Android and iOS.**
 
-**Note!!** Read this if you want to use another flutter plugin for notifications (for further customisations etc). You may then need to turn off so-called method swizzling for iOS on to allow other notification plugins. You then need to notify FCM about reception of the message yourself ( see https://firebase.google.com/docs/cloud-messaging/ios/receive). 
+**Note, advanced!!** Read this if you want to use another flutter plugin for notifications (for further customisations etc). 
+You may then need to turn off so-called method swizzling for iOS on to allow other notification plugins. You then need to notify 
+FCM about reception of the message yourself ( see https://firebase.google.com/docs/cloud-messaging/ios/receive). 
 
 This is how you set swizzling off (in Info.plist):
 ```
@@ -225,11 +309,11 @@ This is how you set swizzling off (in Info.plist):
 
 A new AnchoredOverlay widget type has been added in `lib/ui/widgets/anchored_overlay.dart` to overlay a Google 
 map with current location and to add a button to toggle the overlay. 
-You need to edit `android/app/src/main/AndroidManifest.xml` and `ios/Runner/AppDelegate.m` to update your API key 
-for Google Maps (see https://cloud.google.com/maps-platform/). 
+You need to edit `android/app/src/main/AndroidManifest.xml`, `ios/Runner/AppDelegate.swift`, and `web/ìndex.html` to update 
+your API key for Google Maps (see https://cloud.google.com/maps-platform/). 
 
-**IMPORTANT!!!! The keys being used are under a very low daily quota and has been added to git to make sure the app
-runs out of box. PLEASE change this as soon as possible and before you do your own development!**
+**IMPORTANT!!!! The keys being used are under a very low daily quota and has been added to git to make sure this app
+runs out of the box. PLEASE change this as soon as possible and before you do your own development!**
 
 A new map UI page has been added to lib/ui/pages, and the OverlayMapPage() widget is loaded in 
 lib/ui/pages/index.dart:
@@ -242,7 +326,7 @@ children: <Widget>[
 ```
 
 You can remove the overlay simply by removing the widget reference here. The OverlayMapPage widget relies on 
-the appstate scoped_model to pick up the location, while the location is set from `lib/ui/location/index.dart`.
+the locstate to pick up the location.
 
 ## Tests
 
@@ -261,58 +345,27 @@ integrated support. See https://flutter.dev/docs/testing/integration-tests for m
 To run the integration tests, start the emulator or connect a device and run:
 `flutter drive --driver test_driver/driver.dart --target integration_test/app_test.dart`
 
-You can also install chromedriver and run the tests in the browser. Make sure chromedriver is in your path and run:
-`chromedriver --port=4444 &; flutter drive --driver test_driver/driver.dart --target integration_test/app_test.dart -d web-server`
-
 Currently, there is limited support for splitting up integration tests into separate files, so all tests should be
 in the same file. However, you can use several testWidgets() calls. For demonstration purposes and due to the need
 to log in, the current integration tests are all within the same testWidgets().
 
-### Integration Tests - The pre-flutter.2 way
-
-**NOTE!!! See above for the new way of doing integration tests!**
-
-The integration tests run a real application on a device/simulator. This is done by having two processes: one 
-instrumented application and one test process. You will find the instrumented app in `flutter_driver/app.dart` 
-and the test app in `flutter/driver/app_test.dart`. The official introduction is found at 
-https://flutter.dev/docs/cookbook/testing/integration/introduction
-
-You can start an emulator and then run the integration tests with `flutter drive --target=test_driver/app.dart`.
-
-The application is built and loaded onto the emulator and the tests are run, which takes a long time.
-
-A better approach, especially if you are developing integration tests, is to run the two processes separately 
-(thanks to https://medium.com/flutter-community/hot-reload-for-flutter-integration-tests-e0478b63bd54 for the hint).
-
-First you run the observatory (the app to test), using 
-`flutter run --host-vmservice-port 8888 --disable-service-auth-codes test_driver/app.dart`. Once it is up and 
-running, you have an application you can hot reload ('r') or hot restart ('R'). 
-
-You then run the integration tests using `export VM_SERVICE_URL=http://127.0.0.1:8888/;dart test_driver/app_test.dart`. 
-You can change the tests (app_test.dart) and re-run without touching the app you test. Or you can change the app you 
-test and do hot reload/restart. 
-
-There is a .vscode/launch.json config that defines these and makes them available from the command palette in Visual 
-Studio Code (Tasks: Run test tasks). It should be easy to add keyboard shortcuts or add similar configs to your 
-favourite IDE.
+**This used to work, but support was removed when integration testing was changed. Not yet verified to work!** 
+You can also install chromedriver and run the tests in the browser. Make sure chromedriver is in your path and run:
+`chromedriver --port=4444 &; flutter drive --driver test_driver/driver.dart --target integration_test/app_test.dart -d web-server`
 
 ### Mocking in Integration Tests
 
-In test_driver/app.dart, you will find dataHandler used by the enableFlutterDriverExtension() call. This allows
-two-way communication between the tested application and the tests (that can send messages using 
-driver.requestData('cmd')). This is an interesting technique used to enable and disable mocks as you do the 
-testing.
-
 To simplify and make mocking dynamic, I have introduced mocks into the application state by adding a mocks object
-to the state (see `model/appstate.dart`). The mocks object is a map of objects that can be used throughout the application (i.e. dependency injection through app state). See in ui/login/index.dart and the _AuthPageState class 
-for an example with the Auth0Client. Note that care should be taken to avoid that mocks can be triggered in the a production
-app as authentication can be bypassed this way.
+to the state (see `model/appstate.dart`). The mocks object is a map of objects that can be used throughout the application 
+(i.e. dependency injection through app state). See in `integration_test/app_test.dart` 
+for an example where geolocation mock is enabled through setting mock: true. Note that care should be taken to avoid that 
+mocks can be triggered in the a production app as authentication can be bypassed this way.
 
 ## Some thoughts on state management
 
 In investigating the various state management approaches, Brian Egan's http://fluttersamples.com/ was very 
-helpful. I tried out a few approaches and initially ended up on scoped_model as an approach that is intuitive, 
-plays well with the Flutter principles of app design, and that is powerful enough to support a production app.
+helpful. I tried out a few approaches and in an early version of first_app ended up on scoped_model as an approach 
+that is intuitive, plays well with the Flutter principles of app design, and that is powerful enough to support a production app.
 State management is a matter of taste, but I was trying to find the set of app architectural approaches that
 fit with Flutter and that can support a bigger team of developers.
 
@@ -322,10 +375,10 @@ replacement of scoped_model, quoted from the provider home: "A mixture between d
 state management, built with widgets for widgets." 
 In the process of replacing scoped_model with provider, I chose not to add a more powerful state management 
 package (like MobX), but rather use simple classes with the ChangeNotifier mixin. This is all that is needed for 
-provider to pick up notifyListeners() calls. In a real application, you probably want to choose a state management 
+provider to pick up notifyListeners() calls. In a bigger application, you probably want to choose a state management 
 packaged like MobX to better handle more complex states.
 
-The developer of provider has later developeed https://pub.dev/packages/flutter_riverpod, which is a total rewrite
+The developer of provider has later developed https://pub.dev/packages/flutter_riverpod, which is a total rewrite
 of state management (not using InheritedWidget). It is positioned as a "better" provider, however, I have chosen
 not to rewrite the starter app with riverpod as provider is powerful enough for many real-life scenarios and the
 current introduction to riverpod is harder to understand until you are deeper into Flutter. Also, there have been

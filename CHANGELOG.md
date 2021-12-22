@@ -1,10 +1,14 @@
 # CHANGELOG
 
-Dec 19, 2021
+## Dec 22, 2021
+
+- Add a CustomDialog to inform about location not available for the app
+
+## Dec 19, 2021
 
 - Add drawer menu with display of latest Firebase FCM notification
 
-Dec 12, 2021
+## ## Dec 12, 2021
 
 - Reinstated Android and iOS manual config to make Crashlytics work
 - Factored out OAuth2 clientId and secret to use environment variables
@@ -13,7 +17,7 @@ Dec 12, 2021
 - Removed the mocking through mockmap.dart to only use provider = 'mock' in AuthClient
 - Introduced environment.dart with class Environment to support secrets in env vars in CI/CD
 
-Dec 10, 2021
+## Dec 10, 2021
 
 - Full refactoring of auth, remove flutter_appauth and switch to oauth2_client
 - Upgrade all packages
