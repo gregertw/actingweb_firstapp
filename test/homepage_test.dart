@@ -85,6 +85,6 @@ void main() async {
     expect(
         find.descendant(
             of: find.byType(HomePageDrawer), matching: find.byType(ListTile)),
-        findsNWidgets(4));
+        findsNWidgets(5));
   });
 }
