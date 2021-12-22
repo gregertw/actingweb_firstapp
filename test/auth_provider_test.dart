@@ -1,40 +1,92 @@
 import 'package:test/test.dart';
-import 'package:first_app/models/appstate.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:first_app/providers/auth.dart';
-import 'package:first_app/mock/mock_appauth.dart';
 
 void main() async {
-  // We need mock initial values for SharedPreferences
-  SharedPreferences.setMockInitialValues({});
-  var prefs = await SharedPreferences.getInstance();
-  // This is to keep our appstate
-  // NOTE!! We here also test the appstate related to authentication
-  AppStateModel appState = AppStateModel(prefs: prefs);
+  late AuthClient c;
 
-  // We need a mock client to return the values that Auth0 would return
-  var mockClient = MockFlutterAppAuth();
+  setUp(() async {
+    c = AuthClient(clientId: '', clientSecret: '', provider: 'mock');
+  });
 
-  test('initially not logged in', () {
-    expect(appState.authenticated, false);
+  test('initially not logged in', () async {
+    expect(c.isExpired, true);
+    expect(c.isValid, false);
+    expect(c.accessToken.isEmpty, true);
+    expect(c.refreshToken.isEmpty, true);
+    expect(c.shouldRefresh, false);
   });
 
   test('authenticate', () async {
-    // Let's create an Appauth provider with our appstate and request it
-    // to use our mock version of Appauth lib
-    var c = AuthClient(authClient: mockClient);
     // Do the authorization that normally brings up the login window that leads
     // to a callback from Appauth and finally to the log in information (that
     // we mocked above)
-    var res = await c.authorize();
-    appState.logIn(res);
-    expect(res.containsKey('access_token'), true);
-    expect(appState.authenticated, true);
-    expect(appState.userToken, 'an_access_token');
+    var res = await c.authorizeOrRefresh();
+    expect(res, true);
+    expect(c.isExpired, false);
+    expect(c.isValid, true);
+    expect(c.accessToken.isNotEmpty, true);
+    expect(c.refreshToken.isNotEmpty, true);
+    expect(c.shouldRefresh, false);
   });
 
-  test('log out', () {
-    appState.logOut();
-    expect(appState.authenticated, false);
+  test('toJson', () async {
+    var res = await c.authorizeOrRefresh();
+    expect(res, true);
+    var m = c.toJson();
+    expect(m['accessToken'], 'an_access_token');
+    expect(m['refreshToken'], 'a_refresh_token');
+    var diff = DateTime.parse(m['expires'])
+        .difference(DateTime.now().add(const Duration(seconds: 3600)));
+    expect(diff.inSeconds, lessThan(1));
+  });
+
+  test('fromJson', () async {
+    var m = {
+      'accessToken': 'an_access_token',
+      'refreshToken': 'a_refresh_token',
+      'idToken': 'an_id_token',
+      'expires':
+          DateTime.now().add(const Duration(seconds: 3600)).toIso8601String()
+    };
+    c.fromJson(m);
+    expect(c.accessToken, 'an_access_token');
+    expect(c.refreshToken, 'a_refresh_token');
+    expect(c.idToken, 'an_id_token');
+    var diff =
+        c.expires.difference(DateTime.now().add(const Duration(seconds: 3600)));
+    expect(diff.inSeconds, 0);
+  });
+
+  test('fromJsonToStringFromString', () async {
+    var exp =
+        DateTime.now().add(const Duration(seconds: 3600)).toIso8601String();
+    var m = {
+      'accessToken': 'an_access_token',
+      'refreshToken': 'a_refresh_token',
+      'idToken': 'an_id_token',
+      'expires': exp
+    };
+    c.fromJson(m);
+    var c2 = AuthClient(clientId: '', clientSecret: '', provider: 'mock');
+    c2.fromString(c.toString());
+    expect(c2.accessToken, 'an_access_token');
+    expect(c2.refreshToken, 'a_refresh_token');
+    expect(c2.idToken, 'an_id_token');
+    var diff = c.expires.difference(DateTime.parse(exp));
+    expect(diff.inSeconds, 0);
+  });
+
+  test('closeSessions', () async {
+    // Do the authorization that normally brings up the login window that leads
+    // to a callback from Appauth and finally to the log in information (that
+    // we mocked above)
+    var res = await c.authorizeOrRefresh();
+    expect(res, true);
+    expect(c.isExpired, false);
+    expect(c.isValid, true);
+    c.closeSessions();
+    expect(c.isExpired, true);
+    expect(c.isValid, false);
+    expect(c.accessToken.isEmpty, true);
   });
 }

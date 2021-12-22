@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:first_app/models/locstate.dart';
+import 'package:first_app/ui/widgets/custom_dialog.dart';
 
 String latitudeLongitude(String lat, String long) => "Lat: $lat, Long: $long";
 
@@ -34,7 +35,22 @@ class LocationStreamWidget extends StatelessWidget {
           child: Text(Provider.of<LocStateModel>(context).isListening()
               ? AppLocalizations.of(context)!.stopListening
               : AppLocalizations.of(context)!.startListening),
-          onPressed: Provider.of<LocStateModel>(context).toggleListening,
+          onPressed: () => {
+            Provider.of<LocStateModel>(context, listen: false)
+                .toggleListening(),
+            if (!Provider.of<LocStateModel>(context, listen: false).isAvailable)
+              {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => CustomDialog(
+                          title: AppLocalizations.of(context)!
+                              .locationNotAvailableHeader,
+                          description: AppLocalizations.of(context)!
+                              .locationNotAvailable,
+                          buttonText: AppLocalizations.of(context)!.okButton,
+                        ))
+              },
+          },
         ),
       ),
     ];

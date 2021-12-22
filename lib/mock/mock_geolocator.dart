@@ -11,8 +11,7 @@ class MockGeolocator extends Fake implements Geo {
   }
 
   @override
-  Future<List<Placemark>> placemarkFromCoordinates(
-      double latitude, double longitude,
+  Future<List<Placemark>> fromCoordinates(double latitude, double longitude,
       {String? localeIdentifier}) async {
     final List<Placemark> l = [];
     l.add(Placemark(name: 'Lonesome town', country: 'Norway'));

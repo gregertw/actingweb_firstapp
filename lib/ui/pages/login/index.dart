@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:first_app/models/appstate.dart';
 import 'package:provider/provider.dart';
-import 'package:first_app/providers/auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginPage extends StatelessWidget {
@@ -9,7 +8,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appState = Provider.of<AppStateModel>(context, listen: false);
+    var appState = Provider.of<AppStateModel>(context);
     final logo = Padding(
       padding: const EdgeInsets.all(40.0),
       child: Image.asset('assets/actingweb-header-small.png'),
@@ -53,42 +52,55 @@ class LoginPage extends StatelessWidget {
 class AuthPage extends StatelessWidget {
   const AuthPage({Key? key}) : super(key: key);
 
-  void auth(BuildContext context) {
-    var auth0 = AuthClient(
-        authClient: Provider.of<AppStateModel>(context, listen: false)
-            .mocks
-            .getAppAuth());
-    try {
-      auth0.authorize().then((res) {
-        if (res.containsKey('access_token')) {
-          Provider.of<AppStateModel>(context, listen: false).logIn(res);
-          // Earlier, userinfo was retrieved here, but this failed as
-          // when the future returned, the context could be null and thus
-          // state could not be updated with user data.
-        }
-      });
-    } catch (e) {
-      // ignore: avoid_print
-      print('Error: $e');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: ElevatedButton(
-        key: const Key('LoginPage_LoginButton'),
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
+    return Container(
+      height: 200.0,
+      width: 150.0,
+      constraints: const BoxConstraints(maxHeight: 200.0, maxWidth: 150.0),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: ListView(children: <Widget>[
+          !Provider.of<AppStateModel>(context, listen: false).isWeb
+              ? ElevatedButton(
+                  key: const Key('LoginPage_LoginButton_Github'),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    padding: const EdgeInsets.all(15),
+                  ),
+                  onPressed: () {
+                    Provider.of<AppStateModel>(context, listen: false)
+                        .authorize('github');
+                  },
+                  child: Text(AppLocalizations.of(context)!.loginButton_Github),
+                )
+              : ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    padding: const EdgeInsets.all(15),
+                  ),
+                  onPressed: () {},
+                  child: const Text('Github N/A'),
+                ),
+          ElevatedButton(
+            key: const Key('LoginPage_LoginButton_Google'),
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+              padding: const EdgeInsets.all(15),
+            ),
+            onPressed: () {
+              Provider.of<AppStateModel>(context, listen: false)
+                  .authorize('google');
+            },
+            child: Text(AppLocalizations.of(context)!.loginButton_Google),
           ),
-          padding: const EdgeInsets.all(15),
-        ),
-        onPressed: () {
-          auth(context);
-        },
-        child: Text(AppLocalizations.of(context)!.loginButton),
+        ]),
       ),
     );
   }

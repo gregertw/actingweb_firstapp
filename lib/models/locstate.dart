@@ -5,12 +5,17 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
 class Geo {
-  Future<LocationPermission> checkPermission() async {
-    return Geolocator.checkPermission();
+  final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
+
+  Future<LocationPermission?> checkPermission() async {
+    var enabled = await _geolocatorPlatform.isLocationServiceEnabled();
+    if (enabled) {
+      return await _geolocatorPlatform.checkPermission();
+    }
+    return null;
   }
 
-  Future<List<Placemark>> placemarkFromCoordinates(
-      double latitude, double longitude,
+  Future<List<Placemark>> fromCoordinates(double latitude, double longitude,
       {String? localeIdentifier}) {
     return placemarkFromCoordinates(latitude, longitude);
   }
@@ -18,15 +23,12 @@ class Geo {
   Stream<Position> getPositionStream(
       {LocationAccuracy desiredAccuracy = LocationAccuracy.best,
       int distanceFilter = 0,
-      bool forceAndroidLocationManager = false,
-      Duration? intervalDuration,
       Duration? timeLimit}) {
     return Geolocator.getPositionStream(
-        desiredAccuracy: desiredAccuracy,
-        distanceFilter: distanceFilter,
-        forceAndroidLocationManager: forceAndroidLocationManager,
-        intervalDuration: intervalDuration,
-        timeLimit: timeLimit);
+        locationSettings: LocationSettings(
+            accuracy: desiredAccuracy,
+            distanceFilter: distanceFilter,
+            timeLimit: timeLimit));
   }
 }
 
@@ -46,9 +48,11 @@ class LocStateModel with ChangeNotifier {
   // ignore: cancel_subscriptions
   StreamSubscription<Position>? _positionStreamSubscription;
   final Map<Position, Placemark?> _pointList = <Position, Placemark?>{};
+  late bool _available;
 
   double get latitude => _lastPos.latitude;
   double get longitude => _lastPos.longitude;
+  bool get isAvailable => _available;
   bool isPaused() {
     if (_positionStreamSubscription == null) {
       return true;
@@ -62,6 +66,7 @@ class LocStateModel with ChangeNotifier {
       _pointList as LinkedHashMap<Position, Placemark?>;
 
   LocStateModel(this.locator) {
+    _available = false;
     locator ??= Geo();
   }
 
@@ -69,8 +74,10 @@ class LocStateModel with ChangeNotifier {
     _geoAccessStatus = await locator!.checkPermission();
     if (_geoAccessStatus == LocationPermission.whileInUse ||
         _geoAccessStatus == LocationPermission.always) {
+      _available = true;
       return true;
     }
+    _available = false;
     return false;
   }
 
@@ -80,15 +87,15 @@ class LocStateModel with ChangeNotifier {
   void addLocation(Position pos) {
     _pointList[pos] = null;
     _lastPos = pos;
+    notifyListeners();
     try {
-      locator!.placemarkFromCoordinates(pos.latitude, pos.longitude).then((pm) {
+      locator!.fromCoordinates(pos.latitude, pos.longitude).then((pm) {
         _pointList[pos] = pm.first;
         notifyListeners();
       });
     } catch (e) {
       return;
     }
-    notifyListeners();
   }
 
   Placemark? getPlacemark(Position pos) {
@@ -116,10 +123,13 @@ class LocStateModel with ChangeNotifier {
     return address;
   }
 
-  void toggleListening() {
+  void toggleListening() async {
+    if (!await available()) {
+      return;
+    }
     if (_positionStreamSubscription == null) {
       final Stream<Position> positionStream = locator!.getPositionStream(
-          desiredAccuracy: LocationAccuracy.best, distanceFilter: 10);
+          desiredAccuracy: LocationAccuracy.best, distanceFilter: 0);
       _positionStreamSubscription =
           positionStream.listen((Position position) => addLocation(position));
       //_positionStreamSubscription.pause();

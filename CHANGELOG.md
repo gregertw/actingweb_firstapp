@@ -1,5 +1,41 @@
 # CHANGELOG
 
+## Dec 22, 2021
+
+- Add a CustomDialog to inform about location not available for the app
+
+## Dec 19, 2021
+
+- Add drawer menu with display of latest Firebase FCM notification
+
+## ## Dec 12, 2021
+
+- Reinstated Android and iOS manual config to make Crashlytics work
+- Factored out OAuth2 clientId and secret to use environment variables
+- Added Google auth as an alternative
+- Refactored auth provider to more easily support multiple identity providers
+- Removed the mocking through mockmap.dart to only use provider = 'mock' in AuthClient
+- Introduced environment.dart with class Environment to support secrets in env vars in CI/CD
+
+## Dec 10, 2021
+
+- Full refactoring of auth, remove flutter_appauth and switch to oauth2_client
+- Upgrade all packages
+- Support flutter 2.8.0 release
+- Change firebase intialisation to pure dart with firebase_options.dart file 
+  (delete google-services.json and GoogleService-Info.plist)
+- Remove Android and iOS specific Firebase init (don't report on native crashes anymore)
+  see https://firebase.flutter.dev/docs/crashlytics/overview/
+- Bump version to 1.6.0+15
+- Fix bug in permission handling for iOS
+
+## Nov 14, 2021
+
+- Fix null bug in _markers in map overlay widget
+- Support Xcode 13.2beta
+- Switch over to using flutter test instead of flutter drive (.vscode/tasks.json)
+- Bump targetSdkVersion to 31
+
 ## Oct 17, 2021
 
 - Support latest flutter 2.5.3

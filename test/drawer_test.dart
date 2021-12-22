@@ -33,17 +33,12 @@ void main() async {
   // We need mock initial values for SharedPreferences
   SharedPreferences.setMockInitialValues({});
   var prefs = await SharedPreferences.getInstance();
-  loginState = AppStateModel(prefs: prefs);
-
-  // Ensure we have a logged in state before testing HomePage as LoginPage() is rendered if
-  // we are not authenticated
-  // The state logic is based on receiving the access token, but does not validate the format
-  loginState.logIn({'access_token': '123'});
+  loginState = AppStateModel(prefs: prefs, mock: true);
 
   testWidgets('is drawer ready', (WidgetTester tester) async {
     await initWidget(tester, loginState);
     await tester.pump();
-
+    await loginState.authorize();
     expect(loginState.authenticated, true);
     // We should have opened the drawer
     expect(find.byType(HomePageDrawer), findsOneWidget);

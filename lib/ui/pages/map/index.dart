@@ -25,7 +25,7 @@ class _OverlayMapPageState extends State<OverlayMapPage> {
   void initState() {
     super.initState();
     _show = false;
-    _markers = null;
+    _markers = <Marker>{};
     _mapType = MapType.normal;
   }
 

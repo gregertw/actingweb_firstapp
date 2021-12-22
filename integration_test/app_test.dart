@@ -3,21 +3,23 @@ import 'package:integration_test/integration_test.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:first_app/firebase_options.dart';
 
 // The application under test.
 import 'package:first_app/app.dart';
 
-void main() {
+void main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.dumpErrorToConsole(details);
   };
-  Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   group('first_app', () {
     // First, define the Finders and use them to locate widgets from the
     // test suite. Note: the Strings provided to the `byValueKey` method must
     // be the same as the Strings we used for the Keys.
-    final loginButtonFinder = find.byKey(const Key('LoginPage_LoginButton'));
+    final loginButtonFinder =
+        find.byKey(const Key('LoginPage_LoginButton_Github'));
     final startListeningButtonFinder =
         find.byKey(const Key('LocationPage_StartListeningButton'));
     final locationTileFinder =
