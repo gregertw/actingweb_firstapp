@@ -1,4 +1,4 @@
-import 'package:first_app/models/locstate.dart';
+import 'package:first_app/providers/geo.dart';
 
 class MockMap {
   Geo? mockGeo;

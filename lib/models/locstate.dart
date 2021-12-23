@@ -3,34 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
-
-class Geo {
-  final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
-
-  Future<LocationPermission?> checkPermission() async {
-    var enabled = await _geolocatorPlatform.isLocationServiceEnabled();
-    if (enabled) {
-      return await _geolocatorPlatform.checkPermission();
-    }
-    return null;
-  }
-
-  Future<List<Placemark>> fromCoordinates(double latitude, double longitude,
-      {String? localeIdentifier}) {
-    return placemarkFromCoordinates(latitude, longitude);
-  }
-
-  Stream<Position> getPositionStream(
-      {LocationAccuracy desiredAccuracy = LocationAccuracy.best,
-      int distanceFilter = 0,
-      Duration? timeLimit}) {
-    return Geolocator.getPositionStream(
-        locationSettings: LocationSettings(
-            accuracy: desiredAccuracy,
-            distanceFilter: distanceFilter,
-            timeLimit: timeLimit));
-  }
-}
+import 'package:first_app/providers/geo.dart';
 
 class LocStateModel with ChangeNotifier {
   Geo? locator;
@@ -94,6 +67,8 @@ class LocStateModel with ChangeNotifier {
         notifyListeners();
       });
     } catch (e) {
+      // The fromCoordinates() method uses an underlying OS API that has restrictions
+      // so this request may fail and no address is added for the location.
       return;
     }
   }

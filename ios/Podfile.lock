@@ -12,18 +12,18 @@ PODS:
   - Firebase/Messaging (8.9.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 8.9.0)
-  - firebase_analytics (9.0.3):
+  - firebase_analytics (9.0.4):
     - Firebase/Analytics (= 8.9.0)
     - firebase_core
     - Flutter
-  - firebase_core (1.10.5):
+  - firebase_core (1.10.6):
     - Firebase/CoreOnly (= 8.9.0)
     - Flutter
-  - firebase_crashlytics (2.4.3):
+  - firebase_crashlytics (2.4.4):
     - Firebase/Crashlytics (= 8.9.0)
     - firebase_core
     - Flutter
-  - firebase_messaging (11.2.3):
+  - firebase_messaging (11.2.4):
     - Firebase/Messaging (= 8.9.0)
     - firebase_core
     - Flutter
@@ -78,7 +78,7 @@ PODS:
   - Flutter (1.0.0)
   - flutter_secure_storage (3.3.1):
     - Flutter
-  - flutter_web_auth (0.3.1):
+  - flutter_web_auth (0.3.2):
     - Flutter
   - geocoding (1.0.5):
     - Flutter
@@ -204,10 +204,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Firebase: 13d8d96499e2635428d5bf0ec675df21f95d9a95
-  firebase_analytics: 022be8bd68c73ddaa23b77895e9098afa7069cfb
-  firebase_core: dfcae4c150a5e24436a0b7677c470478a234d5bf
-  firebase_crashlytics: 6713843d68feb3cefa1471e20dfaa72b934d6db8
-  firebase_messaging: c4696ded2f44fb5c2bf6e94f9a575105793e58fa
+  firebase_analytics: cc1ab30e479b7089c0a952c0cae7ba286d464c68
+  firebase_core: c263d7daf1dc92fcd9895e6abdc04872b0ee07ff
+  firebase_crashlytics: 9cbd5d9e8560b218f02fce3c7359567ac822d05f
+  firebase_messaging: dff5cd08781ee1de988565a83c977e435405cd7e
   FirebaseAnalytics: 4ab446ce08a3fe52e8a4303dd997cf26276bf968
   FirebaseCore: 599ee609343eaf4941bd188f85e3aa077ffe325b
   FirebaseCoreDiagnostics: 56fb7216d87e0e6ec2feddefa9d8a392fe8b2c18
@@ -216,7 +216,7 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 82c4a48638f53f7b184f3cc9f6cd2cbe533ab316
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
-  flutter_web_auth: eae2fc62b97d9a44c5c2a1ed0404a6ce396e3d7f
+  flutter_web_auth: 16bc97b544d14c399d4db60bfc3a85320d200cb3
   geocoding: 32cfcdb16d38d907caaba65e2e42ad10d38bee58
   geolocator_apple: b741765c55dc21950e3e106e8b3584e55cf81ce5
   google_maps_flutter: abdb8dee6c52d4be36ad131ee6ebfacd14417c5a
