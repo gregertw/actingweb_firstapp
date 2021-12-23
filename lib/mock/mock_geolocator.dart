@@ -1,7 +1,7 @@
 import 'package:mockito/mockito.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:first_app/models/locstate.dart';
+import 'package:first_app/providers/geo.dart';
 
 // Create a class that fakes the Geolocator library class
 class MockGeolocator extends Fake implements Geo {

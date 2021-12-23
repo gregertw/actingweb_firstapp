@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Dec 23, 2021
+
+- Fix bug with lost request for permissions
+- Factored out Geo() as a provider
+- Bumped version to 1.6.1+16
+
 ## Dec 22, 2021
 
 - Add a CustomDialog to inform about location not available for the app
