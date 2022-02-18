@@ -25,15 +25,15 @@ dependencies:
   cupertino_icons: ^1.0.3
   meta: ^1.7.0
   provider: ^6.0.2
-  shared_preferences: ^2.0.12
+  shared_preferences: ^2.0.13
   google_maps_flutter: ^2.1.1
   google_maps_flutter_web: ^0.3.2+1
   geocoding: ^2.0.2
   firebase_core: ^1.12.0
   firebase_analytics: ^9.1.0
-  firebase_crashlytics: ^2.5.0
+  firebase_crashlytics: ^2.5.1
   firebase_messaging: ^11.2.6
-  geolocator: ^8.0.5
+  geolocator: ^8.2.0
 
 dev_dependencies:
   flutter_test:
@@ -46,7 +46,7 @@ dev_dependencies:
   test: ^1.19.5
   flutter_launcher_icons: ^0.9.0
   convert: ^3.0.1
-  mockito: ^5.0.17
+  mockito: ^5.1.0
 
 flutter_icons:
   android: "launcher_icon"
