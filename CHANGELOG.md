@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Feb 18, 2022
+
+- Validate for Flutter 2.10.1
+- Upgrade packages
+- Bump version to 1.6.2+17
+
 ## Dec 23, 2021
 
 - Fix bug with lost request for permissions
@@ -28,10 +34,10 @@
 - Full refactoring of auth, remove flutter_appauth and switch to oauth2_client
 - Upgrade all packages
 - Support flutter 2.8.0 release
-- Change firebase intialisation to pure dart with firebase_options.dart file 
+- Change firebase intialisation to pure dart with firebase_options.dart file
   (delete google-services.json and GoogleService-Info.plist)
 - Remove Android and iOS specific Firebase init (don't report on native crashes anymore)
-  see https://firebase.flutter.dev/docs/crashlytics/overview/
+  see <https://firebase.flutter.dev/docs/crashlytics/overview/>
 - Bump version to 1.6.0+15
 - Fix bug in permission handling for iOS
 
@@ -100,7 +106,6 @@
 - Refactor use of crashlytics as it does not support web
 - Get rid of discontinued flushbar (use new standard snackbar)
 
-
 ## Oct 2, 2020
 
 - Bump up to version 1.22 of Flutter SDK, XCode 12, and Android 4 w/ API level 30
@@ -112,13 +117,13 @@
 ## Aug 2, 2020
 
 - Added support for web (for Flutter beta)
-- Added generated_plugin_registrant.dart and AppDelegate.swift (unused) 
+- Added generated_plugin_registrant.dart and AppDelegate.swift (unused)
   to be compatible flutter create . (which refreshed ios, android, and web folders)
 - Bump version to 1.3.2+6, no functionality change for mobile apps, but minor fixes
 
 ## Jul 26, 2020
 
-- Added support for Firebase messaging, including access to the token from the drawer menu 
+- Added support for Firebase messaging, including access to the token from the drawer menu
   (click on the user details in the header)
 - Bump version to 1.3.1+5
 
@@ -134,7 +139,7 @@
 
 ## Jun 14, 2020
 
-- Remove flutter_auth0 and thus Auth0 support and replace with flutter_appauth (https://appauth.io) and use a demo identityserver
+- Remove flutter_auth0 and thus Auth0 support and replace with flutter_appauth (<https://appauth.io>) and use a demo identityserver
 - Release version 1.2.0
 
 ## May 16, 2020
@@ -175,11 +180,10 @@
 
 - Add location (latitude, longitude) to global appstate
 - Remove .flutter-plugins-dependencies from version control
-- Fix firstApp -> firstapp in BUNDLE_ID for iOS 
+- Fix firstApp -> firstapp in BUNDLE_ID for iOS
 - Fix bug where attempt to store userinfo after logging in fails due to context being null and appstate
   cannot be found
 - Add an overlay widget with Google Maps loading current location map
-
 
 ## Dec 22, 2019
 
@@ -188,15 +192,14 @@
 
 ## Dec 16, 2019
 
-- Use new flutter_i18n plugin for Android Studio/IntelliJ that supports only specifying language (and not 
+- Use new flutter_i18n plugin for Android Studio/IntelliJ that supports only specifying language (and not
   requires both language and country) in .arb files
 
 ## Dec 15, 2019
 
 - Upgrade to Flutter 1.12.14+hotfix.5
 - Upgrade package dependencies to latest versions
-- Fix breaking change issue, ref https://groups.google.com/forum/#!msg/flutter-announce/sHAL2fBtJ1Y/mGjrKH3dEwAJ
+- Fix breaking change issue, ref <https://groups.google.com/forum/#!msg/flutter-announce/sHAL2fBtJ1Y/mGjrKH3dEwAJ>
 - Move to SDK version target 29 (from 28)
 - Add Podfile to version control
 - Move from flutter_crashlytics to firebase_crashlytics (official plugin)
-
