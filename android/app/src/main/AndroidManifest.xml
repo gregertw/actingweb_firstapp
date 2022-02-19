@@ -30,7 +30,8 @@
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
             android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true">
             <!-- Specify that the launch screen should continue being displayed -->
             <!-- until Flutter renders its first frame. -->
             <meta-data
@@ -47,7 +48,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.linusu.flutter_web_auth.CallbackActivity" >
+        <activity android:name="com.linusu.flutter_web_auth.CallbackActivity" 
+            android:exported="false">
             <intent-filter android:label="flutter_web_auth">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
