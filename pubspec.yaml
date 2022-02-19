@@ -7,7 +7,7 @@ description: An application that manages and receives alerts from ActingWeb acto
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 1.6.1+16
+version: 1.6.2+17
 
 # Prevent accidental publishing to pub.dev.
 publish_to: 'none'
@@ -21,32 +21,30 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
-  oauth2_client: ^2.3.1
+  oauth2_client: ^2.3.2
   cupertino_icons: ^1.0.3
   meta: ^1.7.0
-  provider: ^6.0.1
-  shared_preferences: ^2.0.11
+  provider: ^6.0.2
+  shared_preferences: ^2.0.13
   google_maps_flutter: ^2.1.1
-  google_maps_flutter_web: ^0.3.2
-  geocoding: ^2.0.1
-  firebase_core: ^1.10.6
-  firebase_analytics: ^9.0.4
-  firebase_crashlytics: ^2.4.4
-  firebase_messaging: ^11.2.4
-  geolocator: ^8.0.1
+  google_maps_flutter_web: ^0.3.2+1
+  geocoding: ^2.0.2
+  firebase_core: ^1.12.0
+  firebase_analytics: ^9.1.0
+  firebase_crashlytics: ^2.5.1
+  firebase_messaging: ^11.2.6
+  geolocator: ^8.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   integration_test:
     sdk: flutter
-  flutter_driver:
-    sdk: flutter
   flutter_lints: ^1.0.4
-  test: ^1.17.12
+  test: ^1.19.5
   flutter_launcher_icons: ^0.9.0
   convert: ^3.0.1
-  mockito: ^5.0.16
+  mockito: ^5.1.0
 
 flutter_icons:
   android: "launcher_icon"
