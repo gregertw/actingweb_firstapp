@@ -9,10 +9,10 @@ class OverlayMapPage extends StatefulWidget {
   const OverlayMapPage({Key? key}) : super(key: key);
 
   @override
-  _OverlayMapPageState createState() => _OverlayMapPageState();
+  OverlayMapPageState createState() => OverlayMapPageState();
 }
 
-class _OverlayMapPageState extends State<OverlayMapPage> {
+class OverlayMapPageState extends State<OverlayMapPage> {
   final Completer<GoogleMapController> _controller = Completer();
   Set<Marker>? _markers;
   // If you want to record the position when the user moves the map, see the GoogleMap widget below

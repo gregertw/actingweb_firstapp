@@ -26,13 +26,13 @@ class LoginPage extends StatelessWidget {
     Column body;
     if (appState.authenticated) {
       body = Column(
-        children: [logo, welcome],
         mainAxisAlignment: MainAxisAlignment.center,
+        children: [logo, welcome],
       );
     } else {
       body = Column(
-        children: [logo, welcome, const AuthPage()],
         mainAxisAlignment: MainAxisAlignment.center,
+        children: [logo, welcome, const AuthPage()],
       );
     }
     return Scaffold(

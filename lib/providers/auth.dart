@@ -52,7 +52,7 @@ class AuthUserInfo {
         avatarUrl ??= info['picture'];
         break;
       default:
-        throw 'Does not know how to parse AuthUserInfo from ' + provider;
+        throw 'Does not know how to parse AuthUserInfo from $provider';
     }
   }
 }
@@ -100,15 +100,17 @@ class AuthClient {
   String? provider;
   // For Android and iOS, this must match the URI in the [_redirectUrls].
   // Must be the same as the Android applicationId and iOS bundle scheme.
-  static const String _customUriScheme = 'io.actingweb.firstapp';
-  static const Map<String, String> _redirectUrls = {
+  static const String _customUriScheme = Environment.customUriScheme;
+  static final Map<String, String> _redirectUrls = {
     'mock': 'localhost',
-    'github': 'io.actingweb.firstapp://oauthredirect',
-    'github_web': 'https://gregertw.github.io/actingweb_firstapp_web/',
-    'google': 'io.actingweb.firstapp:/oauthredirect',
-    // Edit the port number below to debug locally, also oauth.js needs to be edited
-    //'google_web': 'http://localhost:56906/'
-    'google_web': 'https://gregertw.github.io/actingweb_firstapp_web/'
+    'github': Environment.clientIdGithubApp,
+    'github_web': 'NOT_SUPPORTED',
+    'google': Environment.clientIdGoogleApp,
+    'google_web': Environment.redirctUrlGoogleWeb == ''
+        ? Uri.base
+            .toString()
+            .split('#/')[0] // Get the current full URL without trailing #/
+        : Environment.redirctUrlGoogleWeb
   };
   static const Map<String, List<String>> _scopes = {
     'github': <String>[],
@@ -182,7 +184,7 @@ class AuthClient {
   /// Configure/override the identity provider settings.
   void setPresetIdentityProvider(String provider) {
     if (web && !provider.contains('_web')) {
-      provider = provider + '_web';
+      provider = '${provider}_web';
     }
     if (!_redirectUrls.containsKey(provider)) {
       throw 'No provider set and authProvider not supplied.';
@@ -203,7 +205,7 @@ class AuthClient {
         clientSecret = Environment.secretGithubApp;
         break;
       case 'github_web':
-        // Github web is not supported
+        // Github web is not supported from Github
         authProvider = GitHubOAuth2Client(
             redirectUri: redirectUrl!, customUriScheme: customUriScheme!);
         clientId = '';

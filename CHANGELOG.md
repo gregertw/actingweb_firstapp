@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## May 29, 2022
+
+- Validate for Flutter 3.0.1
+- Upgrade packages
+- Add redirect URLs to environment variables, so everything can be set in environment.dart
+- Refactor auth.dart and oauth.js to use current URL for web support without explicit configuration
+- Update with a quickstart for Google login, fixing [#39](https://github.com/gregertw/actingweb_firstapp/issues/39)
+- Bump version to 1.6.3+18
+
 ## Feb 18, 2022
 
 - Validate for Flutter 2.10.1

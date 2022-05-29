@@ -103,7 +103,7 @@ class AppStateModel with ChangeNotifier {
         String? str;
         // ignore: avoid_print
         print('Message also contained a notification: ${message.notification}');
-        str = message.notification!.title! + ' ' + message.notification!.body!;
+        str = '${message.notification!.title!} ${message.notification!.body!}';
         lastNotificationTitle =
             message.notification!.title ?? 'No title in notication';
         lastNotificationBody =
@@ -146,20 +146,20 @@ class AppStateModel with ChangeNotifier {
 
   /// Rotates through the supported locales.
   void switchLocale() {
-    const _locales = AppLocalizations.supportedLocales;
-    if (_locales.length == 1) {
+    const locales = AppLocalizations.supportedLocales;
+    if (locales.length == 1) {
       return;
     }
     int ind = 0;
-    _locales.asMap().forEach((key, value) {
+    locales.asMap().forEach((key, value) {
       if (value.languageCode == _locale) {
         ind = key + 1;
       }
     });
-    if (ind >= _locales.length) {
+    if (ind >= locales.length) {
       ind = 0;
     }
-    setLocale(_locales[ind].languageCode);
+    setLocale(locales[ind].languageCode);
   }
 
   /// Sends off a Firebase Analytics event.

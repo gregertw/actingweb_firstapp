@@ -30,9 +30,8 @@ class HomePageDrawer extends StatelessWidget {
                 Text(AppLocalizations.of(context)!.drawerGetLastNotification),
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text((appState.lastNotificationTitle ?? 'N/A') +
-                    ': ' +
-                    (appState.lastNotificationBody ?? 'N/A')),
+                content: Text(
+                    '${appState.lastNotificationTitle ?? 'N/A'}: ${appState.lastNotificationBody ?? 'N/A'}'),
                 duration: const Duration(seconds: 5),
               ));
               Navigator.of(context).pop();
@@ -207,8 +206,8 @@ Widget buildDrawerHeader(BuildContext context) {
       },
     ),
     currentAccountPicture: CircleAvatar(
-      child: Image.asset('assets/actingweb-header-small.png'),
       backgroundColor: Colors.white,
+      child: Image.asset('assets/actingweb-header-small.png'),
     ),
   );
 }
