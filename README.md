@@ -6,7 +6,7 @@ Listed on: [![Awesome Flutter](https://img.shields.io/badge/Awesome-Flutter-blue
 
 **Latest build and artifacts**: [![Codemagic build status](https://api.codemagic.io/apps/5e23f3b4c5faa6a356815277/5e23f3b4c5faa6a356815276/status_badge.svg)](https://codemagic.io/apps/5e23f3b4c5faa6a356815277/5e23f3b4c5faa6a356815276/latest_build)
 
-**Latest update:** Support for Flutter 2.10.1
+**Latest update:** Support for Flutter 3.0.1
 
 There are lots of simple Flutter app examples out there, but very few show how to tie together the elements
 you need to put an app into production. In my process of evaluating Flutter maturity and readiness for
@@ -61,6 +61,39 @@ a production app point of view. Here are some possible improvements:
 ## CHANGELOG
 
 See CHANGELOG.md
+
+## QUICKSTART
+
+The easiest way to get started with this app is to get it running in your own browser locally. To do that, you need to
+configure a Google OAuth2 application at <https://console.cloud.google.com/apis/credentials>. You need to define
+your own application so you can use Google to log in, and you need to make sure that the app knows about the URL it is
+running from (i.e. localhost:port), so that it can present the URL to Google and the Google app is configured with the
+same URL as an allowed redirect URL. In addition, the app needs to present the secret for the Google app you have configured.
+If there is a mismatch in the URL your app is running under, what is configured in the app, and what is configured for the
+Google app, the login process will fail.
+
+Here are the steps:
+
+- Go to Google console as above and create a new OAuth client ID. Choose Web Application as type.
+- Add an Authorized redirect URI to <http://localhost:50000/>
+- Copy the client id and update `clientIdGoogleApp` in lib/environment.dart
+- Copy the client secret and `secretGoogleWeb`in the same file
+- Start debugging with: `flutter run --debug --web-port=50000` (this will allow the app to present the right redirect URL)
+
+In Visual Studio Code, you can add an entry to launch.json in .vscode:
+
+```json
+{
+            "name": "Flutter: Debug web",
+            "type": "dart",
+            "request": "launch",
+            "args": [
+                "--web-port=50000"
+            ],
+            "flutterMode": "debug",
+            "program": "lib/main.dart"
+        },
+```
 
 ## How to get started
 
@@ -167,7 +200,7 @@ Firebase Messaging initialisation.
 
 If you are doing debugging of the app on web, use Google login, you need to edit environment.dart with the client id
 and secret, and then (for local debugging) edit auth.dart and oauth.js with the localhost redirect URL with port number.
-In addition, Google web app (credentials) also need the ```http://localhost:<portnumber>/``` configured as a legal redirect URL.
+In addition, the Google web app (credentials) also need the ```http://localhost:<portnumber>/``` configured as a legal redirect URL. Configure Google web app at <https://console.cloud.google.com/apis/credentials>.
 
 **Note on Github!** Github only supports clientid and secret, and does explicitly not support retrieving an access token
 from a web applications (it is blocked with no CORS headers). This is because it is not considered safe. This means that
