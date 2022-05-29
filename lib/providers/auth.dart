@@ -52,7 +52,7 @@ class AuthUserInfo {
         avatarUrl ??= info['picture'];
         break;
       default:
-        throw 'Does not know how to parse AuthUserInfo from ' + provider;
+        throw 'Does not know how to parse AuthUserInfo from $provider';
     }
   }
 }
@@ -182,7 +182,7 @@ class AuthClient {
   /// Configure/override the identity provider settings.
   void setPresetIdentityProvider(String provider) {
     if (web && !provider.contains('_web')) {
-      provider = provider + '_web';
+      provider = '${provider}_web';
     }
     if (!_redirectUrls.containsKey(provider)) {
       throw 'No provider set and authProvider not supplied.';
@@ -203,7 +203,7 @@ class AuthClient {
         clientSecret = Environment.secretGithubApp;
         break;
       case 'github_web':
-        // Github web is not supported
+        // Github web is not supported from Github
         authProvider = GitHubOAuth2Client(
             redirectUri: redirectUrl!, customUriScheme: customUriScheme!);
         clientId = '';
