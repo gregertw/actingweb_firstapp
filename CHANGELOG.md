@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## June 17, 2022
+
+- Validate for Flutter 3.0.2
+- Upgrade packages
+- Fix bug in Google app redirect
+- Bump version to 1.6.4+19
+
 ## May 29, 2022
 
 - Validate for Flutter 3.0.1
