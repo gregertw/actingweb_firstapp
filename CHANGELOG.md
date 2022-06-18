@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## June 18, 2022
+
+- Emergency fix for android redirect (in AndroidManifest.xml)
+- Fix redirect URL for Github app
+- Bump version to 1.6.5+20
+
 ## June 17, 2022
 
 - Validate for Flutter 3.0.2
