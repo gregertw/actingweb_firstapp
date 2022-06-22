@@ -1,10 +1,10 @@
 # CHANGELOG
 
-## June 18, 2022
+## June 22, 2022
 
 - Emergency fix for android redirect (in AndroidManifest.xml)
 - Fix redirect URL for Github app
-- Bump version to 1.6.5+20
+- Bump version to 1.6.5+20, had to dump to 1.6.6+21 due to a CI/CD issue
 
 ## June 17, 2022
 
