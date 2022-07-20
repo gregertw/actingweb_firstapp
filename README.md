@@ -6,7 +6,7 @@ Listed on: [![Awesome Flutter](https://img.shields.io/badge/Awesome-Flutter-blue
 
 **Latest build and artifacts**: [![Codemagic build status](https://api.codemagic.io/apps/5e23f3b4c5faa6a356815277/5e23f3b4c5faa6a356815276/status_badge.svg)](https://codemagic.io/apps/5e23f3b4c5faa6a356815277/5e23f3b4c5faa6a356815276/latest_build)
 
-**Latest update:** Support for Flutter 3.0.2
+**Latest update:** Support for Flutter 3.0.5
 
 There are lots of simple Flutter app examples out there, but very few show how to tie together the elements
 you need to put an app into production. In my process of evaluating Flutter maturity and readiness for
@@ -291,9 +291,9 @@ onBackgroundMessage() events (in appstate.date). You should only use so-called "
 for this (though you can have extra key/value pairs in the "data" section). For both Android and iOS, the notification will appear in the system tray and the app is launched.
 
 **Note2!!** It is also possible to make the app react directly from the background to
- notifications. However, this requires custom logic for Android and iOS and is not straightforward, so be warned. There was also
-  a bug related to background handling: <https://github.com/FirebaseExtended/flutterfire/issues/1763> This is now
-fixed, but I have not prioritised trying to make it work.
+ notifications. However, this requires custom logic for Android and iOS and is not straightforward, so be warned. There was
+ also a bug related to background handling: <https://github.com/FirebaseExtended/flutterfire/issues/1763> This is now
+fixed. Also see <https://firebase.flutter.dev/docs/messaging/apple-integration> for more details on Apple integration.
 
 **Note3!!** The iOS simulator does not support background notifications, a real device is needed.
 
@@ -301,8 +301,8 @@ The app will write the FCM token to console, but you can also go into the drawer
 displaying name and email to view all details, including the Firebase messaging token.
 
 The notification console to send a notification (once configured) is a bit tricky to find, but has this URL:
- ```https://console.firebase.google.com/u/0/project/<your_project>/notification/compose```. In the drawer menu, there is a menu
- option to show the last notification received. Only the title and body is shown.
+ ```https://console.firebase.google.com/u/0/project/<your_project>/notification/compose```. In the drawer menu, there is
+ a menu option to show the last notification received. Only the title and body is shown.
 
 Or you can use the command line. In order to send a notification, you need to construct a payload like this (this is for
 shell and you need to replace the `<token>` with the app's token):
@@ -331,11 +331,8 @@ under Cloud Messaging).
 
 **So, in sum: Use "notification" to send a title and a message and the "data" element to send extra data. Except that all the "data" elements will appear on the root level of the message json in iOS, the behaviour will be similar for both Android and iOS.**
 
-**Note, advanced!!** Read this if you want to use another flutter plugin for notifications (for further customisations etc).
-You may then need to turn off so-called method swizzling for iOS on to allow other notification plugins. You then need to notify
-FCM about reception of the message yourself ( see <https://firebase.google.com/docs/cloud-messaging/ios/receive>).
-
-This is how you set swizzling off (in Info.plist):
+**Note, advanced!!** Turning swizzling off (in Info.plist) like below will prevent the Firebase Messaging plugin from
+working:
 
 ```xml
  <key>FirebaseAppDelegateProxyEnabled</key>
