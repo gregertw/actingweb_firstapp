@@ -33,8 +33,8 @@ dependencies:
   firebase_core: ^1.18.0
   firebase_analytics: ^9.1.10
   firebase_crashlytics: ^2.8.2
-  firebase_messaging: ^11.4.2
-  geolocator: ^8.2.1
+  firebase_messaging: ^12.0.0
+  geolocator: ^9.0.1
   mockito: ^5.2.0
 
 dev_dependencies:
@@ -47,6 +47,11 @@ dev_dependencies:
   flutter_launcher_icons: ^0.9.3
   convert: ^3.0.2
 
+dependency_overrides:
+  flutter_web_auth:
+    git:
+      url: https://github.com/noga-dev/flutter_web_auth.git
+      
 flutter_icons:
   android: "launcher_icon"
   ios: true
