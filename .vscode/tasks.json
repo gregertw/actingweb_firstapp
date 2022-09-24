@@ -28,6 +28,19 @@
                 "reveal": "always",
                 "panel": "new"
             }
+        },
+        {
+            "type": "flutter",
+            "command": "flutter",
+            "args": [
+                "build",
+                "web",
+                "--base-href=/actingweb_firstapp_web/"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "label": "flutter: flutter build web",
+            "detail": ""
         }
     ]
 }

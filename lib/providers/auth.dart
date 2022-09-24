@@ -103,9 +103,9 @@ class AuthClient {
   static const String _customUriScheme = Environment.customUriScheme;
   static final Map<String, String> _redirectUrls = {
     'mock': 'localhost',
-    'github': Environment.clientIdGithubApp,
+    'github': Environment.redirectUrlGithubApp,
     'github_web': 'NOT_SUPPORTED',
-    'google': Environment.clientIdGoogleApp,
+    'google': Environment.redirctUrlGoogleApp,
     'google_web': Environment.redirctUrlGoogleWeb == ''
         ? Uri.base
             .toString()

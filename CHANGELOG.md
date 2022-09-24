@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## July 20, 2022
+
+- Validate for Flutter 3.0.5
+- Upgrade package dependencies
+- Major version firebase_messaging => adjusted README
+- flutter_web_auth (dependency for oauth2_client) seems to be lacking care, adding tmp dependency override
+- Major version upgrade of geolocator requires Android SDK 33, bumped the version
+- Fix #44, use of flutter_geocoding results in web console error
+- Bump version to 1.6.7+22
+
+## June 22, 2022
+
+- Emergency fix for android redirect (in AndroidManifest.xml)
+- Fix redirect URL for Github app
+- Bump version to 1.6.5+20, had to dump to 1.6.6+21 due to a CI/CD issue
+
+## June 17, 2022
+
+- Validate for Flutter 3.0.2
+- Upgrade packages
+- Fix bug in Google app redirect
+- Bump version to 1.6.4+19
+
 ## May 29, 2022
 
 - Validate for Flutter 3.0.1

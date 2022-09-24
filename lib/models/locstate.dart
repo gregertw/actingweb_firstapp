@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:first_app/providers/geo.dart';
@@ -61,6 +61,10 @@ class LocStateModel with ChangeNotifier {
     _pointList[pos] = null;
     _lastPos = pos;
     notifyListeners();
+    // The underlying flutter_geocoding plugin does not support web yet
+    if (kIsWeb) {
+      return;
+    }
     try {
       locator!.fromCoordinates(pos.latitude, pos.longitude).then((pm) {
         _pointList[pos] = pm.first;
