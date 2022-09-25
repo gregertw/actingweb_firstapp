@@ -81,7 +81,7 @@ PODS:
   - Flutter (1.0.0)
   - flutter_secure_storage (3.3.1):
     - Flutter
-  - flutter_web_auth_2 (1.1.1):
+  - flutter_web_auth (0.4.1):
     - Flutter
   - geocoding (1.0.5):
     - Flutter
@@ -148,8 +148,6 @@ PODS:
   - PromisesObjC (2.1.1)
   - shared_preferences_ios (0.0.1):
     - Flutter
-  - url_launcher_ios (0.0.1):
-    - Flutter
 
 DEPENDENCIES:
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
@@ -158,13 +156,12 @@ DEPENDENCIES:
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
-  - flutter_web_auth_2 (from `.symlinks/plugins/flutter_web_auth_2/ios`)
+  - flutter_web_auth (from `.symlinks/plugins/flutter_web_auth/ios`)
   - geocoding (from `.symlinks/plugins/geocoding/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
-  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
   trunk:
@@ -196,8 +193,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
-  flutter_web_auth_2:
-    :path: ".symlinks/plugins/flutter_web_auth_2/ios"
+  flutter_web_auth:
+    :path: ".symlinks/plugins/flutter_web_auth/ios"
   geocoding:
     :path: ".symlinks/plugins/geocoding/ios"
   geolocator_apple:
@@ -208,8 +205,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
   shared_preferences_ios:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
-  url_launcher_ios:
-    :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
   Firebase: 800f16f07af493d98d017446a315c27af0552f41
@@ -226,7 +221,7 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 732623518591384f61c287e3d8f65294beb7ffb3
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
-  flutter_web_auth_2: a1bc00762c408a8f80b72a538cd7ff5b601c3e71
+  flutter_web_auth: 09a0abd245f1a07a3ff4dcf1247a048d89ee12a9
   geocoding: 32cfcdb16d38d907caaba65e2e42ad10d38bee58
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
   google_maps_flutter_ios: 66201f392bf62d500f07670a30488a247b9bb5b9
@@ -238,7 +233,6 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
-  url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
 
 PODFILE CHECKSUM: 4e8f8b2be68aeea4c0d5beb6ff1e79fface1d048
 
