@@ -29,7 +29,7 @@ class LocationStreamWidget extends StatelessWidget {
           key: const Key('LocationPage_StartListeningButton'),
           style: ElevatedButton.styleFrom(
             elevation: 20.0,
-            onPrimary: Theme.of(context).primaryColorLight,
+            foregroundColor: Theme.of(context).primaryColorLight,
             padding: const EdgeInsets.all(8.0),
           ),
           child: Text(Provider.of<LocStateModel>(context).isListening()
