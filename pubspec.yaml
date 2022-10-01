@@ -33,7 +33,7 @@ dependencies:
   firebase_core: ^1.23.0
   firebase_analytics: ^9.3.6
   firebase_crashlytics: ^2.8.11
-  firebase_messaging: ^13.0.3
+  firebase_messaging: ^13.0.4
   geolocator: ^9.0.1
   mockito: ^5.3.2
 
