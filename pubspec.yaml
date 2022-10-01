@@ -21,7 +21,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
-  oauth2_client: ^2.4.2
+  oauth2_client: ^3.0.0
   cupertino_icons: ^1.0.5
   meta: ^1.7.0
   http: ^0.13.5
@@ -46,11 +46,6 @@ dev_dependencies:
   test: ^1.21.4
   flutter_launcher_icons: ^0.10.0
   convert: ^3.0.2
-
-dependency_overrides:
-  flutter_web_auth:
-    git:
-      url: https://github.com/noga-dev/flutter_web_auth.git
 
 flutter_icons:
   android: "launcher_icon"
