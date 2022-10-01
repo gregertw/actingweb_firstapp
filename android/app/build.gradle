@@ -65,7 +65,6 @@ android {
        release {
            signingConfig signingConfigs.release
            minifyEnabled true
-           useProguard true
            // https://medium.com/androiddevelopers/practical-proguard-rules-examples-5640a3907dc9
            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
        }
