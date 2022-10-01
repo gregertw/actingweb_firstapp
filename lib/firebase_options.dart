@@ -26,7 +26,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
     }
 
     throw UnsupportedError(
@@ -55,17 +58,6 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCFGeVdzEh6ZPKClV_0in0xHHX-0NtqGQ8',
-    appId: '1:748007732162:ios:b662cf09a8209a8b785c5b',
-    messagingSenderId: '748007732162',
-    projectId: 'actingweb-firstapp',
-    databaseURL: 'https://actingweb-firstapp.firebaseio.com',
-    storageBucket: 'actingweb-firstapp.appspot.com',
-    iosClientId: '748007732162-20hnc1u6qmn35avunaidj44p43o6g4s7.apps.googleusercontent.com',
-    iosBundleId: 'io.actingweb.firstapp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCFGeVdzEh6ZPKClV_0in0xHHX-0NtqGQ8',
     appId: '1:748007732162:ios:b662cf09a8209a8b785c5b',
     messagingSenderId: '748007732162',
