@@ -31,9 +31,9 @@ dependencies:
   google_maps_flutter_web: ^0.4.0+3
   geocoding: ^2.0.5
   firebase_core: ^1.24.0
-  firebase_analytics: ^9.3.7
-  firebase_crashlytics: ^2.8.11
-  firebase_messaging: ^13.0.4
+  firebase_analytics: ^9.3.8
+  firebase_crashlytics: ^2.8.13
+  firebase_messaging: ^13.1.0
   geolocator: ^9.0.1
   mockito: ^5.3.2
 
