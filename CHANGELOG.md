@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Oct 8, 2022
+
+- Validate for Flutter 3.3.4
+- Upgrade package dependencies
+- Get rid of dependency on unofficial flutter_web_auth (new ouath2_client version)
+- Bump version to 1.6.8+23
+- Move from jcenter to mavenCentral
+
 ## July 20, 2022
 
 - Validate for Flutter 3.0.5
