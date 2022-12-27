@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## Dec 27, 2022
+
+- Validate for Flutter 3.3.10
+- Upgrade all packages
+- Fixed a bug with flutter_web_auth in AndroidManifest.xml
+- Bump version to 1.6.9+25
+
 ## Oct 8, 2022
 
 - Validate for Flutter 3.3.4

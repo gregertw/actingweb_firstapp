@@ -6,7 +6,7 @@
         {
             "label": "Flutter integration tests",
             "type": "shell",
-            "command": "flutter test integration_test/",
+            "command": "fvm flutter test integration_test/",
             "group": {
                 "kind": "test",
                 "isDefault": true
