@@ -6,7 +6,7 @@ Listed on: [![Awesome Flutter](https://img.shields.io/badge/Awesome-Flutter-blue
 
 **Latest build and artifacts**: [![Codemagic build status](https://api.codemagic.io/apps/5e23f3b4c5faa6a356815277/5e23f3b4c5faa6a356815276/status_badge.svg)](https://codemagic.io/apps/5e23f3b4c5faa6a356815277/5e23f3b4c5faa6a356815276/latest_build)
 
-**Latest update:** Support for Flutter 3.3.4
+**Latest update:** Support for Flutter 3.3.10
 
 There are lots of simple Flutter app examples out there, but very few show how to tie together the elements
 you need to put an app into production. In my process of evaluating Flutter maturity and readiness for
