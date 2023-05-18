@@ -4,6 +4,7 @@
 
 - Validate for Flutter 3.10.1
 - Upgrade all packages
+- Bump version to 1.6.9+27
 
 ## Dec 27, 2022
 
