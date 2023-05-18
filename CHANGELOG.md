@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## May 18, 2022
+
+- Validate for Flutter 3.10.1
+- Upgrade all packages
+
 ## Dec 27, 2022
 
 - Validate for Flutter 3.3.10
