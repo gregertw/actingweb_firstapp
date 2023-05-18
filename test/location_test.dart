@@ -24,10 +24,10 @@ dynamic initWidget(WidgetTester tester, LocStateModel locstate) {
         appBar: AppBar(),
         body: ChangeNotifierProvider.value(
           value: locstate,
-          child: Center(
+          child: const Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const <Widget>[
+              children: <Widget>[
                 LocationStreamWidget(),
               ],
             ),

@@ -27,13 +27,13 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           title: Text(AppLocalizations.of(context)!.appTitle),
         ),
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: ChangeNotifierProvider(
           create: (_) => new LocStateModel(appState.mocks.getGeo()),
-          child: Center(
+          child: const Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const <Widget>[
+              children: <Widget>[
                 LocationStreamWidget(),
                 OverlayMapPage(),
               ],
