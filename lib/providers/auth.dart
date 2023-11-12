@@ -10,8 +10,7 @@ import 'package:http/http.dart' as http;
 /// Use this as authProvider in [AuthClient] for mocked auth.
 class MockOAuth2Client extends GitHubOAuth2Client {
   MockOAuth2Client(
-      {required String redirectUri, required String customUriScheme})
-      : super(redirectUri: redirectUri, customUriScheme: customUriScheme);
+      {required super.redirectUri, required super.customUriScheme});
 
   Future<AccessTokenResponse> getMockedResponse() async {
     return AccessTokenResponse.fromMap({

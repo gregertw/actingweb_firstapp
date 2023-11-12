@@ -7,12 +7,6 @@ import 'app.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  // A breaking change in the platform messaging, as of Flutter 1.12.13+hotfix.5,
-  // we need to explicitly initialise bindings to get access to the BinaryMessenger
-  // This is needed by Crashlytics.
-  // https://groups.google.com/forum/#!msg/flutter-announce/sHAL2fBtJ1Y/mGjrKH3dEwAJ
-  WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // If we run on web, do not use Crashlytics (not supported on web yet)
@@ -25,6 +19,11 @@ void main() async {
     // Use dart zone to define Crashlytics as error handler for errors
     // that occur outside runApp
     runZonedGuarded<Future<void>>(() async {
+      // A breaking change in the platform messaging, as of Flutter 1.12.13+hotfix.5,
+      // we need to explicitly initialise bindings to get access to the BinaryMessenger
+      // This is needed by Crashlytics.
+      // https://groups.google.com/forum/#!msg/flutter-announce/sHAL2fBtJ1Y/mGjrKH3dEwAJ
+      WidgetsFlutterBinding.ensureInitialized();
       // Pass all uncaught errors from the framework to Crashlytics.
       FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
       runApp(await getApp());

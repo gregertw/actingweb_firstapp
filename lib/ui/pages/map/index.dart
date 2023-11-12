@@ -6,7 +6,7 @@ import 'package:first_app/ui/widgets/anchored_overlay.dart';
 import 'package:first_app/models/locstate.dart';
 
 class OverlayMapPage extends StatefulWidget {
-  const OverlayMapPage({Key? key}) : super(key: key);
+  const OverlayMapPage({super.key});
 
   @override
   OverlayMapPageState createState() => OverlayMapPageState();

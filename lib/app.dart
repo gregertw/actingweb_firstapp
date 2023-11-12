@@ -29,9 +29,9 @@ class ProviderApp extends StatelessWidget {
   final FirebaseAnalytics analytics;
 
   const ProviderApp({
-    Key? key,
+    super.key,
     required this.analytics,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
