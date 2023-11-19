@@ -4,10 +4,10 @@ description: A Flutter starter app that gives you a solid foundation for a real 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
+# Both the version and the build number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 1.6.9+27
+version: 1.6.10+28
 
 # Prevent accidental publishing to pub.dev.
 publish_to: "none"
