@@ -5,12 +5,12 @@ class CustomDialog extends StatelessWidget {
   final String? title, description, buttonText;
   final Image? image;
   const CustomDialog({
-    Key? key,
+    super.key,
     required this.title,
     required this.description,
     required this.buttonText,
     this.image,
-  }) : super(key: key);
+  });
   @override
   Widget build(BuildContext context) {
     return Dialog(

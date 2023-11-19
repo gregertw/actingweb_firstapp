@@ -5,7 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:first_app/ui/widgets/custom_dialog.dart';
 
 class HomePageDrawer extends StatelessWidget {
-  const HomePageDrawer({Key? key}) : super(key: key);
+  const HomePageDrawer({super.key});
 
   Future<bool> _userInfo(BuildContext context) async {
     var appState = Provider.of<AppStateModel>(context, listen: false);

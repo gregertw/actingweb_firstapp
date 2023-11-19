@@ -8,7 +8,7 @@ import 'package:first_app/ui/widgets/custom_dialog.dart';
 String latitudeLongitude(String lat, String long) => "Lat: $lat, Long: $long";
 
 class LocationStreamWidget extends StatelessWidget {
-  const LocationStreamWidget({Key? key}) : super(key: key);
+  const LocationStreamWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,7 @@ class LocationStreamWidget extends StatelessWidget {
 
 class PositionListItem extends StatelessWidget {
   final Position position;
-  const PositionListItem({Key? key, required this.position}) : super(key: key);
+  const PositionListItem({super.key, required this.position});
 
   @override
   Widget build(BuildContext context) {
