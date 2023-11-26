@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Nov 26, 2023
+
+- Fixed issues with compliance with Google Play and Apple AppStore
+- Further package upgrades
+- Bump to 1.6.10+29
+
 ## Nov 19, 2023
 
 - Validate for Flutter 3.16.0
