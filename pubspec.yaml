@@ -23,7 +23,7 @@ dependencies:
   intl: ^0.18.0
   oauth2_client: ^3.0.0
   cupertino_icons: ^1.0.5
-  meta: ^1.11.0
+  meta: ^1.10.0
   http: ^1.1.0
   provider: ^6.0.3
   shared_preferences: ^2.0.15
