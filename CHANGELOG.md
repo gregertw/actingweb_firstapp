@@ -3,7 +3,7 @@
 ## Dec 9, 2023
 
 - Upgrade to Flutter 3.16.3
-- Bump version to 1.6.11+30
+- Bump version to 1.6.11+31
 
 ## Nov 26, 2023
 
