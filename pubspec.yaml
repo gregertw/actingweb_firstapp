@@ -7,7 +7,7 @@ description: A Flutter starter app that gives you a solid foundation for a real 
 # Both the version and the build number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 1.6.11+31
+version: 1.6.12+32
 
 # Prevent accidental publishing to pub.dev.
 publish_to: "none"
@@ -33,9 +33,9 @@ dependencies:
   firebase_core: ^2.23.0
   firebase_analytics: ^10.7.1
   firebase_crashlytics: ^3.4.5
-  firebase_messaging: ^14.7.5
+  firebase_messaging: ^14.7.9
   geolocator: ^10.1.0
-  mockito: ^5.3.2
+  mockito: ^5.4.4
 
 dev_dependencies:
   flutter_test:
@@ -43,7 +43,7 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   flutter_lints: ^3.0.1
-  test: ^1.24.3
+  test: ^1.24.9
   flutter_launcher_icons: ^0.13.1
   convert: ^3.0.2
 

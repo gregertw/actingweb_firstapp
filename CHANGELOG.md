@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Dev 31, 2023
+
+- Upgrade to Fluter 3.16.5
+- Upgrade packages
+- Bump version to 1.6.12+32
+
 ## Dec 9, 2023
 
 - Upgrade to Flutter 3.16.3
