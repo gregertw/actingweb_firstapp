@@ -7,7 +7,7 @@ description: A Flutter starter app that gives you a solid foundation for a real 
 # Both the version and the build number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 1.6.12+32
+version: 1.6.13+33
 
 # Prevent accidental publishing to pub.dev.
 publish_to: "none"
