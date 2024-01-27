@@ -24,7 +24,8 @@ dependencies:
   oauth2_client: ^3.0.0
   cupertino_icons: ^1.0.5
   meta: ^1.10.0
-  http: ^1.2.0
+  # Do not upgrade http to 1.2.0 and above until integration_test can run with web >=0.4.2
+  http: ^1.1.2
   provider: ^6.0.3
   shared_preferences: ^2.0.15
   google_maps_flutter: ^2.5.3
