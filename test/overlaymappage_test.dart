@@ -6,7 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:first_app/ui/pages/map/index.dart';
 import 'package:first_app/models/locstate.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:first_app/l10n/app_localizations.dart';
 import 'package:first_app/ui/theme/style.dart';
 import 'package:first_app/mock/mock_geolocator.dart';
 

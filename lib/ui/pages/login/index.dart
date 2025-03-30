@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:first_app/models/appstate.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:first_app/l10n/app_localizations.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:first_app/models/appstate.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:first_app/l10n/app_localizations.dart';
 import 'package:first_app/ui/widgets/custom_dialog.dart';
 
 class HomePageDrawer extends StatelessWidget {
@@ -132,7 +132,7 @@ Widget buildDrawerHeader(BuildContext context) {
           alignment: Alignment.center,
           height: 350,
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.surface,
           ),
           child: ListView(
             children: <Widget>[
