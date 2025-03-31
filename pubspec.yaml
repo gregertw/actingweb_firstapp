@@ -7,7 +7,7 @@ description: A Flutter starter app that gives you a solid foundation for a real 
 # Both the version and the build number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 1.6.13+33
+version: 1.6.14+34
 
 # Prevent accidental publishing to pub.dev.
 publish_to: "none"
@@ -20,22 +20,22 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  intl: ^0.18.1
-  oauth2_client: ^3.0.0
+  intl: ^0.19.0
+  oauth2_client: ^4.1.0
   cupertino_icons: ^1.0.5
   meta: ^1.10.0
   # Do not upgrade http to 1.2.0 and above until integration_test can run with web >=0.4.2
   http: ^1.1.2
   provider: ^6.0.3
   shared_preferences: ^2.0.15
-  google_maps_flutter: ^2.5.3
+  google_maps_flutter: ^2.12.0
   google_maps_flutter_web: ^0.5.4+3
-  geocoding: ^2.0.5
-  firebase_core: ^2.23.0
-  firebase_analytics: ^10.8.0
-  firebase_crashlytics: ^3.4.9
-  firebase_messaging: ^14.7.10
-  geolocator: ^10.1.0
+  geocoding: ^3.0.0
+  firebase_core: ^3.12.1
+  firebase_analytics: ^11.4.4
+  firebase_crashlytics: ^4.3.4
+  firebase_messaging: ^15.2.4
+  geolocator: ^13.0.3
   mockito: ^5.4.4
 
 dev_dependencies:
@@ -43,9 +43,9 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
-  flutter_lints: ^3.0.1
+  flutter_lints: ^5.0.0
   test: ^1.24.9
-  flutter_launcher_icons: ^0.13.1
+  flutter_launcher_icons: ^0.14.3
   convert: ^3.0.2
 
 flutter_icons:

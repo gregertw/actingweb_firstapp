@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:first_app/l10n/app_localizations.dart';
 import 'package:first_app/models/locstate.dart';
 import 'package:first_app/ui/widgets/custom_dialog.dart';
 

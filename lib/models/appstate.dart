@@ -5,7 +5,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:first_app/providers/auth.dart';
 import 'package:first_app/mock/mockmap.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:first_app/l10n/app_localizations.dart';
 import 'package:first_app/environment.dart';
 // Import mock packages for the web version
 import 'package:first_app/mock/mock_geolocator.dart';
@@ -164,7 +164,7 @@ class AppStateModel with ChangeNotifier {
 
   /// Sends off a Firebase Analytics event.
   Future<void> sendAnalyticsEvent(
-      String name, Map<String, dynamic>? params) async {
+      String name, Map<String, Object>? params) async {
     if (analytics == null) {
       return;
     }

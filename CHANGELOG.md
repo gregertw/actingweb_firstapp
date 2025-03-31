@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Mar 31, 2025
+
+- Upgrade to Flutter 3.29.2
+- Upgrade packages
+- Bump version to 1.6.14+34
+
 ## Jan 27, 2024
 
 - Upgrade to Flutter 3.16.9

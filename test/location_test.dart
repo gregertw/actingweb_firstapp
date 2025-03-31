@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:first_app/ui/pages/location/index.dart';
 import 'package:first_app/mock/mock_geolocator.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:first_app/l10n/app_localizations.dart';
 import 'package:first_app/ui/theme/style.dart';
 
 // Helper function to encapsulate code needed to instantiate the HomePage() widget
